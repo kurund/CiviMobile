@@ -1,0 +1,107 @@
+<?php
+/**
+ * CiviMobile: Mobile interface for CiviCRM
+ *
+ * @file
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function civimobile_menu() {
+  $items = array();
+
+  // CiviMobile Homepage
+  $items['civimobile'] = array(
+    'title'            => 'CiviMobile',
+    'description'      => 'A small but very effective mobile interface to your CiviCRM installation.',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('home',2),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  $items['civimobile/contact'] = array(
+    'title'            => 'CiviMobile',
+    'description'      => 'A small but very effective mobile interface to your CiviCRM installation.',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('contact_list',2),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  $items['civimobile/contact/%'] = array(
+    'title'            => 'Contact',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('contact',2),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  $items['civimobile/structure'] = array(
+    'title'            => 'Contact',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('pagestructure',2),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  $items['civimobile/event'] = array(
+    'title'            => 'Event',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('event_list',2),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  $items['civimobile/event/%'] = array(
+    'title'            => 'Event',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('event',2),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  $items['civimobile/profile'] = array(
+    'title'            => 'ProfileList',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('profile_list'),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  $items['civimobile/profile/%'] = array(
+    'title'            => 'Profile',
+    'page callback'    => '_civimobile_page',
+    'page arguments'   => array('profile'),
+    'access arguments' => array('access CiviCRM'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+function _civimobile_page($page,$param= null ) {
+  $civimobile_page_settings = civimobile_vars_setup();
+  $pagepath = drupal_get_path('module','civimobile')."/templates/civimobile.$page.tpl.php";
+  include_once($pagepath);
+  return NULL;
+}
+
+function civimobile_vars_setup() {
+  civicrm_initialize();  
+  
+  if ( CRM_Utils_Array::value( 'locale', $GLOBALS ) ) { 
+    $civimobile_vars['language'] = $GLOBALS['locale'];
+  } else {
+    $civimobile_vars['language'] = 'en_US';
+  }
+
+  $civimobile_vars['title']   = 'CiviMobile';
+  //$civimobile_vars['head']    = drupal_get_html_head();
+  $civimobile_vars['favicon'] = theme_get_setting("toggle_favicon") ? "<link rel=\"shortcut icon\" href=\"". theme_get_setting("favicon") ."\" type=\"image/x-icon\"/>\n" : "";
+  //$civimobile_vars['styles']   = drupal_get_css();
+  //$civimobile_vars['scripts']   = drupal_get_js();
+  $civimobile_vars['civimobile_assets']   = base_path().drupal_get_path('module','civimobile');
+  
+  $config =& CRM_Core_Config::singleton();
+  $civimobile_vars['civicrm_base']   = $config->userFrameworkResourceURL;
+
+  return $civimobile_vars;     
+}
+
+
+
