@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<menu>
+  <item>
+    <title>CiviCRM Mobile</title>
+    <path>civicrm/mobile</path>
+    <page_callback>civimobile::addContact</page_callback>
+  </item>
+ <item>
+    <path>civicrm/mobile/contact</path>
+    <page_callback>civimobile::contacts</page_callback>
+  </item>
+ <item>
+    <path>civicrm/mobile/contact/activities</path>
+    <page_callback>civimobile::activities</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/contact/relationships</path>
+    <page_callback>civimobile::relationships</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/contact/notes</path>
+    <page_callback>civimobile::notes</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/contact/cases</path>
+    <page_callback>civimobile::cases</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/membership</path>
+    <page_callback>civimobile::membership</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/contribution</path>
+    <page_callback>civimobile::contribution</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/participant</path>
+    <page_callback>civimobile::participant</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/participants/eventid</path>
+    <page_callback>civimobile::event</page_callback>
+  </item>
+<item>
+    <path>civicrm/mobile/survey</path>
+    <page_callback>civimobile::survey</page_callback>
+  </item>
+</menu>

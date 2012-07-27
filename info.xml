@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<extension key="access.module.civimobile" type="module">
+  <file>civimobile</file>
+  <name>Civi Mobile</name>
+  <description>Module for civicrm mobile interface</description>
+  <urls>
+    <url desc="Main Extension Page">http://civicrm.org</url>
+    <url desc="Documentation">http://wiki.civicrm.org/confluence/display/CRMDOC/</url>
+    <url desc="Support">http://forum.civicrm.org</url>
+    <url desc="Licensing">http://civicrm.org/licensing</url>
+  </urls>
+  <license>AGPL</license>
+  <maintainer>
+    <author>rahul</author>
+    <email>rahul.lamkhade@webaccess.co.in</email>
+  </maintainer>
+  <releaseDate>2012-07-16</releaseDate>
+  <version>1.0</version>
+  <develStage>beta</develStage>
+  <compatibility>
+    <ver>4.1</ver>
+  </compatibility>
+  <comments>For support, please contact project team on the forums. (http://forum.civicrm.org)</comments>
+</extension>
