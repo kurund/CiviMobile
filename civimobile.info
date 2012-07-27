@@ -1,7 +1,0 @@
-; $Id$
-name = CiviMobile
-description = A small but very effective mobile interface to your CiviCRM installation.
-core = 7.x
-package = CiviCRM
-dependencies[] = civicrm
-files[] = civimobile.module
