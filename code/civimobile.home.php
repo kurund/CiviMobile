@@ -18,7 +18,6 @@ $results = civicrm_api("contact","get",$params );
   <a data-role="button" data-icon="search" href="#contact-search" title="Contacts" class="icons" data-transition="slideup">Contact</a>
   <a data-role="button" data-icon="grid" href="#events" title="Events" class="icons" data-transition="slideup" >Events</a>
   <a data-role="button" data-icon="info" href="#survey" title="Survey" class="icons" data-transition="slideup" >Survey</a>
-  <?php require_once 'civimobile.navbar.php'; ?>
 </div><!-- /content --> 
 </div>
 <!-- end of menu page -->
