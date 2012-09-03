@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <menu>
   <item>
-    <title>CiviCRM Mobile</title>
+    <title>CiviMobile</title>
     <path>civicrm/mobile</path>
     <page_callback>civimobile::addContact</page_callback>
   </item>
