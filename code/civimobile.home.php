@@ -1,6 +1,5 @@
 <?php 
 require_once 'civimobile.header.php';
-require_once 'initialise.php';
 $id = $_SESSION['CiviCRM']['userID'];
 $params = array ('version' =>'3',
                  'contact_id' => $id
@@ -46,4 +45,4 @@ $results = civicrm_api("contact","get",$params );
  <?php  require_once 'civimobile.survey_list.tpl.php';?>
 </div>
   <!-- end of survey page -->
-  <?php require_once 'civimobile.footar.php'; ?> 
+<?php require_once 'civimobile.footer.php'; ?> 
