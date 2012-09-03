@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <extension key="com.webaccessglobal.module.civimobile" type="module">
   <file>civimobile</file>
-  <name>Civi Mobile</name>
-  <description>Mobile interface for CiviCRM</description>
+  <name>CiviMobile</name>
+  <description>CMS independent mobile interface for CiviCRM</description>
   <urls>
     <url desc="Main Extension Page">http://civicrm.org</url>
     <url desc="Documentation">http://wiki.civicrm.org/confluence/display/CRMDOC/</url>
