@@ -28,7 +28,6 @@ if(!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
      <?php //print $civimobile_page_settings['scripts'] ?>
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" >
     <link rel="stylesheet" href="<?php print $civimobile_page_settings['civimobile_assets'];?>libraries/jquery.mobile-1.1.1/jquery.mobile-1.1.1.css" />
-    <script src="<?php print $civimobile_page_settings['civimobile_assets']; ?>libraries/jquery.mobile-1.1.1/jquery.js"></script>
     <script src="<?php print $civimobile_page_settings['civimobile_assets']; ?>libraries/jquery.mobile-1.1.1/jquery.mobile-1.1.1.min.js"></script>
     <script src="<?php print $civimobile_page_settings['civicrm_base']; ?>js/rest.js"></script>
     <script>
