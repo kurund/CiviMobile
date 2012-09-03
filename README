@@ -4,4 +4,24 @@ CiviMobile
 
 Mobile interface for CiviCRM
 
+Features
+
+* Contacts
+- Search Contacts
+- Add/Update Contacts
+- Proximity search for contacts
+
+* Events
+- participant listing
+- register participant
+
+* Survey
+- Seach for suvery
+- Record survey responses
+
+Project Members:
+
+Web Access India Pvt. Ltd. - webaccessglobal.com
+Peter McAndrew - thirdsectordesign.org
+Kurund Jalmi   - civicrm.org
 
