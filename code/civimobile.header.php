@@ -14,7 +14,9 @@ $civimobile_vars['civicrm_base']   = $config->userFrameworkResourceURL;
 
 $includePath = dirname(dirname( __FILE__ ) );
 $includePath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $includePath) . DIRECTORY_SEPARATOR;
-#$includePath = $config->userFrameworkBaseURL . $includePath;
+
+// FIX Me: you need to uncomment below line for multi-site install
+//$includePath = $config->userFrameworkBaseURL . $includePath;
 
 global $base_url;
 function navbar ($back = false) {
