@@ -34,15 +34,16 @@ function navbar ($back = false) {
   <head>
     <title><?php print $civimobile_vars['title'];?></title>
     <?php //print $civimobile_page_settings['favicon'] ?>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" >
-    <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.1.1/jquery.mobile-1.1.1.css" />
-    <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.1.1/jquery.js"></script>
-    <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.1.1/jquery.mobile-1.1.1.min.js"></script>
+    <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.2.0-beta.1/jquery.mobile-1.2.0-beta.1.min.css" />
+    <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-beta.1/jquery-1.8.1.min.js"></script>
+    <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-beta.1/jquery.mobile-1.2.0-beta.1.js"></script>
     <script src="<?php print $civimobile_vars['civicrm_base']; ?>js/rest.js"></script>
     <script>
       var crmajaxURL = '<?php print base_path(); ?>civicrm/ajax/rest';
       var base_url =  '<?php print base_path(); ?>';
     </script>
-    <script src="<?php print $includePath;?>js/base.js"></script>
+    <!--script src="<?php //print $includePath;?>js/base.js"></script-->
   </head>
   <body> 
