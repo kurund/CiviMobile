@@ -3,7 +3,7 @@
   <item>
     <title>CiviMobile</title>
     <path>civicrm/mobile</path>
-    <page_callback>civimobile::addContact</page_callback>
+    <page_callback>civimobile::home</page_callback>
   </item>
  <item>
     <path>civicrm/mobile/contact</path>
