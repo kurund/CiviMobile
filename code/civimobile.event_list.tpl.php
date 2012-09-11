@@ -1,7 +1,7 @@
 <div id="jqm-homeheader" data-role="header">
    <h1>Upcoming Events</h1>
-   <a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l">Back</a>
-   <a href="#menu" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-right jqm-home">Home</a>
+   
+   <a href="#menu" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
 </div> 
 <div data-role="content"> 
    <ul id="main-events-list" data-role="listview" data-inset="true" >

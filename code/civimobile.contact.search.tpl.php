@@ -20,9 +20,7 @@
 <div>
 <ul id="contactz" data-role="listview" data-inset="false" data-filter="false" ></ul>
 </div>
-  <br/> <div> 
-        <a href="#contactslist"  data-role="button"  data-transition="slideup" >Back to contact list</a>
-  </div>  
+  <br/> 
 </div>
 
  

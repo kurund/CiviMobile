@@ -14,7 +14,8 @@ $civimobile_vars['civicrm_base']   = $config->userFrameworkResourceURL;
 
 $includePath = dirname(dirname( __FILE__ ) );
 $includePath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $includePath) . DIRECTORY_SEPARATOR;
-$includePath = $config->userFrameworkBaseURL . $includePath;
+//$includePath = $config->userFrameworkBaseURL . $includePath;
+
 
 if(!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')):
 ?>
@@ -32,7 +33,7 @@ if(!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
       var crmajaxURL = '<?php print base_path(); ?>civicrm/ajax/rest';
       var base_url =  '<?php print base_path(); ?>';
     </script>
-    <script src="<?php print $includePath;?>/js/base.js"></script>
+    <script src="<?php print $includePath;?>js/base.js"></script>
     </head>
   <body> 
 <?php endif; 

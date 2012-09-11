@@ -1,9 +1,11 @@
 	<?php
+
+  unset($_SESSION['id']);
     $url = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
     $parse_url = parse_url($url, PHP_URL_PATH);
       // get last arg of path (contact id)
-    $contact_id = arg(3);
+$contact_id = arg(3);
     $results = civicrm_api("Contact","get", 
                     array ( 'sequential' =>'1', 
                             'version'=>3, 
@@ -11,7 +13,8 @@
                             'return' =>'display_name,email,phone,tag,group,contact_type,street_address,city,postal_code,state_province')
                             );
     $contact = $results['values'][0];
-    
+    $_SESSION['id']=$contact_id; 
+   
     // All details are displayed in the Contact View Page
     // Need to rework to sort out the display, to optimize the page load time 
     $contrib_results = civicrm_api("Contribution","get",
@@ -52,11 +55,14 @@
                                     );
     include('civimobile.header.php');
 ?>
+
 <div data-role="page" data-theme="c" id="jqm-contacts">
 
  <div data-role="header" data-theme="a">
+
     <h3><?php print $contact['display_name'];?></h3>
-    	   <a href="#menu" data-direction="reverse" data-role="button" data-icon="home" data-transition="slideup" data-iconpos="notext" class="ui-btn-right jqm-home">Home</a>
+    	  <a href="#contact-search" data-rel="back" class="ui-btn-left" data-icon="arrow-l" style="text-decoration: none">Back</a>
+        <a style="text-decoration: none" id="edit-contact-button" data-role="button" data-icon="info" href="#contact-edit" title="Edit Contact" class="icons"  data-transition="slidedown">Edit Contact</a>
   </div><!-- /header -->
 	
 	<div data-role="content" id="contact-content"> 
@@ -94,6 +100,7 @@
         require_once 'CRM/Core/Config.php';
         $config =& CRM_Core_Config::singleton( );
         $symbol = $config->defaultCurrencySymbol;
+       //  $config->_cid = $contact_id;
         ?>
         
         <?php if ($member_results['count'] > 0) :?>
@@ -193,9 +200,7 @@
         <?php endif; ?>        
     </div> 
 
-  <div> 
-          <a href="#contactslist" data-ajax="true" data-role="button" data-transition="slideup" >Back to contact list</a>
-  </div>  
+ 
  
 
                 <script language="javascript" type="text/javascript">

@@ -24,7 +24,7 @@ $event_name = $results['values'][$event_id]['event_title'];
 <div data-role="page" data-theme="b" id="participants"> 
 	<div id="jqm-participants" data-role="header">
 	    <h3>Participants in Event <?php echo $event_name ?></h3>
-	   <a href="#menu" data-direction="reverse" data-role="button" data-icon="home" data-transition="slideup" data-iconpos="notext" class="ui-btn-right jqm-home">Home</a>
+	   <a href="#menu" data-direction="reverse" data-role="button" data-icon="home" data-transition="slideup" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
 	</div> 
 	
 	<div data-role="content" id="participants-content"> 
@@ -50,7 +50,7 @@ foreach($cont as $key => $contact) { ?>
 </ul>
 	</div>
 
-	<?php require_once('civimobile.navbar.php'); ?>
+
 </div> 
 
 <? require('civimobile.footer.php'); ?>
