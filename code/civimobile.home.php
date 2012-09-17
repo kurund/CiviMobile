@@ -9,7 +9,7 @@ require_once 'civimobile.header.php';
 	</div><!-- /header -->
 
 	<div data-role="content">	
-    <a data-role="button" data-icon="search" href="#contact-search" title="Contacts" class="icons" data-transition="slideup">Contact</a>
+    <a data-role="button" data-icon="search" href="#contact-search" title="Contacts" class="icons" data-transition="slideup" >Contact</a>
     <a data-role="button" data-icon="grid" href="#events" title="Events" class="icons" data-transition="slideup" >Events</a>
     <a data-role="button" data-icon="info" href="#survey" title="Survey" class="icons" data-transition="slideup" >Survey</a>
   </div><!-- /content --> 
@@ -17,12 +17,16 @@ require_once 'civimobile.header.php';
 <!-- end of menu page -->
 
 <div data-role="page" id="contact-search" >
-  <?php require_once 'civimobile.contact_list.tpl.php'; ?>
+    <?php require_once 'civimobile.contact_list.tpl.php'; ?>
 </div>
+<div data-role="page" id="add-contact-page" >
+    <?php require_once 'civimobile.contact.tpl.php'; ?>
+</div>
+
 
 <!-- start of contact-edit page -->
 <div data-role="page" id="contact-edit" >
-  <?php //require_once 'civimobile.contact.tpl.php'; ?>
+    <?php //require_once 'civimobile.contact.tpl.php'; ?>
 </div>
 <!-- end of contact-edit page -->
 

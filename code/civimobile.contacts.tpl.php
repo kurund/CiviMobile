@@ -3,7 +3,7 @@
   unset($_SESSION['id']);
     $url = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
-    $parse_url = parse_url($url, PHP_URL_PATH);
+$parse_url = parse_url($url, PHP_URL_PATH); 
       // get last arg of path (contact id)
 $contact_id = arg(3);
     $results = civicrm_api("Contact","get", 
@@ -13,8 +13,7 @@ $contact_id = arg(3);
                             'return' =>'display_name,email,phone,tag,group,contact_type,street_address,city,postal_code,state_province')
                             );
     $contact = $results['values'][0];
-    $_SESSION['id']=$contact_id; 
-   
+    $_SESSION['id']=$contact_id;
     // All details are displayed in the Contact View Page
     // Need to rework to sort out the display, to optimize the page load time 
     $contrib_results = civicrm_api("Contribution","get",
@@ -61,8 +60,8 @@ $contact_id = arg(3);
  <div data-role="header" data-theme="a">
 
     <h3><?php print $contact['display_name'];?></h3>
-    	  <a href="#contact-search" data-rel="back" class="ui-btn-left" data-icon="arrow-l" style="text-decoration: none">Back</a>
-        <a style="text-decoration: none" id="edit-contact-button" data-role="button" data-icon="info" href="#contact-edit" title="Edit Contact" class="icons"  data-transition="slidedown">Edit Contact</a>
+    	  <a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l" style="text-decoration: none">Back</a>
+        <a style="text-decoration: none" id="edit-contact-button" data-role="button" data-icon="info" href="#add-contact-page" title="Edit Contact" class="icons"  data-transition="slidedown" onclick="editContact()">Edit Contact</a>
   </div><!-- /header -->
 	
 	<div data-role="content" id="contact-content"> 

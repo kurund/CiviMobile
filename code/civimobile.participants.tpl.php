@@ -54,3 +54,7 @@ foreach($cont as $key => $contact) { ?>
 </div> 
 
 <? require('civimobile.footer.php'); ?>
+<script>
+
+
+</script>
