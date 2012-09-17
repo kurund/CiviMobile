@@ -12,11 +12,8 @@ $civimobile_vars['title']   = 'CiviMobile';
 $config =& CRM_Core_Config::singleton();
 $civimobile_vars['civicrm_base']   = $config->userFrameworkResourceURL;
 
-$includePath = dirname(dirname( __FILE__ ) );
-$includePath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $includePath) . DIRECTORY_SEPARATOR;
-
-// FIX Me: you need to uncomment below line for multi-site install
-//$includePath = $config->userFrameworkBaseURL . $includePath;
+// extension include path
+$includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' . DIRECTORY_SEPARATOR;
 
 global $base_url;
 function navbar ($back = false) {
@@ -44,6 +41,5 @@ function navbar ($back = false) {
       var crmajaxURL = '<?php print base_path(); ?>civicrm/ajax/rest';
       var base_url =  '<?php print base_path(); ?>';
     </script>
-    <!--script src="<?php //print $includePath;?>js/base.js"></script-->
   </head>
   <body> 
