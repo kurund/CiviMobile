@@ -22,13 +22,13 @@ require_once 'civimobile.header.php';
 
 <!-- start of event page -->
 <div data-role="page" id="events" >
-  <?php  require_once 'civimobile.event_search.html';?>
+  <?php  //require_once 'civimobile.event_search.html';?>
 </div>
 <!-- end of event page -->
 
 <!-- start of survey page -->
 <div data-role="page" id="survey" >
-   <?php  require_once 'civimobile.survey_search.html';?>
+   <?php  //require_once 'civimobile.survey_search.html';?>
 </div>
 <!-- end of survey page -->
 
