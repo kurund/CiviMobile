@@ -1,0 +1,49 @@
+<div data-role="header" id="jqm-eventsheader">
+  <h3>Search Events</h3>
+  <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
+</div> 
+
+<div data-role="content" id="event-content">
+  <div class="ui-listview-filter ui-bar-c">
+    <input type="search" name="event_name" id="event_name" value=""/>
+  </div>
+  <ul id="events" data-role="listview" data-inset="false" data-filter="false"></ul>
+</div>
+
+<script>
+  $(document).bind('pageinit', function() {
+    $('#event_name').keyup( function() {
+      if ($(this).val()) {
+        eventSearch($(this).val());
+      }
+      else {
+        $('#events').empty(); 
+      }
+    });
+  });
+
+  function eventSearch (q) {
+    $.mobile.showPageLoadingMsg( 'Searching' );
+    $().crmAPI ('Event','get',
+    {'version' :'3', 'return' : 'event_title' },
+    { 
+      ajaxURL: crmajaxURL,
+      success:function (data){
+        if (data.count == 0) {
+          cmd = null;
+        }
+        else {
+          cmd = "refresh";
+          $('#events').show();
+          $('#events').empty();
+        }
+        $.each(data.values, function(key, value) {
+          $('#events').append('<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="event-'+value.id+'" ><a href="<?php print url('civicrm/mobile/event/')?>'+value.id+'" data-transition="slideup"  data-role="event-'+value.id+'">'+value.title+'</a></li>');
+        });
+        $.mobile.hidePageLoadingMsg( );
+        $('#events').listview(cmd); 
+      }
+    });
+  }
+</script>
+
