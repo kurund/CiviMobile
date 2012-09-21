@@ -18,6 +18,7 @@
 </div>
 
 <script>
+$(document).bind('pageinit', function() {
   $(function(){
     $('#sort_name').keyup( function() {
       if ($(this).val()) {
@@ -28,6 +29,7 @@
       }
     });
   });
+});
 
   function contactSearch (q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
