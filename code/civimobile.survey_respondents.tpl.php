@@ -21,7 +21,6 @@ $id = arg(3);
 		
 		</div><!-- /content-primary -->
 	</div><!-- /content -->
-<?php require_once('civimobile.navbar.php') ?>
 </div><!-- /page -->
 <?php require_once('civimobile.footer.php') ?>
 
