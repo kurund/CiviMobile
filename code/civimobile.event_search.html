@@ -25,7 +25,7 @@
   function eventSearch (q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('Event','get',
-    {'version' :'3', 'return' : 'event_title' },
+    {'version' :'3', 'debug': 1, 'title': {'LIKE':'%' + q + '%'}, 'return' : 'event_title' },
     { 
       ajaxURL: crmajaxURL,
       success:function (data){
