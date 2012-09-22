@@ -50,6 +50,12 @@ class civimobile {
     exit;
   }
 
+  function participantCheckin() {
+    require_once 'civimobile.participant_checkin.html';
+    exit;
+  }
+
+
   function survey() {
     require_once 'civimobile.survey.tpl.php';
     exit;

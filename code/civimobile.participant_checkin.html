@@ -1,3 +1,5 @@
+<?php require_once 'civimobile.header.php'; ?>
+
 <div id="jqm-participant-checkin-header" data-role="header">
   <h3>Participant Check In</h3>
   <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
@@ -9,7 +11,12 @@
   </div>
   <ul id="participant-checkins" data-role="listview" data-inset="false" data-filter="false"></ul>
 </div>
-  
+
+<div data-role="footer" data-id="global-footer" data-position="fixed" data-theme="c">
+  <a id="undo-checkin-button" style="width:100%; display:none" href="#" d ata-role="button" data-mini="true" data-icon="back" data-theme="e">undo checkin</a>
+</div>
+<?php require_once 'civimobile.footer.php'; ?> 
+
 <script>
   $(document).bind('pageinit', function() {
     $('#participant_name').keyup( function() {
@@ -20,13 +27,19 @@
         $('#participant-checkins').empty(); 
       }
     });
-    //participantSearch();
+    participantSearch();
   });
 
   function participantSearch (q) {
+    var eventId = getURLParameter('eid');
+    if ( isNaN(eventId) ) {
+      return;
+    }
+
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('Participant','get',
-    {'version' :'3', 'sort_name': q, 'return' : 'display_name' },
+    {'version' :'3', 'sort_name': q, 'event_id': eventId,
+      'return' : 'display_name' },
     { 
       ajaxURL: crmajaxURL,
       success:function (data){
@@ -39,12 +52,64 @@
           $('#participant-checkins').empty();
         }
         $.each(data.values, function(key, value) {
-          $('#participant-checkins').append('<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="event-'+value.contact_id+'" ><a href="<?php print url('civicrm/mobile/contact/')?>'+value.contact_id+'" data-transition="slideup"  data-role="contact-'+value.contact_id+'">'+value.display_name+'</a></li>');
+          var content = '<li role="option" tabindex="-1" data-theme="c" data-icon="check" id="check-in-participant-'+ value.participant_id+'" data-participant-id="'+ value. participant_id + '" data-participant-status-id="' + value.participant_status_id +'"><a href="#" data-role="participants-'+ value.id +'">' + value.display_name + '</a></li>';
+
+          $('#participant-checkins').append(content); 
         });
         $.mobile.hidePageLoadingMsg( );
-        $('#participant-checkins').listview(cmd); 
+        $('#participant-checkins').listview(cmd);
+        
+        $("[id^=check-in-participant-]").click(function(event){
+          pid = $(this).attr('data-participant-id');
+          checkinParticipant($(this).attr('data-participant-id'),$(this).attr('data-participant-status-id'), eventId);
+        });
       }
     });
   }
-</script>
 
+  function checkinParticipant(pid,psid,eid) {
+    $.mobile.showPageLoadingMsg( 'Searching' );
+    $("#undo-checkin-button").hide();
+    $('#check-in-participant-'+pid+' a').css("color","#c7c7c7");
+    $().crmAPI ('Participant','create',{'version' :'3', 'event_id' : eid, 'participant_id' : pid, 'participant_status_id' : '1' }
+    ,{
+      ajaxURL: crmajaxURL,
+      success:function (data){
+        //remove colour
+        $('#check-in-participant-'+pid+' a').css("color","");
+        //hide item children
+        $('#check-in-participant-'+pid).children().hide();
+        //need to figure out how to change button text before it get displayed.
+        $("#undo-checkin-button").show();
+        $("#contacts").listview('refresh');
+        $("#undo-checkin-button").attr('data-participant-id', pid);
+        $("#undo-checkin-button").attr('data-previous-participant-status-id', psid);
+        //need to figure out how to cancel existing delays
+        $("#undo-checkin-button").delay(10000).fadeOut("normal", function() {
+          // need to remove row so that we don't end up with a weird thick line betwen ajacent rows this is link to above issue with cancelling existing delays
+          $("#contacts").listview('refresh');
+        });
+        $("#undo-checkin-button").click(function(event){
+          undoCheckinParticipant( pid, psid, eid);
+        });
+        $.mobile.hidePageLoadingMsg( 'Searching' );
+      }
+    });
+  }
+
+  function undoCheckinParticipant(pid,ppsid,eid){
+    $.mobile.showPageLoadingMsg( 'Searching' );
+    $().crmAPI ('Participant','create',{'version' :'3', 'event_id' : eid, 'participant_id' : pid, 'participant_status_id' : ppsid }
+    ,{
+      ajaxURL: crmajaxURL,
+      success:function (data){
+        //show checkin row
+        $('#check-in-participant-'+pid).children().show();
+        $("#undo-checkin-button").hide();
+        $("#participants-list").listview('refresh');
+        $.mobile.hidePageLoadingMsg( 'Searching' );
+      }
+    });
+  }
+
+</script>

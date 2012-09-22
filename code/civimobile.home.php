@@ -1,6 +1,4 @@
-<?php 
-require_once 'civimobile.header.php';
-?>
+<?php require_once 'civimobile.header.php'; ?>
 
 <!-- start of menu page -->
 <div data-role="page" id="crm-jqm-home">
@@ -23,12 +21,6 @@ require_once 'civimobile.header.php';
 <!-- start of event page -->
 <div data-role="page" id="crm-events" >
   <?php require_once 'civimobile.event_search.html';?>
-</div>
-<!-- end of event page -->
-
-<!-- start of participant page -->
-<div data-role="page" id="crm-participant-checkin" >
-  <?php require_once 'civimobile.participant_checkin.html';?>
 </div>
 <!-- end of event page -->
 

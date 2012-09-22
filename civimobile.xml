@@ -38,8 +38,8 @@
     <page_callback>civimobile::participant</page_callback>
   </item>
 <item>
-    <path>civicrm/mobile/participants/eventid</path>
-    <page_callback>civimobile::event</page_callback>
+    <path>civicrm/mobile/participant/checkin</path>
+    <page_callback>civimobile::participantCheckin</page_callback>
   </item>
 <item>
     <path>civicrm/mobile/survey</path>
