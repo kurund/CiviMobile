@@ -26,6 +26,12 @@ require_once 'civimobile.header.php';
 </div>
 <!-- end of event page -->
 
+<!-- start of proximity search page -->
+<div data-role="page" id="proximity-search" >
+  <?php require_once 'civimobile.proximity_search.html';?>
+</div>
+<!-- end of event page -->
+
 <!-- start of participant page -->
 <div data-role="page" id="crm-participant-checkin" >
   <?php require_once 'civimobile.participant_checkin.html';?>

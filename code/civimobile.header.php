@@ -31,6 +31,7 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
     <script>
       var crmajaxURL = '<?php print base_path(); ?>civicrm/ajax/rest';
       var base_url =  '<?php print base_path(); ?>';
+      var cmurl = '<?php print url('civicrm/mobile/contact/')?>';
     </script>
   </head>
   <body> 
