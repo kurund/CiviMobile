@@ -1,57 +1,59 @@
 <?php require_once 'civimobile.header.php'; ?>
 
-<div data-role="header" id="jqm-surveyinterviewheader">
-  <h3>Interview Respondant</h3>
-  <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
-</div> 
+<div data-role="page" id="jqm-survey-interview">
+  <div data-role="header">
+    <h3>Interview Respondant</h3>
+    <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
+  </div> 
 
-<div data-role="content" id="survey-interview-content">
-  <div id="crm-profile-content"></div>
-</div>
+  <div data-role="content" id="survey-interview-content">
+    <div id="crm-profile-content"></div>
+  </div>
 
-<script>
-  $(document).bind('pageinit', function() {
-    surveyRespondantSearch();
-  });
+  <script>
+    $(document).bind('pageinit', function() {
+      surveyRespondantSearch();
+    });
 
-  function surveyRespondantSearch() {
-    var surveyId = <?php echo $_GET['sid']; ?>;
-    var resId = <?php echo $_GET['resid']; ?>;
-    var rid = <?php echo $_GET['rid']; ?>;
-    var contactId = <?php echo $_GET['cid']; ?>;
-    
-    if ( isNaN(surveyId) || isNaN(resId) || isNaN(rid) || isNaN(contactId) ) {
-      return;
+    function surveyRespondantSearch() {
+      var surveyId = <?php echo $_GET['sid']; ?>;
+      var resId = <?php echo $_GET['resid']; ?>;
+      var rid = <?php echo $_GET['rid']; ?>;
+      var contactId = <?php echo $_GET['cid']; ?>;
+
+      if ( isNaN(surveyId) || isNaN(resId) || isNaN(rid) || isNaN(contactId) ) {
+        return;
+      }
+
+      $.mobile.showPageLoadingMsg( 'Loading' );
+      // get the profile related to survey
+      var profileId;
+      $().crmAPI ('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'enity_id' : surveyId}
+      ,{ success:function (data) {    
+          profileId = data.values[0].uf_group_id;
+          buildProfile( profileId, 'crm-profile-content', contactId );
+        }
+      });
+
+      /*
+      // get the result for the survey
+      $().crmAPI ('OptionValue','get',
+      {'version' :'3', 'debug': 1, 'option_group_id': resId,
+      },
+      { 
+        ajaxURL: crmajaxURL,
+        success:function (data){
+          $.mobile.hidePageLoadingMsg( );
+        }
+      });
+      */
+      // save action for contact values
+
+      // save action to save the result for the activity
+
     }
 
-    $.mobile.showPageLoadingMsg( 'Loading' );
-    // get the profile related to survey
-    var profileId;
-    $().crmAPI ('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'enity_id' : surveyId}
-    ,{ success:function (data) {    
-        profileId = data.values[0].uf_group_id;
-        buildProfile( profileId, 'crm-profile-content', contactId );
-      }
-    });
-
-    /*
-    // get the result for the survey
-    $().crmAPI ('OptionValue','get',
-    {'version' :'3', 'debug': 1, 'option_group_id': resId,
-      },
-    { 
-      ajaxURL: crmajaxURL,
-      success:function (data){
-        $.mobile.hidePageLoadingMsg( );
-      }
-    });
-*/
-    // save action for contact values
-
-    // save action to save the result for the activity
-
-  }
-  
-</script>
-
+  </script>
+</div>
+<!-- end of page -->
 <?php require_once 'civimobile.footer.php'; ?> 
