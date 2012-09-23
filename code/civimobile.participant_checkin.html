@@ -34,7 +34,7 @@
     if ( isNaN(eventId) ) {
       return;
     }
-
+    
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('Participant','get',
     {'version' :'3', 'sort_name': q, 'event_id': eventId,

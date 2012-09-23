@@ -30,12 +30,6 @@
 </div>
 <!-- end of event page -->
 
-<!-- start of participant page -->
-<div data-role="page" id="crm-participant-checkin" >
-  <?php require_once 'civimobile.participant_checkin.html';?>
-</div>
-<!-- end of event page -->
-
 <!-- start of survey page -->
 <div data-role="page" id="crm-survey" >
    <?php require_once 'civimobile.survey_search.html';?>
