@@ -6,7 +6,7 @@ class civimobile {
   }
 
   function contacts() {
-    require_once 'civimobile.contacts.tpl.php';
+    require_once 'civimobile.contact.html';
     exit;
   }
 
