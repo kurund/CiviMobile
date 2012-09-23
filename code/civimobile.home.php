@@ -28,7 +28,7 @@
 <div data-role="page" id="proximity-search" >
   <?php require_once 'civimobile.proximity_search.html';?>
 </div>
-<!-- end of event page -->
+<!-- end of proximity search page -->
 
 <!-- start of survey page -->
 <div data-role="page" id="crm-survey" >
