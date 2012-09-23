@@ -30,7 +30,8 @@
   });
 
   function participantSearch (q) {
-    var eventId = getURLParameter('eid');
+    var eventId = <?php echo $_GET['eid']; ?>;
+
     if ( isNaN(eventId) ) {
       return;
     }
