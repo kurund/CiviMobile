@@ -12,10 +12,10 @@
 
   <script>
     $(document).bind('pageinit', function() {
-      surveyRespondantSearch();
+      surveyInterview();
     });
 
-    function surveyRespondantSearch() {
+    function surveyInterview() {
       var surveyId = <?php echo $_GET['sid']; ?>;
       var resId = <?php echo $_GET['resid']; ?>;
       var rid = <?php echo $_GET['rid']; ?>;
