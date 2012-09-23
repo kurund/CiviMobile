@@ -1,0 +1,65 @@
+<?php require_once 'civimobile.header.php'; ?>
+
+<div data-role="header" id="jqm-eventsheader">
+  <h3>Survey Respondants</h3>
+  <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
+</div> 
+
+<div data-role="content" id="survey-content">
+  <div class="ui-listview-filter ui-bar-c">
+    <input type="search" name="sc_name" id="sc_name" value=""/>
+  </div>
+  <ul id="survey-contacts" data-role="listview" data-inset="false" data-filter="false"></ul>
+</div>
+<?php require_once 'civimobile.footer.php'; ?> 
+
+<script>
+  $(document).bind('pageinit', function() {
+    $('#sc_name').keyup( function() {
+      if ($(this).val()) {
+        surveyRespondantSearch($(this).val());
+      }
+      else {
+        $('#survey-contacts').empty(); 
+      }
+    });
+
+    surveyRespondantSearch();
+  });
+
+  function surveyRespondantSearch(q) {
+    var surveyId = getURLParameter('sid');
+    if ( isNaN(surveyId) ) {
+      return;
+    }
+
+    var resId = getURLParameter('resid');
+    if ( isNaN(resId) ) {
+      return;
+    }
+    
+    $.mobile.showPageLoadingMsg( 'Searching' );
+    $().crmAPI ('SurveyRespondant','get',
+    {'version' :'3', 'survey_id': surveyId,
+      'voter_name': {'LIKE': q + '%'} },
+    { 
+      ajaxURL: crmajaxURL,
+      success:function (data){
+        if (data.count == 0) {
+          cmd = null;
+        }
+        else {
+          cmd = "refresh";
+          $('#survey-contacts').show();
+          $('#survey-contacts').empty();
+        }
+        $.each(data.values, function(key, value) {
+          $('#survey-contacts').append('<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="survey-res-'+value.id+'" ><a href="/civicrm/mobile/survey/interview?sid='+ surveyId +'&resid='+ resId +'&rid='+ value.id +'&cid='+value.voter_id+'" data-transition="slideup">'+value.voter_name+'</a></li>');
+        });
+        $.mobile.hidePageLoadingMsg( );
+        $('#survey-contacts').listview(cmd); 
+      }
+    });
+  }
+</script>
+

@@ -1,0 +1,49 @@
+<div data-role="header" id="jqm-eventsheader">
+  <h3>Search Survey</h3>
+  <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
+</div> 
+
+<div data-role="content" id="survey-content">
+  <div class="ui-listview-filter ui-bar-c">
+    <input type="search" name="survey_name" id="survey_name" value=""/>
+  </div>
+  <ul id="surveys" data-role="listview" data-inset="false" data-filter="false"></ul>
+</div>
+
+<script>
+  $(document).bind('pageinit', function() {
+    $('#survey_name').keyup( function() {
+      if ($(this).val()) {
+        surveySearch($(this).val());
+      }
+      else {
+        $('#surveys').empty(); 
+      }
+    });
+  });
+
+  function surveySearch(q) {
+    $.mobile.showPageLoadingMsg( 'Searching' );
+    $().crmAPI ('Survey','get',
+    {'version' :'3', 'debug': 1, 'title': {'LIKE': q + '%'}},
+    { 
+      ajaxURL: crmajaxURL,
+      success:function (data){
+        if (data.count == 0) {
+          cmd = null;
+        }
+        else {
+          cmd = "refresh";
+          $('#surveys').show();
+          $('#surveys').empty();
+        }
+        $.each(data.values, function(key, value) {
+          $('#surveys').append('<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="survey-'+value.id+'" ><a href="/civicrm/mobile/survey/contacts?sid='+ value.id +'&resid='+value.result_id+'" data-transition="slideup">'+value.title+'</a></li>');
+        });
+        $.mobile.hidePageLoadingMsg( );
+        $('#surveys').listview(cmd); 
+      }
+    });
+  }
+</script>
+

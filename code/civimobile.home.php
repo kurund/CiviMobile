@@ -38,7 +38,7 @@
 
 <!-- start of survey page -->
 <div data-role="page" id="crm-survey" >
-   <?php  //require_once 'civimobile.survey_search.html';?>
+   <?php require_once 'civimobile.survey_search.html';?>
 </div>
 <!-- end of survey page -->
 

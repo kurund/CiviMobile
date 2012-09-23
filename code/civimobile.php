@@ -10,54 +10,18 @@ class civimobile {
     exit;
   }
 
-  function activities() {
-    require_once 'civimobile.contact.activities.tpl.php';
-    exit;
-  }
-
-  function relationships() {
-    require_once 'civimobile.contact.relationships.tpl.php';
-    exit;
-  }
-
-  function notes() {
-    require_once 'civimobile.contact.notes.tpl.php';
-    exit;
-  }
-
-  function cases() {
-    require_once 'civimobile.contact.cases.tpl.php';
-    exit;
-  }
-
-  function membership() {
-    require_once 'civimobile.membership.tpl.php';
-    exit;
-  }
-
-  function contribution() {
-    require_once 'civimobile.contribution.tpl.php';
-    exit;
-  }
-
-  function participant() {
-    require_once 'civimobile.participant.tpl.php';
-    exit;
-  }
-
-  function event() {
-    require_once 'civimobile.participants.tpl.php';
-    exit;
-  }
-
   function participantCheckin() {
     require_once 'civimobile.participant_checkin.html';
     exit;
   }
 
-
-  function survey() {
-    require_once 'civimobile.survey.tpl.php';
+  function surveyContacts() {
+    require_once 'civimobile.survey_contacts.html';
+    exit;
+  }
+  
+  function surveyInterview() {
+    require_once 'civimobile.survey_interview.html';
     exit;
   }
 }
