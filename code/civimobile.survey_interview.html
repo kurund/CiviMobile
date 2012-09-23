@@ -1,6 +1,6 @@
 <?php require_once 'civimobile.header.php'; ?>
 
-<div data-role="header" id="jqm-eventsheader">
+<div data-role="header" id="jqm-surveyinterviewheader">
   <h3>Interview Respondant</h3>
   <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
 </div> 
@@ -15,23 +15,12 @@
   });
 
   function surveyRespondantSearch() {
-    var surveyId = getURLParameter('sid');
-    if ( isNaN(surveyId) ) {
-      return;
-    }
-
-    var resId = getURLParameter('resid');
-    if ( isNaN(resId) ) {
-      return;
-    }
-
-    var rId = getURLParameter('rid');
-    if ( isNaN(rId) ) {
-      return;
-    }
-
-    var contactId = getURLParameter('cid');
-    if ( isNaN(contactId) ) {
+    var surveyId = <?php echo $_GET['sid']; ?>;
+    var resId = <?php echo $_GET['resid']; ?>;
+    var rid = <?php echo $_GET['rid']; ?>;
+    var contactId = <?php echo $_GET['cid']; ?>;
+    
+    if ( isNaN(surveyId) || isNaN(resId) || isNaN(rid) || isNaN(contactId) ) {
       return;
     }
 
@@ -41,10 +30,11 @@
     $().crmAPI ('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'enity_id' : surveyId}
     ,{ success:function (data) {    
         profileId = data.values[0].uf_group_id;
-        buildProfile( profileId );
+        buildProfile( profileId, 'crm-profile-content', contactId );
       }
     });
 
+    /*
     // get the result for the survey
     $().crmAPI ('OptionValue','get',
     {'version' :'3', 'debug': 1, 'option_group_id': resId,
@@ -55,7 +45,7 @@
         $.mobile.hidePageLoadingMsg( );
       }
     });
-
+*/
     // save action for contact values
 
     // save action to save the result for the activity

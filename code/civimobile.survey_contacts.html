@@ -1,6 +1,7 @@
 <?php require_once 'civimobile.header.php'; ?>
 
-<div data-role="header" id="jqm-eventsheader">
+
+<div data-role="header" id="jqm-surveyrespondantsheader">
   <h3>Survey Respondants</h3>
   <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
 </div> 
@@ -27,16 +28,13 @@
   });
 
   function surveyRespondantSearch(q) {
-    var surveyId = getURLParameter('sid');
-    if ( isNaN(surveyId) ) {
+    var surveyId = <?php echo $_GET['sid']; ?>;
+    var resId = <?php echo $_GET['resid']; ?>;
+    
+    if ( isNaN(surveyId) || isNaN(resId) ) {
       return;
     }
 
-    var resId = getURLParameter('resid');
-    if ( isNaN(resId) ) {
-      return;
-    }
-    
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('SurveyRespondant','get',
     {'version' :'3', 'survey_id': surveyId,

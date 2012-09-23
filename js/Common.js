@@ -10,9 +10,16 @@ function getURLParameter(name) {
 /**
  * function to build profile
  */
-function buildProfile( profileId, profileContainerId ) {
-  var dataUrl = '/civicrm/profile/create?reset=1&json=1&gid=' + profileId;
-
+function buildProfile( profileId, profileContainerId, contactId ) {
+  var params = {};
+  var jsonProfile = {};
+  var fieldIds = {};
+  if (contactId ) {
+    var dataUrl = '/civicrm/profile/edit?reset=1&json=1&gid=' + profileId +'&id=' + contactId;
+  }
+  else {
+    var dataUrl = '/civicrm/profile/create?reset=1&json=1&gid=' + profileId;
+  }
   $.getJSON( dataUrl,
       {
         format: "json"

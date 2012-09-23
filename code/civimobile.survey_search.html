@@ -1,4 +1,4 @@
-<div data-role="header" id="jqm-eventsheader">
+<div data-role="header" id="jqm-surveysearchheader">
   <h3>Search Survey</h3>
   <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
 </div> 
@@ -25,7 +25,7 @@
   function surveySearch(q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('Survey','get',
-    {'version' :'3', 'debug': 1, 'title': {'LIKE': q + '%'}},
+    {'version' :'3', 'title': {'LIKE': q + '%'}},
     { 
       ajaxURL: crmajaxURL,
       success:function (data){
