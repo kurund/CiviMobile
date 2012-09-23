@@ -1,9 +1,9 @@
 <?php require_once 'civimobile.header.php'; ?>
 
-<div data-role="page" id="jqm-survey-contacts">
+<div data-role="page" id="cm-survey-contacts">
   <div data-role="header"> 
     <h3>Survey Respondants</h3>
-    <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
+    <a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l" data-transition="slideup">Back</a> 
   </div> 
 
   <div data-role="content" id="survey-respondant-content">
@@ -14,19 +14,6 @@
   </div>
 
   <script>
-    $(document).bind('pageinit', function() {
-      $('#sc_name').keyup( function() {
-        if ($(this).val()) {
-          surveyRespondantSearch($(this).val());
-        }
-        else {
-          $('#survey-contacts').empty(); 
-        }
-      });
-
-      surveyRespondantSearch();
-    });
-
     function surveyRespondantSearch(q) {
       var surveyId = <?php echo $_GET['sid']; ?>;
       var resId = <?php echo $_GET['resid']; ?>;

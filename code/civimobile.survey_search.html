@@ -1,6 +1,6 @@
-<div data-role="header" id="jqm-surveysearchheader">
+<div data-role="header">
   <h3>Search Survey</h3>
-  <a href="#crm-jqm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
+  <a href="#cm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
 </div> 
 
 <div data-role="content" id="survey-content">
@@ -11,17 +11,6 @@
 </div>
 
 <script>
-  $(document).bind('pageinit', function() {
-    $('#survey_name').keyup( function() {
-      if ($(this).val()) {
-        surveySearch($(this).val());
-      }
-      else {
-        $('#surveys').empty(); 
-      }
-    });
-  });
-
   function surveySearch(q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('Survey','get',

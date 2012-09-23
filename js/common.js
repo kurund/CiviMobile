@@ -1,13 +1,4 @@
-/**
- * Function to parse and get the values from url
- */
-function getURLParameter(name) {
-  return decodeURI(
-      (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
-      );
-}
-
-/**
+/*
  * function to build profile
  */
 function buildProfile( profileId, profileContainerId, contactId ) {

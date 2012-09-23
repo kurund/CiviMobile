@@ -1,141 +1,96 @@
-<div id="jqm-contactsheader" data-role="header">
-	<h3>Contacts proximity search</h3>
-	<a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l" data-transition="slideup">Back</a> <a href="#menu" data-direction="reverse" data-role="button" data-icon="home" data-transition="slideup" data-iconpos="notext" class="ui-btn-right jqm-home">Home</a>
+<div data-role="header">
+  <h3>Contacts proximity search</h3>
+  <a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l" data-transition="slideup">Back</a> <a href="#cm-home" data-direction="reverse" data-role="button" data-icon="home" data-transition="slideup" data-iconpos="notext" class="ui-btn-right jqm-home">Home</a>
 </div>
-	
+
 <div data-role="content" id="contact-contentz">
-	<div class="ui-listview-filter ui-bar-c">
-		<input type="search" name="postcode" id="postcode" placeholder="Postcode" onkeyup="getPostal();" />
-	</div>
-	<div data-role="fieldcontain"><input type="checkbox" name="curLocation" id="useLocation" class="custom" />
-		<label for="useLocation">Use current location</label></div>
-		<br />
-	<div>
-		<ul id="contactz" data-role="listview" data-inset="false" data-filter="false"></ul>
-	</div>
-	
-	<br />
+  <div class="ui-listview-filter ui-bar-c">
+    <input type="search" name="postcode" id="postcode" placeholder="Postcode" onkeyup="getPostal();" />
+  </div>
+  <div data-role="fieldcontain"><input type="checkbox" name="curLocation" id="useLocation" class="custom" />
+    <label for="useLocation">Use current location</label></div>
+  <br />
+  <div>
+    <ul id="contactz" data-role="listview" data-inset="false" data-filter="false"></ul>
+  </div>
+
+  <br/>
 </div>
 
 <script>
 
-/**
- * invoked from civimobile.proximity_search.html page
- * delegate to searchContactByPostcode()
- */
-function getPostal(){
-	searchContactByPostcode ($("#postcode").val());
-}
+  /**
+  * invoked from civimobile.proximity_search.html page
+  * delegate to searchContactByPostcode()
+  */
+  function getPostal(){
+    searchContactByPostcode ($("#postcode").val());
+  }
 
-/**
- * queries the API for an address, supplying a postcode as a parameter
- * 
- * @param {string} postcode
- * @return void
- */
-function searchContactByPostcode(postcode){
-	$.mobile.showPageLoadingMsg( 'Searching' );
-	
-	if(postcode != null){
-		$().crmAPI ('Address','get',{'version' :'3', 'postal_code' : postcode}
-		,{
-			ajaxURL: crmajaxURL,
-			success:function (data){
-			if (data.count == 0) {
-				cmd = null;
-				$('#contactz').hide();
-			}
-			else {
-				cmd = "refresh";
-				$('#contactz').show();
-				$('#contactz').empty();
-			}
-			/** iterates through results to create markup for list */
-			$.each(data.values, function(key, value) {
-				if(value.contact_id != null){
-					$().crmAPI ('Contact','getsingle',{'version' :'3', 'contact_id' :value.contact_id}
-					,{ 
-						ajaxURL: crmajaxURL,
-						success:function (data){
-							$('#contactz').append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c" id="event-'+value.contact_id+'" ><a href="'+cmurl+value.contact_id+'" data-transition="slideup"data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
-							$('#contactz').listview(cmd);
-						}
-					});
-				}
-			});
-			}
-		}); 
-	} 
-	$.mobile.hidePageLoadingMsg( );
-} 
+  /**
+  * queries the API for an address, supplying a postcode as a parameter
+  * 
+  * @param {string} postcode
+  * @return void
+  */
+  function searchContactByPostcode(postcode){
+    $.mobile.showPageLoadingMsg( 'Searching' );
 
-/**
- * Queries API for contact within a certain radius of the user's location 
- * 
- * @param {object} params Object containing latitude and longitude properties
- */
-function searchContactByGeoLocation (params) {
-	$.mobile.showPageLoadingMsg( 'Searching' );
-	$().crmAPI ('Location','get_by_location',{'version' :'3', 'latitude': params.coords.latitude, 'longitude' :params.coords.longitude, 'distance' : 200, 'units' : 'miles'}
-	,{ 
-		ajaxURL: crmajaxURL,
-		success:function (data){ 
-			if (data.count == 0) {
-				$('#contactz').hide();
-			}
-			else {
-				$.each(data.values, function(key, value) {
-					$('#contactz').append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c" id="event-'+value.contact_id+'" ><a href="'+cmurl+value.contact_id+'" data-transition="slideup" data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
-				});
-				$('#contactz').listview();
-			}
-			$.mobile.hidePageLoadingMsg( ); 
-		}
-	});
-}
+    if (postcode != null) {
+      $().crmAPI ('Address','get',{'version' :'3', 'postal_code' : postcode}
+      ,{
+        ajaxURL: crmajaxURL,
+        success:function (data){
+          if (data.count == 0) {
+            cmd = null;
+            $('#contactz').hide();
+          }
+          else {
+            cmd = "refresh";
+            $('#contactz').show();
+            $('#contactz').empty();
+          }
+          /** iterates through results to create markup for list */
+          $.each(data.values, function(key, value) {
+            if(value.contact_id != null){
+              $().crmAPI ('Contact','getsingle',{'version' :'3', 'contact_id' :value.contact_id}
+              ,{ 
+                ajaxURL: crmajaxURL,
+                success:function (data){
+                  $('#contactz').append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c" id="event-'+value.contact_id+'" ><a href="'+cmurl+value.contact_id+'" data-transition="slideup"data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
+                  $('#contactz').listview(cmd);
+                }
+              });
+            }
+          });
+        }
+      }); 
+    } 
+    $.mobile.hidePageLoadingMsg( );
+  } 
 
-/**
- * binds to keyup event on sort_name field of contact search listings
- * invokes contactSearch() method to query API and populate list from results
- * 
- * @event {pageinit}
- */
-$(document).bind('pageinit', function() {
-	
-	
-	// Add a click listener on the button to get the location data
-	$('#useLocation').click(function(){
-		
-		$('#postcode').val('');
-		
-		if($('#useLocation').is(":checked")) {
-			$('#contactz').remove();
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:600000});
-			} else {
-				// If location is not supported on this platform, disable it
-				$('#useLocation').value = "Geolocation not supported";
-				$('#useLocation').unbind('click');
-				//$('#postcode').show();
-			}
-		} else{
-			$('#contactz').remove();
-		}
-	});
-	
-	function onSuccess(location) {			
-		console.log('latitude' + location.coords.latitude );
-		console.log('longitude' + location.coords.longitude );
-		console.log('Accuracy: ' + location.coords.accuracy);
-		searchContactByGeoLocation(location);
-	}
-	 
-	// Error function for Geolocation call
-	function onError(msg){
-		console.log('error: '+msg);
-		$('#locationResult').html("Geolocation not supported");
-		$('#useLocation').unbind('click');
-	}
-	
-});
+  /**
+  * Queries API for contact within a certain radius of the user's location 
+  * 
+  * @param {object} params Object containing latitude and longitude properties
+  */
+  function searchContactByGeoLocation (params) {
+    $.mobile.showPageLoadingMsg( 'Searching' );
+    $().crmAPI ('Location','get_by_location',{'version' :'3', 'latitude': params.coords.latitude, 'longitude' :params.coords.longitude, 'distance' : 200, 'units' : 'miles'}
+    ,{ 
+      ajaxURL: crmajaxURL,
+      success:function (data){ 
+        if (data.count == 0) {
+          $('#contactz').hide();
+        }
+        else {
+          $.each(data.values, function(key, value) {
+            $('#contactz').append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c" id="event-'+value.contact_id+'" ><a href="'+cmurl+value.contact_id+'" data-transition="slideup" data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
+          });
+          $('#contactz').listview();
+        }
+        $.mobile.hidePageLoadingMsg( ); 
+      }
+    });
+  }
 </script>

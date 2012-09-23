@@ -26,7 +26,7 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
     <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.2.0-beta.1/jquery.mobile-1.2.0-beta.1.min.css" />
     <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-beta.1/jquery-1.8.1.min.js"></script>
     <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-beta.1/jquery.mobile-1.2.0-beta.1.js"></script>
-    <script src="<?php print $includePath; ?>js/Common.js"></script>
+    <script src="<?php print $includePath; ?>js/common.js"></script>
     <script src="<?php print $civimobile_vars['civicrm_base']; ?>packages/jquery/plugins/jquery.mustache.js"></script>
     <script src="<?php print $civimobile_vars['civicrm_base']; ?>js/rest.js"></script>
     <script>
@@ -34,5 +34,6 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
       var base_url =  '<?php print base_path(); ?>';
       var cmurl = '<?php print url('civicrm/mobile/contact/')?>';
     </script>
+    <script src="<?php print $includePath; ?>js/events.js"></script>
   </head>
   <body> 
