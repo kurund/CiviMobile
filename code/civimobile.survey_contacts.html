@@ -27,7 +27,7 @@
       $.mobile.showPageLoadingMsg( 'Searching' );
       $().crmAPI ('SurveyRespondant','get',
       {'version' :'3', 'survey_id': surveyId, 'interviewer_id': interviewerId,
-        'voter_name': {'LIKE': q + '%'} },
+        'status_id': "1" },
       { 
         ajaxURL: crmajaxURL,
         success:function (data){
