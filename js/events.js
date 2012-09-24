@@ -1,3 +1,16 @@
+// events for contact view
+$( document ).delegate("#cm-contact-details", "pageinit", function() {
+	$('#edit-contact-button').click(function(){ //function here!!!
+		 });
+	createContactfields();
+});
+
+// events for edit contact view
+$( document ).delegate("#cm-contact-edit-details", "pageinit", function() {
+	$('#save-contact-button').click(function(){ //function here!!!
+		 });
+});
+
 // events for contact search
 $( document ).delegate("#cm-contact-search", "pageinit", function() {
   $('#sort_name').keyup( function() {

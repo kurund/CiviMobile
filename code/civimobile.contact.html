@@ -1,8 +1,6 @@
 <?php require_once('civimobile.header.php') ?>
 
-
-
-<div data-role="page">
+<div data-role="page" id="cm-contact-detail">
   <div data-role="header">
     <h1>Contact details</h1>
     <a href="edit" id="edit-contact-button" data-role="button" class="ui-btn-right jqm-edit" data-ajax="false">Edit</a>
@@ -20,16 +18,10 @@
 
 <script>
 
-$( function(){
-	$('#save-contact-button').click(function(){ updateContact(); });
-	var contacID = $.mobile.path.parseUrl(window.location.href);
-	contact = contacID.filename;
-	createContactfields();
-
-});
-
 function createContactfields(){
   //this function gets all of the available contact fields in the profile
+	var contacID = $.mobile.path.parseUrl(window.location.href);
+	contact = contacID.filename;
   var params = {};
   var fieldIds = {};
   //get the profile fields
