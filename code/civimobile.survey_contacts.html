@@ -7,17 +7,17 @@
   </div> 
 
   <div data-role="content" id="survey-respondant-content">
-    <div class="ui-listview-filter ui-bar-c">
+    <!--div class="ui-listview-filter ui-bar-c">
       <input type="search" name="sc_name" id="sc_name" value=""/>
-    </div>
-    <ul id="survey-contacts" data-role="listview" data-inset="false" data-filter="false"></ul>
+    </div-->
+    <ul id="survey-contacts" data-role="listview" data-inset="false" data-filter="true"></ul>
   </div>
 
   <script>
     function surveyRespondantSearch(q) {
-      var surveyId = <?php echo $_GET['sid']; ?>;
-      var resId = <?php echo $_GET['resid']; ?>;
-      var interviewerId = <?php echo $civimobile_vars['loggedInContactID']; ?>;
+      var surveyId = "<?php echo $_GET['sid']; ?>";
+      var resId = "<?php echo $_GET['resid']; ?>";
+      var interviewerId = "<?php echo $civimobile_vars['loggedInContactID']; ?>";
 
       if ( isNaN(surveyId) || isNaN(resId) ) {
         return;
@@ -30,19 +30,20 @@
       { 
         ajaxURL: crmajaxURL,
         success:function (data){
+          var surveyContactSelector = $('#survey-contacts');
           if (data.count == 0) {
             cmd = null;
           }
           else {
             cmd = "refresh";
-            $('#survey-contacts').show();
-            $('#survey-contacts').empty();
+            surveyContactSelector.show();
+            surveyContactSelector.empty();
           }
           $.each(data.values, function(key, value) {
             $('#survey-contacts').append('<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="survey-res-'+value.id+'" ><a href="/civicrm/mobile/survey/interview?sid='+ surveyId +'&resid='+ resId +'&aid='+ value.id +'&cid='+value.voter_id+'" data-transition="slideup">'+value.voter_name+'</a></li>');
           });
           $.mobile.hidePageLoadingMsg( );
-          $('#survey-contacts').listview(cmd); 
+          surveyContactSelector.listview(cmd);
         }
       });
     }

@@ -58,10 +58,12 @@ $( document ).delegate("#cm-surveys", "pageinit", function() {
       $('#surveys').empty(); 
     }
   });
+  surveySearch('');
 });
 
 // events for survey contact listing
 $( document ).delegate("#cm-survey-contacts", "pageinit", function() {
+  /*
   $('#sc_name').keyup( function() {
     if ($(this).val()) {
       surveyRespondantSearch($(this).val());
@@ -70,7 +72,7 @@ $( document ).delegate("#cm-survey-contacts", "pageinit", function() {
       $('#survey-contacts').empty(); 
     }
   });
-
+  */
   surveyRespondantSearch();
 });
 
@@ -86,18 +88,16 @@ $( document ).delegate("#cm-proximity-search", "pageinit", function() {
     // Add a click listener on the button to get the location data
     $('#useLocation').click(function(){
       $('#postcode').val('');
-      if ($('#useLocation').is(":checked")) {
-        $('#contactz').remove();
+      $('#contactz').remove();
+      if ($(this).is(":checked")) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:600000});
-          } else {
+        } else {
           // If location is not supported on this platform, disable it
-          $('#useLocation').value = "Geolocation not supported";
-          $('#useLocation').unbind('click');
+          $(this).value = "Geolocation not supported";
+          $(this).unbind('click');
           //$('#postcode').show();
         }
-        } else{
-        $('#contactz').remove();
       }
     });
 

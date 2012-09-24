@@ -1,10 +1,10 @@
 ===================================
-CiviMobile
+CiviMobile Extension
 ===================================
 
-Mobile interface for CiviCRM
+Mobile application for few specific actions in CiviCRM
 
-Features:
+Current feature includes:
 
 * Contacts
 - Search Contacts
@@ -12,11 +12,10 @@ Features:
 - Proximity search for contacts
 
 * Events
-- participant listing
-- register participant
+- participant search and checkin
 
 * Survey
-- Seach for suvery
+- Search for suvery
 - Record survey responses
 
 Contributors:
@@ -24,9 +23,7 @@ Contributors:
 Web Access India Pvt. Ltd. - webaccessglobal.com
 Peter McAndrew - thirdsectordesign.org
 Kurund Jalmi   - civicrm.org
-Xavier Dutoit  - techtothepeople.com
-Rajesh Sundararajan
 Erawat Chamanont
-Kyle Jaster
+
 
 
