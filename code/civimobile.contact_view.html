@@ -25,7 +25,7 @@ function createContactfields(){
   var params = {};
   var fieldIds = {};
   //get the profile fields
-    var dataUrl = '<?php print $civimobile_vars['civicrm_base']; ?>profile/create?gid=1&reset=1';  
+    var dataUrl = '<?php print base_path(); ?>civicrm/profile/create?gid=1&reset=1';  
 	console.log(dataUrl);
     $.getJSON( dataUrl,
     {

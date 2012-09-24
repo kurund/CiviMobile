@@ -2,7 +2,7 @@
 require_once('civimobile.header.php');
 ?>
 
-<div data-role="page" id="cm-contact-view">
+<div data-role="page" id="cm-contact-edit">
 	<div data-role="header">
 		<h1>Edit contact</h1>
 		<a href="#" id="save-contact-button" data-role="button" data-icon="check" class="ui-btn-right jqm-save">Save</a>
@@ -21,10 +21,6 @@ contact = contact.values[contactId];
 console.log(contact);
 var fieldIds = {};
 
-$( function(){
-  $('#save-contact-button').click(function(){ updateContact(); });
-  createContactEditfields();
-});
 
 function createContactEditfields(){
   //this function gets all of the available contact fields in the profile
@@ -102,20 +98,6 @@ function updateContact() {
   }
   });
 }
-// function updateContact() {
-// 
-//   $.each(fieldIds, function(key, value) {
-//     fieldIds[key] = $('#'+key).val();
-//   });
-//   fieldIds.id=contactId;
-//   fieldIds.version=3;
-//   console.log(fieldIds);
-// 
-//   $().crmAPI ('Contact','update',fieldIds
-//   ,{ success:function (data){ 
-//     window.location.href = "/civimobile/contact/"+data.id+"/";    
-//   }
-// });
-// }
+
 </script>
 <?php require_once('civimobile.footer.php')?>

@@ -1,12 +1,14 @@
 // events for contact view
-$( document ).delegate("#cm-contact-details", "pageinit", function() {
+$( document ).delegate("#cm-contact-view", "pageinit", function() {
 	$('#edit-contact-button').click(function(){ //function here!!!
+		console.log("edit contact page")
 		 });
 	createContactfields();
 });
 
 // events for edit contact view
-$( document ).delegate("#cm-contact-edit-details", "pageinit", function() {
+$( document ).delegate("#cm-contact-edit", "pageinit", function() {
+	console.log("edit contact page")
 	$('#save-contact-button').click(function(){ //function here!!!
 		 });
 });
