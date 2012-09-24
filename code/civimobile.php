@@ -6,7 +6,7 @@ class civimobile {
   }
 
   function contacts() {
-    require_once 'civimobile.contact.html';
+    require_once 'civimobile.contact_view.html';
     exit;
   }
 
