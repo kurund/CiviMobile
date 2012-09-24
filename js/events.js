@@ -50,6 +50,7 @@ $( document ).delegate("#cm-surveys", "pageinit", function() {
 
 // events for survey contact listing
 $( document ).delegate("#cm-survey-contacts", "pageinit", function() {
+  /*
   $('#sc_name').keyup( function() {
     if ($(this).val()) {
       surveyRespondantSearch($(this).val());
@@ -58,7 +59,7 @@ $( document ).delegate("#cm-survey-contacts", "pageinit", function() {
       $('#survey-contacts').empty(); 
     }
   });
-
+  */
   surveyRespondantSearch();
 });
 
