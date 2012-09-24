@@ -64,6 +64,8 @@ $( document ).delegate("#cm-survey-contacts", "pageinit", function() {
 // events for survey interview screen
 $( document ).delegate("#cm-survey-interview", "pageinit", function() {
   surveyInterview();
+
+  $('#save-survey-button').click(function(){ saveSurvey(); });
 });
 
 // proximity search

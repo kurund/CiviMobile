@@ -3,21 +3,24 @@
 <div data-role="page" id="cm-survey-interview">
   <div data-role="header">
     <h3>Interview Respondant</h3>
-    <a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l" data-transition="slideup">Back</a> 
+    <a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l" data-transition="slideup">Back</a>
+    <a href="#" id="save-survey-button" data-role="button" data-icon="check" class="ui-btn-right jqm-save">Save</a>
   </div> 
 
   <div data-role="content" id="survey-interview-content">
-    <div id="crm-profile-content"></div>
+     <ul data-role="listview" data-theme="g" id="question-list"></ul>
+     <br /> 
+     <div id="crm-profile-content"></div>
   </div>
 
   <script>
-    function surveyInterview() {
-      var surveyId = <?php echo $_GET['sid']; ?>;
-      var resId = <?php echo $_GET['resid']; ?>;
-      var rid = <?php echo $_GET['rid']; ?>;
-      var contactId = <?php echo $_GET['cid']; ?>;
+    var surveyId = <?php echo $_GET['sid']; ?>;
+    var resId = <?php echo $_GET['resid']; ?>;
+    var aid = <?php echo $_GET['aid']; ?>;
+    var contactId = <?php echo $_GET['cid']; ?>;
 
-      if ( isNaN(surveyId) || isNaN(resId) || isNaN(rid) || isNaN(contactId) ) {
+    function surveyInterview() {
+      if ( isNaN(surveyId) || isNaN(resId) || isNaN(contactId) ) {
         return;
       }
       
@@ -33,25 +36,41 @@
         }
       });
 
-      /*
       // get the result for the survey
       $().crmAPI ('OptionValue','get',
-      {'version' :'3', 'debug': 1, 'option_group_id': resId,
-      },
-      { 
+      { 'version' :'3', 'debug': 1, 'option_group_id': resId }, {
         ajaxURL: crmajaxURL,
         success:function (data){
           $.mobile.hidePageLoadingMsg( );
+          $('#question-list').append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br"><label for="select-choice-0" class="select"></label> <select name="select-choice-0" id="select-choice-1"> </select></div>');
+          $.each(data.values, function(index, value) {
+            $('#select-choice-1').append('<option value="'+value.value+'">'+value.label+'</option>');
+          });
+          $('#select-choice-1').selectmenu();
         }
       });
-      */
-      // save action for contact values
-
-      // save action to save the result for the activity
-
+    }
+    
+    // save action to save the result for the activity
+    function saveSurvey(){
+      if ( isNaN(aid) ) {
+        return;
+      }
+ 
+      selectValue= $('#select-choice-1').val()
+      $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2' }
+      ,{ success:function (data){
+          // show success message
+          $( "#popup-success" ).popup( "open" )
+        }
+      });
     }
 
   </script>
+  <div data-role="popup" id="popup-success" data-theme="e" data-overlay-theme="a" class="ui-content">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <p>Your changes are saved</p>
+  </div>
 </div>
 <!-- end of page -->
 <?php require_once 'civimobile.footer.php'; ?> 
