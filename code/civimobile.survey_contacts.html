@@ -17,6 +17,7 @@
     function surveyRespondantSearch(q) {
       var surveyId = <?php echo $_GET['sid']; ?>;
       var resId = <?php echo $_GET['resid']; ?>;
+      var interviewerId = <?php echo $civimobile_vars['loggedInContactID']; ?>;
 
       if ( isNaN(surveyId) || isNaN(resId) ) {
         return;
@@ -24,7 +25,7 @@
 
       $.mobile.showPageLoadingMsg( 'Searching' );
       $().crmAPI ('SurveyRespondant','get',
-      {'version' :'3', 'survey_id': surveyId,
+      {'version' :'3', 'survey_id': surveyId, 'interviewer_id': interviewerId,
         'voter_name': {'LIKE': q + '%'} },
       { 
         ajaxURL: crmajaxURL,

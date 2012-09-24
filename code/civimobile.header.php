@@ -6,11 +6,13 @@ else {
   $civimobile_vars['language'] = 'en_US';
 }
 
-$civimobile_vars['title']   = 'CiviMobile';
-//$civimobile_vars['favicon'] = theme_get_setting("toggle_favicon") ? "<link rel=\"shortcut icon\" href=\"". theme_get_setting("favicon") ."\" type=\"image/x-icon\"/>\n" : "";
+$civimobile_vars['title'] = 'CiviMobile';
 
 $config =& CRM_Core_Config::singleton();
 $civimobile_vars['civicrm_base'] = $config->userFrameworkResourceURL . DIRECTORY_SEPARATOR;
+
+$session =& CRM_Core_Session::singleton();
+$civimobile_vars['loggedInContactID'] = $session->get('userID');
 
 // extension include path
 $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' . DIRECTORY_SEPARATOR;
