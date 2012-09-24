@@ -5,27 +5,17 @@
 
 <div data-role="content" id="contact-contentz">
   <div class="ui-listview-filter ui-bar-c">
-    <input type="search" name="postcode" id="postcode" placeholder="Postcode" onkeyup="getPostal();" />
+    <input type="search" name="postcode" id="cm-postcode" placeholder="Postcode" />
   </div>
   <div data-role="fieldcontain"><input type="checkbox" name="curLocation" id="useLocation" class="custom" />
     <label for="useLocation">Use current location</label></div>
   <br />
   <div>
-    <ul id="contactz" data-role="listview" data-inset="false" data-filter="false"></ul>
+    <ul id="cm-prox-contacts" data-role="listview" data-inset="false" data-filter="false"></ul>
   </div>
-
-  <br/>
 </div>
 
 <script>
-
-  /**
-  * invoked from civimobile.proximity_search.html page
-  * delegate to searchContactByPostcode()
-  */
-  function getPostal(){
-    searchContactByPostcode ($("#postcode").val());
-  }
 
   /**
   * queries the API for an address, supplying a postcode as a parameter
@@ -41,14 +31,15 @@
       ,{
         ajaxURL: crmajaxURL,
         success:function (data){
+          var proxContactSelector = $('#cm-prox-contacts');
           if (data.count == 0) {
             cmd = null;
-            $('#contactz').hide();
+            proxContactSelector.hide();
           }
           else {
             cmd = "refresh";
-            $('#contactz').show();
-            $('#contactz').empty();
+            proxContactSelector.show();
+            proxContactSelector.empty();
           }
           /** iterates through results to create markup for list */
           $.each(data.values, function(key, value) {
@@ -57,8 +48,8 @@
               ,{ 
                 ajaxURL: crmajaxURL,
                 success:function (data){
-                  $('#contactz').append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c" id="event-'+value.contact_id+'" ><a href="'+cmurl+value.contact_id+'" data-transition="slideup"data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
-                  $('#contactz').listview(cmd);
+                  proxContactSelector.append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c"><a href="/civicrm/mobile/contact?action=view&cid='+ value.contact_id +'" data-transition="slideup"data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
+                  proxContactSelector.listview(cmd);
                 }
               });
             }
@@ -74,20 +65,24 @@
   * 
   * @param {object} params Object containing latitude and longitude properties
   */
-  function searchContactByGeoLocation (params) {
+  function searchContactByGeoLocation(params) {
     $.mobile.showPageLoadingMsg( 'Searching' );
-    $().crmAPI ('Location','get_by_location',{'version' :'3', 'latitude': params.coords.latitude, 'longitude' :params.coords.longitude, 'distance' : 200, 'units' : 'miles'}
+    $().crmAPI ('Contact','proximity',{'version' :'3', 'latitude': params.coords.latitude, 'longitude' :params.coords.longitude, 'distance' : 200, 'units' : 'miles'}
     ,{ 
       ajaxURL: crmajaxURL,
-      success:function (data){ 
+      success:function (data){
+        var proxContactSelector = $('#cm-prox-contacts');
         if (data.count == 0) {
-          $('#contactz').hide();
+          proxContactSelector.hide();
         }
         else {
+          proxContactSelector.show();
+          proxContactSelector.empty();
+
           $.each(data.values, function(key, value) {
-            $('#contactz').append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c" id="event-'+value.contact_id+'" ><a href="'+cmurl+value.contact_id+'" data-transition="slideup" data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
+            $('#cm-prox-contacts').append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c" id="event-'+value.contact_id+'" ><a href="/civicrm/mobile/contact?action=view&cid='+ value.contact_id +'" data-transition="slideup" data-role="contact-'+value.contact_id+'">'+value.display_name+'</a></li>');
           });
-          $('#contactz').listview();
+          proxContactSelector.listview('refresh');
         }
         $.mobile.hidePageLoadingMsg( ); 
       }

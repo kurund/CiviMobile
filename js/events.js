@@ -10,9 +10,9 @@ $( document ).delegate("#cm-contact-view", "pageinit", function() {
 
 // events for edit contact view
 $( document ).delegate("#cm-contact-edit", "pageinit", function() {
-	console.log("edit contact page")
 	$('#save-contact-button').click(function(){ //function here!!!
-		 });
+	  // TO DO
+  });
 });
 
 // events for contact search
@@ -89,33 +89,30 @@ $( document ).delegate("#cm-survey-interview", "pageinit", function() {
 
 // proximity search
 $( document ).delegate("#cm-proximity-search", "pageinit", function() {
-    // Add a click listener on the button to get the location data
-    $('#useLocation').click(function(){
-      $('#postcode').val('');
-      $('#contactz').remove();
-      if ($(this).is(":checked")) {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:600000});
-        } else {
-          // If location is not supported on this platform, disable it
-          $(this).value = "Geolocation not supported";
-          $(this).unbind('click');
-          //$('#postcode').show();
-        }
+  $('#cm-postcode').keyup( function() {
+    searchContactByPostcode ($(this).val());
+  });
+
+  // Add a click listener on the button to get the location data
+  $('#useLocation').click(function(){
+    $('#cm-postcode').val('');
+    $('#cm-prox-contacts').empty();
+    if ($(this).is(":checked")) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:600000});
+      } else {
+        // If location is not supported on this platform, disable it
+        $(this).value = "Geolocation not supported";
       }
-    });
+    }
+  });
 
     function onSuccess(location) {			
-      //console.log('latitude' + location.coords.latitude );
-      //console.log('longitude' + location.coords.longitude );
-      //console.log('Accuracy: ' + location.coords.accuracy);
       searchContactByGeoLocation(location);
     }
 
     // Error function for Geolocation call
-    function onError(msg){
-      //console.log('error: '+msg);
+    function onError( ) {
       $('#locationResult').html("Geolocation not supported");
-      $('#useLocation').unbind('click');
     }
 }); 
