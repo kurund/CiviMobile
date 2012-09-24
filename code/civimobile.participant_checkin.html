@@ -8,18 +8,18 @@
 
   <div data-role="content" id="participant-checkin-content">
     <div class="ui-listview-filter ui-bar-c">
-      <input type="search" name="participant_name" id="participant_name" value="" />
+      <input type="search" name="participant_name" id="participant_name" value="" placeholder=""/>
     </div>
-    <ul id="participant-checkins" data-role="listview" data-inset="false" data-filter="false"></ul>
+    <ul id="participant-checkins" data-role="listview" data-split-icon="arrow-r" data-split-theme="d"></ul>
   </div>
 
   <div data-role="footer" data-id="global-footer" data-position="fixed" data-theme="c">
-    <a id="undo-checkin-button" style="width:100%; display:none" href="#" d ata-role="button" data-mini="true" data-icon="back" data-theme="e">undo checkin</a>
+    <a id="undo-checkin-button" style="width:100%; display:none" href="#" data-role="button" data-mini="true" data-icon="back" data-theme="e">undo checkin</a>
   </div>
 
   <script>
     function participantSearch (q) {
-      var eventId = <?php echo $_GET['eid']; ?>;
+      var eventId = "<?php echo $_GET['eid']; ?>";
 
       if ( isNaN(eventId) ) {
         return;
@@ -32,20 +32,25 @@
       { 
         ajaxURL: crmajaxURL,
         success:function (data){
+          var participantCheckinSelector = $('#participant-checkins');
           if (data.count == 0) {
             cmd = null;
           }
           else {
             cmd = "refresh";
-            $('#participant-checkins').show();
-            $('#participant-checkins').empty();
+            participantCheckinSelector.show();
+            participantCheckinSelector.empty();
           }
           $.each(data.values, function(key, value) {
-            var content = '<li role="option" tabindex="-1" data-theme="c" data-icon="check" id="check-in-participant-'+ value.participant_id+'" data-participant-id="'+ value. participant_id + '" data-participant-status-id="' + value.participant_status_id +'"><a href="#" data-role="participants-'+ value.id +'">' + value.display_name + '</a></li>';
+            var content = '<li role="option">' +
+              '<a href="#" data-role="participants-'+ value.id +'" id="check-in-participant-'+ value.participant_id+'" data-participant-id="'+ value. participant_id + '" data-participant-status-id="' + value.participant_status_id +'">' +
+              value.display_name + '</a>' +
+              '<a href="/civicrm/mobile/contact?action=view&cid='+ value.contact_id + '"></a>' +
+              '</li>';
             $('#participant-checkins').append(content); 
           });
           $.mobile.hidePageLoadingMsg( );
-          $('#participant-checkins').listview(cmd);
+          participantCheckinSelector.listview(cmd);
 
           $("[id^=check-in-participant-]").click(function(event){
             pid = $(this).attr('data-participant-id');
