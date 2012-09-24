@@ -1,9 +1,11 @@
 // events for contact view
 $( document ).delegate("#cm-contact-view", "pageinit", function() {
 	$('#edit-contact-button').click(function(){ //function here!!!
-		console.log("edit contact page")
+		console.log("view contact page")
 		 });
-	createContactfields();
+		//need to figure out how to load this dynamically on each page
+		buildProfile( "1", "contact-details-sections", "2" );
+		
 });
 
 // events for edit contact view
