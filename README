@@ -1,10 +1,10 @@
 ===================================
-CiviMobile
+CiviMobile Extension
 ===================================
 
-Mobile interface for CiviCRM
+Mobile application for few specific actions in CiviCRM
 
-Features:
+Current feature includes:
 
 * Contacts
 - Search Contacts
