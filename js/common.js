@@ -1,10 +1,11 @@
 /*
  * function to build profile
  */
+
+var fieldIds = {};
 function buildProfile( profileId, profileContainerId, contactId ) {
   var params = {};
   var jsonProfile = {};
-  var fieldIds = {};
   if (contactId ) {
     var dataUrl = '/civicrm/profile/edit?reset=1&json=1&gid=' + profileId +'&id=' + contactId;
   }
@@ -60,5 +61,23 @@ function buildProfile( profileId, profileContainerId, contactId ) {
       }
       });
    });
+}
+
+/**
+ * Save profile values
+ */
+function saveProfile( profileId, fieldIds, contactId ) {
+  $.each(fieldIds, function(index, value) {
+    fieldIds[index] = $('#'+index).val();
+  });
+  
+  fieldIds.version = "3";
+  //fieldIds.contact_type = "Individual";
+  fieldIds.contact_id = contactId;
+  fieldIds.profile_id = profileId;
+  $().crmAPI ('Profile','set', fieldIds
+  ,{ success:function (data) {
+  }
+  });
 }
 

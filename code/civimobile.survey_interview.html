@@ -18,7 +18,7 @@
     var resId = <?php echo $_GET['resid']; ?>;
     var aid = <?php echo $_GET['aid']; ?>;
     var contactId = <?php echo $_GET['cid']; ?>;
-
+    var profileId;
     function surveyInterview() {
       if ( isNaN(surveyId) || isNaN(resId) || isNaN(contactId) ) {
         return;
@@ -28,7 +28,6 @@
         
       $.mobile.showPageLoadingMsg( 'Loading' );
       // get the profile related to survey
-      var profileId;
       $().crmAPI ('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'enity_id' : surveyId}
       ,{ success:function (data) {    
           profileId = data.values[0].uf_group_id;
@@ -38,7 +37,7 @@
 
       // get the result for the survey
       $().crmAPI ('OptionValue','get',
-      { 'version' :'3', 'debug': 1, 'option_group_id': resId }, {
+      { 'version' :'3', 'option_group_id': resId }, {
         ajaxURL: crmajaxURL,
         success:function (data){
           $.mobile.hidePageLoadingMsg( );
@@ -49,6 +48,7 @@
           $('#select-choice-1').selectmenu();
         }
       });
+      $.mobile.hidePageLoadingMsg( );
     }
     
     // save action to save the result for the activity
@@ -59,7 +59,8 @@
  
       selectValue= $('#select-choice-1').val()
       $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2' }
-      ,{ success:function (data){
+      ,{ success:function (data) {
+          saveProfile(profileId, fieldIds, contactId);
           // show success message
           $( "#popup-success" ).popup( "open" )
         }
