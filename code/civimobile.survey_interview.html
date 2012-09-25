@@ -3,7 +3,7 @@
 <div data-role="page" id="cm-survey-interview">
   <div data-role="header">
     <h3>Interview Respondant</h3>
-    <a href="#" data-rel="back" class="ui-btn-left" data-icon="arrow-l" data-transition="slideup">Back</a>
+    <a href="#" data-role="button" class="ui-btn-left" data-icon="arrow-l" data-transition="slideup" id="survey-contact-listing">Back</a>
     <a href="#" id="save-survey-button" data-role="button" data-icon="check" class="ui-btn-right jqm-save">Save</a>
   </div> 
 
@@ -57,14 +57,19 @@
         return;
       }
 
-      selectValue= $('#select-choice-1').val()
+      var selectValue= $('#select-choice-1').val();
       $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2'}, {
         success:function (data) {
           saveProfile(profileId, fieldIds, contactId);
           // show success message
           $( "#popup-success" ).popup( "open" );
+          $.mobile.changePage('/civicrm/mobile/survey/contacts?sid=' + surveyId + '&resid=' + resId );
         }
       });
+    }
+
+    function gotoSurveyContactListing() {
+      $.mobile.changePage('/civicrm/mobile/survey/contacts?sid=' + surveyId + '&resid=' + resId );
     }
 
   </script>

@@ -4,7 +4,7 @@ $( document ).delegate("#cm-contact-view", "pageinit", function() {
 		console.log("view contact page")
 		 });
 		//need to figure out how to load this dynamically on each page
-		tempContactID = 3
+		tempContactID = 3;
 		getContact(tempContactID);
 		buildProfile( "1", "contact-details-sections", tempContactID, "view" );
 		
@@ -15,7 +15,7 @@ $( document ).delegate("#cm-contact-edit", "pageinit", function() {
 	$('#save-contact-button').click(function(){ 
 		saveProfile( 1, 3 );
   });
-	tempContactID = 3
+	tempContactID = 3;
 	buildProfile( "1", "edit-contact-fields", tempContactID, "edit" );
 });
 
@@ -99,6 +99,7 @@ $( document ).delegate("#cm-survey-interview", "pageinit", function() {
   surveyInterview();
 
   $('#save-survey-button').click(function(){ saveSurvey(); });
+  $('#survey-contact-listing').click(function(){ gotoSurveyContactListing(); });
 });
 
 // proximity search
