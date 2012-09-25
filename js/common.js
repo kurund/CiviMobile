@@ -4,7 +4,7 @@
 
 var fieldIds = {};
 function buildProfile( profileId, profileContainerId, contactId, mode ) {
-	var params = {};
+	//var params = {};
 	var jsonProfile = {};
 	if (contactId ) {
 		var dataUrl = '/civicrm/profile/edit?reset=1&json=1&gid=' + profileId +'&id=' + contactId;
@@ -42,7 +42,6 @@ function buildProfile( profileId, profileContainerId, contactId, mode ) {
 					}
 					field = field.html;
 					//build fields
-					//console.log($(field).get(0).id);
 					
 					if (mode == "view"){
 						$('#' + profileContainerId).append('<li data-role="list-divider">'+value.label+'</li>');
@@ -63,9 +62,8 @@ function buildProfile( profileId, profileContainerId, contactId, mode ) {
 							$('#'+id).parent().parent().prepend('<label for="'+id+'">'+value.label+':</label>');
 						}
 					}
-
-					params[value.field_name] = "";
-					fieldIds[id] = "";
+					//gather all the processes field ids
+					fieldIds[$(field).get(0).id] = "";
 				});
 			}
 		});
@@ -75,19 +73,22 @@ function buildProfile( profileId, profileContainerId, contactId, mode ) {
 /**
  * Save profile values
  */
-function saveProfile( profileId, fieldIds, contactId ) {
+function saveProfile( profileId, contactId ) {
   $.each(fieldIds, function(index, value) {
     fieldIds[index] = $('#'+index).val();
   });
   
   fieldIds.version = "3";
-  //fieldIds.contact_type = "Individual";
+  fieldIds.contact_type = "Individual";
   fieldIds.contact_id = contactId;
   fieldIds.profile_id = profileId;
+	//console.log(fieldIds);
   $().crmAPI ('Profile','set', fieldIds
-  ,{ success:function (data) {
-  }
-  });
+    ,{ success:function (data) {
+			console.log(data);
+			$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+data.id );
+    }
+    });
 }
 
 function getContact( contactId ) {

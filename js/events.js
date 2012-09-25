@@ -12,8 +12,8 @@ $( document ).delegate("#cm-contact-view", "pageinit", function() {
 
 // events for edit contact
 $( document ).delegate("#cm-contact-edit", "pageinit", function() {
-	$('#save-contact-button').click(function(){ //function here!!!
-	  // TO DO
+	$('#save-contact-button').click(function(){ 
+		saveProfile( 1, 3 );
   });
 	tempContactID = 3
 	buildProfile( "1", "edit-contact-fields", tempContactID, "edit" );
@@ -22,8 +22,8 @@ $( document ).delegate("#cm-contact-edit", "pageinit", function() {
 
 // events for create contact
 $( document ).delegate("#cm-contact-create", "pageinit", function() {
-	$('#save-new-contact-button').click(function(){ //function here!!!
-	  // TO DO
+	$('#save-new-contact-button').click(function(){ 
+		saveProfile( 1, null );
   });
 	buildProfile( "1", "create-contact-fields", null, "edit" );
 });
