@@ -1,33 +1,15 @@
 // events for view contact 
 $( document ).delegate("#cm-contact-view", "pageinit", function() {
-	$('#edit-contact-button').click(function(){ //function here!!!
-		console.log("view contact page")
-		 });
-		//need to figure out how to load this dynamically on each page
-		tempContactID = 3;
-		getContact(tempContactID);
-		buildProfile( "1", "contact-details-sections", tempContactID, "view" );
-		
+  contactView();
 });
 
-// events for edit contact
-$( document ).delegate("#cm-contact-edit", "pageinit", function() {
-	$('#save-contact-button').click(function(){ 
-		saveProfile( 1, 3 );
+// events for contact create and edit, if contact id is not passed it's a create mode
+$( document ).delegate("#cm-contact-form", "pageinit", function() {
+	$('#save-contact-button').click(function(){
+    saveContact( );
   });
-	tempContactID = 3;
-	buildProfile( "1", "edit-contact-fields", tempContactID, "edit" );
+  contactCreate();
 });
-
-
-// events for create contact
-$( document ).delegate("#cm-contact-create", "pageinit", function() {
-	$('#save-new-contact-button').click(function(){ 
-		saveProfile( 1, null );
-  });
-	buildProfile( "1", "create-contact-fields", null, "edit" );
-});
-
 
 // events for contact search
 $( document ).delegate("#cm-contact-search", "pageinit", function() {

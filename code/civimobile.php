@@ -7,8 +7,12 @@ class civimobile {
 
   function contacts() {
 		$action = $_GET['action'];
-				//think of something clever to do if action is not one of view or edit
-    require_once 'civimobile.contact_'.$action.'.html';
+    if ( $action == 'view' ) {
+      require_once 'civimobile.contact_view.html';
+    }
+    else {
+      require_once 'civimobile.contact.html';
+    }
     exit;
   }
 

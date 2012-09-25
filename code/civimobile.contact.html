@@ -1,0 +1,27 @@
+<?php require_once('civimobile.header.php'); ?>
+
+<div data-role="page" id="cm-contact-form">
+	<div data-role="header">
+		<h1>Edit contact</h1>
+		<a href="#" id="save-contact-button" data-role="button" data-icon="check" class="ui-btn-right jqm-save">Save</a>
+		<a href="#" id="back-contact-button"data-rel="back" class="ui-btn-left" data-icon="arrow-l">Back</a>
+	</div><!-- /header -->
+
+	<div data-role="content" id="crm-contact-fields">
+	</div><!-- /content -->
+  <script>
+    var contactID = "<?php echo $_GET['cid']; ?>";
+    //FIX ME: make this more generic
+    var profileId = 1;
+
+    function contactCreate() {
+      buildProfile( profileId, "crm-contact-fields", contactID );
+    }
+
+    function saveContact() {
+      saveProfile( profileId, contactID );
+    }
+  </script>
+</div><!-- /page -->
+
+<?php require_once('civimobile.footer.php')?>

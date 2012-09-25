@@ -3,14 +3,15 @@
  */
 
 var fieldIds = {};
-function buildProfile( profileId, profileContainerId, contactId, mode ) {
+function buildProfile( profileId, profileContainerId, contactId ) {
 	//var params = {};
 	var jsonProfile = {};
-	if (contactId ) {
-		var dataUrl = '/civicrm/profile/edit?reset=1&json=1&gid=' + profileId +'&id=' + contactId;
+
+	if ( contactId ) {
+    var dataUrl = '/civicrm/profile/edit?reset=1&json=1&gid=' + profileId +'&id=' + contactId;
 	}
 	else {
-		var dataUrl = '/civicrm/profile/create?reset=1&json=1&gid=' + profileId;
+    var dataUrl = '/civicrm/profile/create?reset=1&json=1&gid=' + profileId;
 	}
 	$.getJSON( dataUrl,
 		{
@@ -18,7 +19,6 @@ function buildProfile( profileId, profileContainerId, contactId, mode ) {
 		},
 		function(data) {
 			jsonProfile = data
-			//console.log(jsonProfile);
 			$().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId}
 			,{ success:function (data){
 				$.each(data.values, function(index, value) {
@@ -42,32 +42,56 @@ function buildProfile( profileId, profileContainerId, contactId, mode ) {
 					}
 					field = field.html;
 					//build fields
-					
-					if (mode == "view"){
-						$('#' + profileContainerId).append('<li data-role="list-divider">'+value.label+'</li>');
-						$('#' + profileContainerId).append('<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >'+contact[value.field_name]+'</li>');
-						$('#' + profileContainerId).listview('refresh');
-					}
-					if (mode == "edit"){
-						$('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field+'</div>');
-						var id = $(field).attr('id');
-						var tagName = $(field).get(0).tagName;
-						//var tagName = tagName;
-						if (tagName == 'INPUT'){
-							$('#'+id).textinput();
-							$('#'+id).attr( 'placeholder', value.label )
-						}
-						if (tagName == 'SELECT'){
-							$('#'+id).selectmenu();
-							$('#'+id).parent().parent().prepend('<label for="'+id+'">'+value.label+':</label>');
-						}
-					}
+
+          $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field+'</div>');
+          var id = $(field).attr('id');
+          var tagName = $(field).get(0).tagName;
+          //var tagName = tagName;
+          if (tagName == 'INPUT'){
+            $('#'+id).textinput();
+            $('#'+id).attr( 'placeholder', value.label )
+          }
+          if (tagName == 'SELECT'){
+            $('#'+id).selectmenu();
+            $('#'+id).parent().parent().prepend('<label for="'+id+'">'+value.label+':</label>');
+          }
+
 					//gather all the processes field ids
 					fieldIds[$(field).get(0).id] = "";
 				});
 			}
 		});
 	});
+}
+
+/**
+ * Function to build profile view
+ *
+ * @param profileId
+ * @param profileContainerId
+ * @param contactId
+ */
+function buildProfileView( profileId, profileContainerId, contactId ) {
+  $().crmAPI ('Contact','get',{'version' :'3', 'id' : contactId}
+    ,{
+      ajaxURL: crmajaxURL,
+      success:function (data){
+        var contactInfo = data.values[contactId];
+        $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId}
+          ,{ success:function (data){
+            $.each(data.values, function(index, value) {
+              if ( contactInfo[value.field_name] ) {
+                var content = '<li data-role="list-divider">'+value.label+'</li>' +
+                  '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >'+
+                  contactInfo[value.field_name] +'</li>';
+              }
+              $('#' + profileContainerId).append(content);
+            });
+            $('#' + profileContainerId).listview('refresh');
+          }
+        });
+      }
+  });
 }
 
 /**
@@ -80,24 +104,14 @@ function saveProfile( profileId, contactId ) {
   
   fieldIds.version = "3";
   fieldIds.contact_type = "Individual";
-  fieldIds.contact_id = contactId;
+  if ( contactId ) {
+    fieldIds.contact_id = contactId;
+  }
+
   fieldIds.profile_id = profileId;
-	//console.log(fieldIds);
-  $().crmAPI ('Profile','set', fieldIds
+	$().crmAPI ('Profile','set', fieldIds
     ,{ success:function (data) {
-			console.log(data);
 			$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+data.id );
     }
-    });
-}
-
-function getContact( contactId ) {
-  $().crmAPI ('Contact','get',{'version' :'3', 'id' : contactId}
-  ,{
-    ajaxURL: crmajaxURL,
-    success:function (data){
-			contact = data.values[contactId];
-      console.log(contact);
-		}
   });
 }

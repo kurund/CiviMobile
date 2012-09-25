@@ -46,7 +46,7 @@
               '<a href="/civicrm/mobile/contact?action=view&cid='+ value.voter_id + '"></a>' +
               '</li>';
 
-            $('#survey-contacts').append(content);
+            surveyContactSelector.append(content);
           });
           $.mobile.hidePageLoadingMsg( );
           surveyContactSelector.listview(cmd);

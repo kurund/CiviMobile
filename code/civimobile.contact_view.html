@@ -12,17 +12,18 @@
       </ul>
     </div><!-- /content-primary -->
   </div><!-- /content -->
+
+  <script>
+    var contactID = "<?php echo $_GET['cid']; ?>";
+    //FIX ME: make this more generic
+    var profileId = 1;
+
+    function contactView() {
+      buildProfileView( profileId, "contact-details-sections", contactID );
+      $('#edit-contact-button').attr('href','/civicrm/mobile/contact?action=edit&cid=' + contactID);
+    }
+  </script>
+
 </div><!-- /page -->
 
 <?php require_once('civimobile.footer.php') ?>
-
-<script>
-
-var contactID = "<?php echo $_GET['cid']; ?>";
-
-$('#edit-contact-button').attr('href','/civicrm/mobile/contact?action=edit&cid='+contactID);
-
-//var contacID = $.mobile.path.parseUrl(window.location.href);
-//contact = contacID.filename;
-
-</script>
