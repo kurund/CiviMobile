@@ -4,7 +4,7 @@ $( document ).delegate("#cm-contact-view", "pageinit", function() {
 		console.log("view contact page")
 		 });
 		//need to figure out how to load this dynamically on each page
-		buildProfile( "1", "contact-details-sections", "2" );
+		buildProfile( "1", "contact-details-sections", "2", "view" );
 		
 });
 
