@@ -1,4 +1,4 @@
-// events for contact view
+// events for view contact 
 $( document ).delegate("#cm-contact-view", "pageinit", function() {
 	$('#edit-contact-button').click(function(){ //function here!!!
 		console.log("view contact page")
@@ -10,7 +10,7 @@ $( document ).delegate("#cm-contact-view", "pageinit", function() {
 		
 });
 
-// events for edit contact view
+// events for edit contact
 $( document ).delegate("#cm-contact-edit", "pageinit", function() {
 	$('#save-contact-button').click(function(){ //function here!!!
 	  // TO DO
@@ -18,6 +18,16 @@ $( document ).delegate("#cm-contact-edit", "pageinit", function() {
 	tempContactID = 3
 	buildProfile( "1", "edit-contact-fields", tempContactID, "edit" );
 });
+
+
+// events for create contact
+$( document ).delegate("#cm-contact-create", "pageinit", function() {
+	$('#save-new-contact-button').click(function(){ //function here!!!
+	  // TO DO
+  });
+	buildProfile( "1", "create-contact-fields", null, "edit" );
+});
+
 
 // events for contact search
 $( document ).delegate("#cm-contact-search", "pageinit", function() {
