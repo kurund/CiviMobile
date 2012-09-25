@@ -15,6 +15,8 @@ $( document ).delegate("#cm-contact-edit", "pageinit", function() {
 	$('#save-contact-button').click(function(){ //function here!!!
 	  // TO DO
   });
+	tempContactID = 3
+	buildProfile( "1", "edit-contact-fields", tempContactID, "edit" );
 });
 
 // events for contact search

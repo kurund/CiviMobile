@@ -11,34 +11,11 @@ require_once('civimobile.header.php');
 
 	<div data-role="content" id="edit-contact-fields">
 	</div><!-- /content -->
-	<?php require_once('civimobile.navbar.php') ?>
 </div><!-- /page -->
 
 <script>
-var contactId = <?php echo $id; ?>;
-var contact = <?php echo json_encode($results); ?>;
-contact = contact.values[contactId];
-console.log(contact);
-var fieldIds = {};
 
 
-
-function updateContact() {
-
-  $.each(fieldIds, function(index, value) {
-    fieldIds[index] = $('#'+index).val();
-  });	
-  fieldIds.version = "3";
-  fieldIds.contact_type = "Individual";
-  fieldIds.contact_id = contactId;
-  fieldIds.profile_id = newIndividualProfileId;
-  $().crmAPI ('Profile','set', fieldIds
-  ,{ success:function (data){
-    console.log(data)
-    window.location.href = "/civimobile/contact/"+data.id+"/";
-  }
-  });
-}
 
 </script>
 <?php require_once('civimobile.footer.php')?>

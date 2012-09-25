@@ -3,7 +3,7 @@
 <div data-role="page" id="cm-contact-view">
   <div data-role="header">
     <h1>Contact details</h1>
-    <a href="edit" id="edit-contact-button" data-role="button" class="ui-btn-right jqm-edit" data-ajax="false">Edit</a>
+    <a href="" id="edit-contact-button" data-role="button" class="ui-btn-right jqm-edit" data-ajax="false">Edit</a>
     <a href="#" id="back-contact-button"data-rel="back" class="ui-btn-left" data-icon="arrow-l">Back</a>
   </div><!-- /header -->
   <div data-role="content" id="contact-details-content">
@@ -17,10 +17,12 @@
 <?php require_once('civimobile.footer.php') ?>
 
 <script>
-var contacID = $.mobile.path.parseUrl(window.location.href);
-contact = contacID.filename;
 
+var contactID = "<?php echo $_GET['cid']; ?>";
 
+$('#edit-contact-button').attr('href','/civicrm/mobile/contact?action=edit&cid='+contactID);
 
+//var contacID = $.mobile.path.parseUrl(window.location.href);
+//contact = contacID.filename;
 
 </script>
