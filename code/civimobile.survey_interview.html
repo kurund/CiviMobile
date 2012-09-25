@@ -14,10 +14,10 @@
   </div>
 
   <script>
-    var surveyId = <?php echo $_GET['sid']; ?>;
-    var resId = <?php echo $_GET['resid']; ?>;
-    var aid = <?php echo $_GET['aid']; ?>;
-    var contactId = <?php echo $_GET['cid']; ?>;
+    var surveyId = "<?php echo $_GET['sid']; ?>";
+    var resId = "<?php echo $_GET['resid']; ?>";
+    var aid = "<?php echo $_GET['aid']; ?>";
+    var contactId = "<?php echo $_GET['cid']; ?>";
     var profileId;
     function surveyInterview() {
       if ( isNaN(surveyId) || isNaN(resId) || isNaN(contactId) ) {
@@ -56,13 +56,13 @@
       if ( isNaN(aid) ) {
         return;
       }
- 
+
       selectValue= $('#select-choice-1').val()
-      $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2' }
-      ,{ success:function (data) {
+      $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2'}, {
+        success:function (data) {
           saveProfile(profileId, fieldIds, contactId);
           // show success message
-          $( "#popup-success" ).popup( "open" )
+          $( "#popup-success" ).popup( "open" );
         }
       });
     }
