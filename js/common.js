@@ -42,6 +42,8 @@ function buildProfile( profileId, profileContainerId, contactId, mode ) {
 					}
 					field = field.html;
 					//build fields
+					//console.log($(field).get(0).id);
+					
 					if (mode == "view"){
 						$('#' + profileContainerId).append('<li data-role="list-divider">'+value.label+'</li>');
 						$('#' + profileContainerId).append('<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >'+contact[value.field_name]+'</li>');
@@ -88,3 +90,13 @@ function saveProfile( profileId, fieldIds, contactId ) {
   });
 }
 
+function getContact( contactId ) {
+  $().crmAPI ('Contact','get',{'version' :'3', 'id' : contactId}
+  ,{
+    ajaxURL: crmajaxURL,
+    success:function (data){
+			contact = data.values[contactId];
+      console.log(contact);
+		}
+  });
+}
