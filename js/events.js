@@ -8,6 +8,10 @@ $( document ).delegate("#cm-contact-form", "pageinit", function() {
 	$('#save-contact-button').click(function(){
     saveContact( );
   });
+	$('#back-contact-button').click(function(){
+		goBackContact();
+		  });
+	
   contactCreate();
 });
 

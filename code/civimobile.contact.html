@@ -2,7 +2,7 @@
 
 <div data-role="page" id="cm-contact-form">
 	<div data-role="header">
-		<h1>Edit contact</h1>
+		<h1 id="contact-header">Edit contact</h1>
 		<a href="#" id="save-contact-button" data-role="button" data-icon="check" class="ui-btn-right jqm-save">Save</a>
 		<a href="#" id="back-contact-button"data-rel="back" class="ui-btn-left" data-icon="arrow-l">Back</a>
 	</div><!-- /header -->
@@ -11,14 +11,24 @@
 	</div><!-- /content -->
   <script>
     var contactID = "<?php echo $_GET['cid']; ?>";
-
+		var action = "<?php echo $_GET['action']; ?>";
     function contactCreate() {
       buildProfile( profileId, "crm-contact-fields", contactID );
+			if (action == "add"){
+				$('#contact-header').text('Add Contact');
+			}
     }
-
     function saveContact() {
       saveProfile( profileId, contactID );
     }
+		function goBackContact() {
+			if (action == "add"){
+				$.mobile.changePage('#cm-contact-search');
+			}
+			else{
+				$.mobile.changePage('/civicrm/mobile/contact?action=view&cid=' + contactID);
+			}
+		}
   </script>
 </div><!-- /page -->
 
