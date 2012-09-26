@@ -27,7 +27,7 @@
 
       $.mobile.showPageLoadingMsg( 'Searching' );
       $().crmAPI ('Participant','get',
-      {'version' :'3', 'sort_name': q, 'event_id': eventId, 'participant_status_id': '2',
+      {'version' :'3', 'sort_name': q, 'event_id': eventId, 'participant_status_id': '1'||'5',
         'return' : 'display_name,participant_status_id' },
       { 
         ajaxURL: crmajaxURL,
@@ -43,7 +43,7 @@
           }
           $.each(data.values, function(key, value) {
             var content = '<li role="option">' +
-              '<a href="#" data-role="participants-'+ value.id +'" id="check-in-participant-'+ value.participant_id+'" data-participant-id="'+ value. participant_id + '" data-participant-status-id="' + value.participant_status_id +'">' +
+              '<a href="#" data-role="participants-'+ value.id +'" id="check-in-participant-'+ value.participant_id+'" data-participant-id="'+ value.participant_id + '" data-participant-status-id="' + value.participant_status_id +'">' +
               value.display_name + '</a>' +
               '<a href="/civicrm/mobile/contact?action=view&cid='+ value.contact_id + '"></a>' +
               '</li>';
@@ -71,7 +71,7 @@
           //remove colour
           $('#check-in-participant-'+pid+' a').css("color","");
           //hide item children
-          $('#check-in-participant-'+pid).children().hide();
+          $('#check-in-participant-'+pid).hide();
           //need to figure out how to change button text before it get displayed.
           var undoButton = $("#undo-checkin-button");
           undoButton.show();
@@ -98,7 +98,7 @@
         ajaxURL: crmajaxURL,
         success:function (data){
           //show checkin row
-          $('#check-in-participant-'+pid).children().show();
+          $('#check-in-participant-'+pid).show();
           $("#undo-checkin-button").hide();
           $("#participants-list").listview('refresh');
           $.mobile.hidePageLoadingMsg( 'Searching' );
