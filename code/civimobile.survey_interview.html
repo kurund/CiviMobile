@@ -18,7 +18,6 @@
     var resId = "<?php echo $_GET['resid']; ?>";
     var aid = "<?php echo $_GET['aid']; ?>";
     var contactId = "<?php echo $_GET['cid']; ?>";
-    var profileId;
     function surveyInterview() {
       if ( isNaN(surveyId) || isNaN(resId) || isNaN(contactId) ) {
         return;
@@ -30,8 +29,8 @@
       // get the profile related to survey
       $().crmAPI ('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'enity_id' : surveyId}
       ,{ success:function (data) {    
-          profileId = data.values[0].uf_group_id;
-          buildProfile( profileId, 'crm-profile-content', contactId );
+          surveyProfileId = data.values[0].uf_group_id;
+          buildProfile( surveyProfileId, 'crm-profile-content', contactId );
         }
       });
 
@@ -60,7 +59,7 @@
       var selectValue= $('#select-choice-1').val();
       $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2'}, {
         success:function (data) {
-          saveProfile(profileId, fieldIds, contactId);
+          saveProfile(surveyProfileId, fieldIds, contactId);
           // show success message
           $( "#popup-success" ).popup( "open" );
           $.mobile.changePage('/civicrm/mobile/survey/contacts?sid=' + surveyId + '&resid=' + resId );

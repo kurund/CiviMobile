@@ -35,6 +35,7 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
       var crmajaxURL = '<?php print base_path(); ?>civicrm/ajax/rest';
       var base_url =  '<?php print base_path(); ?>';
       var cmurl = '<?php print url('civicrm/mobile/contact/')?>';
+			var profileId = 1;
     </script>
     <script src="<?php print $includePath; ?>js/events.js"></script>
   </head>
