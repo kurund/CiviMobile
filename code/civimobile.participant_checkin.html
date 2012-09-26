@@ -45,7 +45,7 @@
             var content = '<li role="option">' +
               '<a href="#" data-role="participants-'+ value.id +'" id="check-in-participant-'+ value.participant_id+'" data-participant-id="'+ value.participant_id + '" data-participant-status-id="' + value.participant_status_id +'">' +
               value.display_name + '</a>' +
-              '<a href="/civicrm/mobile/contact?action=view&cid='+ value.contact_id + '&context=cm-events"></a>' +
+              '<a href="/civicrm/mobile/contact?action=view&cid='+ value.contact_id + '&context=cm-events" data-icon="info"></a>' +
               '</li>';
             $('#participant-checkins').append(content); 
           });

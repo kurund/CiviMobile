@@ -43,7 +43,7 @@
           $.each(data.values, function(key, value) {
             var content = '<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="survey-res-'+value.id+'" >' +
               '<a href="/civicrm/mobile/survey/interview?sid='+ surveyId +'&resid='+ resId +'&aid='+ value.id +'&cid='+value.voter_id+'" data-transition="slideup">'+value.voter_name+'</a>' +
-              '<a href="/civicrm/mobile/contact?action=view&cid='+ value.voter_id + '&context=cm-surveys"></a>' +
+              '<a href="/civicrm/mobile/contact?action=view&cid='+ value.voter_id + '&context=cm-surveys"  data-icon="info"></a>' +
               '</li>';
 
             surveyContactSelector.append(content);
