@@ -18,6 +18,8 @@
     var resId = "<?php echo $_GET['resid']; ?>";
     var aid = "<?php echo $_GET['aid']; ?>";
     var contactId = "<?php echo $_GET['cid']; ?>";
+    var surveyProfileId;
+
     function surveyInterview() {
       if ( isNaN(surveyId) || isNaN(resId) || isNaN(contactId) ) {
         return;
@@ -59,7 +61,7 @@
       var selectValue= $('#select-choice-1').val();
       $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2'}, {
         success:function (data) {
-          saveProfile(surveyProfileId, fieldIds, contactId);
+          saveProfile(surveyProfileId, contactId);
           // show success message
           $( "#popup-success" ).popup( "open" );
           $.mobile.changePage('/civicrm/mobile/survey/contacts?sid=' + surveyId + '&resid=' + resId );
