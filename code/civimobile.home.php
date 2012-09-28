@@ -10,6 +10,7 @@
     <a data-role="button" data-icon="search" href="#cm-contact-search" title="Contacts" class="icons" data-transition="slideup" >Contact</a>
     <a data-role="button" data-icon="grid" href="#cm-events" title="Events" class="icons" data-transition="slideup" >Events</a>
     <a data-role="button" data-icon="info" href="#cm-surveys" title="Survey" class="icons" data-transition="slideup" >Survey</a>
+		<a data-role="button" data-icon="info" href="#cm-login" title="Survey" class="icons" data-transition="slideup" >Login</a>
   </div><!-- /content -->
 </div>
 <!-- end of menu page -->
@@ -35,5 +36,11 @@
    <?php require_once 'civimobile.survey_search.html';?>
 </div>
 <!-- end of survey page -->
+
+<!-- start of login page -->
+<div data-role="page" id="cm-login" >
+   <?php require_once 'civimobile.login.html';?>
+</div>
+<!-- end of login page -->
 
 <?php require_once 'civimobile.footer.php'; ?> 
