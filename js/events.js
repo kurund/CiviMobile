@@ -46,7 +46,7 @@ $( document ).delegate("#cm-participant-checkin", "pageinit", function() {
       participantSearch($(this).val());
     }
     else {
-      $('#participant-checkins').empty(); 
+      $('.participant-list').find('*').not('.dividerClass').remove();
     }
   });
   participantSearch();
