@@ -6,6 +6,13 @@
     <page_callback>civimobile::home</page_callback>
   </item>
   <item>
+    <title>Login to CiviMobile</title>
+    <path>civicrm/mobile/login</path>
+    <page_callback>civimobile::login</page_callback>
+    <access_callback>1</access_callback>
+    <is_public>true</is_public>
+  </item>
+  <item>
     <path>civicrm/mobile/contact</path>
     <page_callback>civimobile::contacts</page_callback>
   </item>

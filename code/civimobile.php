@@ -16,11 +16,6 @@ class civimobile {
     exit;
   }
 
-	function editContact() {
-    require_once 'civimobile.contact_edit.html';
-    exit;
-  }
-
   function participantCheckin() {
     require_once 'civimobile.participant_checkin.html';
     exit;
@@ -33,6 +28,11 @@ class civimobile {
   
   function surveyInterview() {
     require_once 'civimobile.survey_interview.html';
+    exit;
+  }
+
+  function login() {
+    require_once 'civimobile.login.html';
     exit;
   }
 }

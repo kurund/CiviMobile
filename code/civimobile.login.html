@@ -1,32 +1,53 @@
-<div data-role="header">
-  <h3>Login to CiviMobile</h3>
-</div> 
+<?php require_once 'civimobile.header.php'; ?>
+<div data-role="page" id="cm-login" data-ajax="false">
+  <div data-role="header">
+    <h3>Login to CiviMobile</h3>
+  </div>
 
-<div data-role="content">
-		<div class="content-primary">
-	<form>
-		<ul data-role="listview" data-inset="true" data-divider-theme="a">
-			<li data-role="list-divider" role="heading" >Enter your username and password to access CiviCRM</li>
-			<li data-role="fieldcontain">
-	        	<input type="text" name="name" id="name" placeholder="User name" value=""  />
-			</li>
-			<li data-role="fieldcontain">
-	        	<input type="password" name="name" id="name" placeholder="Password" value=""  />
-			</li>
-			<li class="ui-body ui-body-b">
-							<fieldset >
-									<button type="submit" data-theme="a">Submit</button>
-						   </fieldset>
-			</li>
+  <div data-role="content">
+    <div class="content-primary">
+      <form method="POST">
+        <ul data-role="listview" data-inset="true" data-divider-theme="a">
+          <li data-role="list-divider" role="heading" >Enter your username and password to access CiviCRM</li>
+          <li data-role="fieldcontain">
+            <input type="text" name="uname" id="name" placeholder="Username" value=""  />
+          </li>
+          <li data-role="fieldcontain">
+            <input type="password" name="passwd" id="name" placeholder="Password" value=""  />
+          </li>
+          <li class="ui-body ui-body-b">
+            <fieldset >
+              <button type="submit" data-theme="a">Login</button>
+            </fieldset>
+          </li>
+        </ul>
+      </form>
+    </div><!--/content-primary -->
+  </div><!-- /content -->
 
-			
-		</ul>
+  <?php
+    // authenticate user
+    if ( !empty( $_POST )) {
+      $authenticate = true;
+      if ( empty($_POST['uname']) ) {
+        $authenticate = false;
+      }
+
+      if ( empty($_POST['passwd']) ) {
+        $authenticate = false;
+      }
+
+      if ( $authenticate && CRM_Utils_System::authenticate($_POST['uname'], $_POST['passwd'], true) ) {
+        CRM_Utils_System::redirect( CRM_Utils_System::url('civicrm/mobile') );
+      }
+      else {
+        echo "Authentication failure: Enter valid username/password.";
+      }
+    }
+  ?>
+
+</div>
 
 
-		
-		</form>
-		
-		</div><!--/content-primary -->		
-	</div><!-- /content -->
-
-<script>
+<!-- end of page -->
+<?php require_once 'civimobile.footer.php'; ?>
