@@ -12,6 +12,10 @@
     <page_callback>civimobile::login</page_callback>
   </item>
   <item>
+    <path>civicrm/mobile/logout</path>
+    <page_callback>civimobile::logout</page_callback>
+  </item>
+  <item>
     <path>civicrm/mobile/contact</path>
     <page_callback>civimobile::contacts</page_callback>
   </item>

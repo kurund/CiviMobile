@@ -39,6 +39,7 @@
 
       if ( $authenticate && CRM_Utils_System::authenticate($_POST['uname'], $_POST['passwd'], true) ) {
         CRM_Utils_System::redirect( CRM_Utils_System::url('civicrm/mobile') );
+        CRM_Utils_System::civiExit();
       }
       else {
         echo "Authentication failure: Enter valid username/password.";

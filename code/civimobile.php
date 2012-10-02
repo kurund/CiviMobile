@@ -35,4 +35,10 @@ class civimobile {
     require_once 'civimobile.login.html';
     exit;
   }
+
+  function logout() {
+    CRM_Utils_System::logout();
+    CRM_Utils_System::redirect( CRM_Utils_System::url('civicrm/mobile') );
+    CRM_Utils_System::civiExit();
+  }
 }
