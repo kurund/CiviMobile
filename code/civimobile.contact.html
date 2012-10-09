@@ -10,10 +10,10 @@
 	<div data-role="content" id="crm-contact-fields">
 	</div><!-- /content -->
   <script>
-    var contactID = "<?php echo $_GET['cid']; ?>";
+		var contactId = "<?php echo $_GET['cid']; ?>";
 		var action = "<?php echo $_GET['action']; ?>";
     function contactCreate() {
-      buildProfile( profileId, "crm-contact-fields", contactID );
+      buildProfile( null, "crm-contact-fields", contactId );
 			if (action == "add"){
 				$('#contact-header').text('Add Contact');
 			}
