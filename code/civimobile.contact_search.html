@@ -1,9 +1,16 @@
 <div id="jqm-contactsheader" data-role="header">
 	<h3>Search Contacts</h3>
 	<a href="#cm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
-	<a href="/civicrm/mobile/contact?action=add"  style="text-decoration: none" id="add-contact-button" data-role="button" data-icon="plus" class="ui-btn-right jqm-home">Add</a>
+	<a href="#addContactPopup"  style="text-decoration: none" id="add-contact-button" data-role="button" data-icon="plus" class="ui-btn-right jqm-home" data-rel="popup">Add</a>
 </div> 
-
+<div data-role="popup" id="addContactPopup" data-transition="slidedown">
+	<ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="a">
+		<li data-role="divider" data-theme="a">Contact type:</li>
+		<li><a href="/civicrm/mobile/contact?action=add&pid=1">Individual</a></li>
+		<li><a href="/civicrm/mobile/contact?action=add&pid=5">Orgnaisation</a></li>
+		<li><a href="/civicrm/mobile/contact?action=add&pid=6">Household</a></li>
+	</ul>
+</div>
 <div data-role="content" id="contact-content">
 	<div class="ui-listview-filter ui-bar-c">
 		<input type="search" name="sort_name" id="sort_name" value="" />

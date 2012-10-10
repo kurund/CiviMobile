@@ -113,7 +113,6 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
 * A function to get the contact type and return the relevant ID
 */
 function getContactProfileId(contactType){
-	//api call to return contact type
 	var profileIds = {"Individual":'1',
 	"Organization":'5',
 	"Household":'6'};
@@ -121,31 +120,58 @@ function getContactProfileId(contactType){
 }
 
 
+function profileIdToContactType(profileId){
+	var contactTypes = {'1':"Individual",
+	'5':"Organization",
+	'6':"Household"};
+	return contactTypes[profileId];
+}
+
+
 /**
 * Save profile values
 */
 function saveProfile( profileId, contactId ) {	
-	$().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
-	,{
-		ajaxURL: crmajaxURL,
-		success:function (data){
-			var contactType = data.result;
-			var profileId = getContactProfileId(contactType);
-			$.each(fieldIds, function(index, value) {
-				fieldIds[index] = $('#'+index).val();
-			});
-			fieldIds.version = "3";
-			fieldIds.profile_id = profileId;
-			fieldIds.contact_type = contactType;
-			if ( contactId ) {
-				fieldIds.contact_id = contactId;
-			}
-			$().crmAPI ('Profile','set', fieldIds
-			,{ 
-				success:function (data) {
-					$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactId );
+	if (contactId){
+		$().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
+		,{
+			ajaxURL: crmajaxURL,
+			success:function (data){
+				var contactType = data.result;
+				var profileId = getContactProfileId(contactType);
+				$.each(fieldIds, function(index, value) {
+					fieldIds[index] = $('#'+index).val();
+				});
+				fieldIds.version = "3";
+				fieldIds.profile_id = profileId;
+				fieldIds.contact_type = contactType;
+				if ( contactId ) {
+					fieldIds.contact_id = contactId;
 				}
-			});
+				$().crmAPI ('Profile','set', fieldIds
+				,{ 
+					success:function (data) {
+						$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactId );
+					}
+				});
+			}
+		});
+	}
+	else{		
+		$.each(fieldIds, function(index, value) {
+			fieldIds[index] = $('#'+index).val();
+		});
+		fieldIds.version = "3";
+		fieldIds.profile_id = profileId;
+		fieldIds.contact_type = profileIdToContactType(profileId);
+		if ( contactId ) {
+			fieldIds.contact_id = contactId;
 		}
-	});
+		$().crmAPI ('Profile','set', fieldIds
+		,{ 
+			success:function (data) {
+				$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+data.id );
+			}
+		});
+	}
 }

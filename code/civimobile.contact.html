@@ -12,14 +12,22 @@
   <script>
 		var contactID = "<?php echo $_GET['cid']; ?>";
 		var action = "<?php echo $_GET['action']; ?>";
+		var pid = "<?php echo $_GET['pid']; ?>";
     function contactCreate() {
-      buildProfile( null, "crm-contact-fields", contactID );
 			if (action == "add"){
 				$('#contact-header').text('Add Contact');
+				buildProfile( pid, "crm-contact-fields", null );
+			}else{
+				buildProfile( null, "crm-contact-fields", contactID );
 			}
     }
     function saveContact() {
-      saveProfile( null, contactID );
+			if (action == "add"){
+				saveProfile( pid, contactID );
+			}else{
+				saveProfile( null, contactID );
+			}
+      
       //$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactID );
     }
 		function goBackContact() {
