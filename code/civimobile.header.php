@@ -9,7 +9,8 @@ else {
 $civimobile_vars['title'] = 'CiviMobile';
 
 $config =& CRM_Core_Config::singleton();
-$civimobile_vars['civicrm_base'] = $config->userFrameworkResourceURL . DIRECTORY_SEPARATOR;
+$civimobile_vars['civicrm_base'] = $config->userFrameworkBaseURL . DIRECTORY_SEPARATOR;
+$civimobile_vars['civicrm_resourceURL'] = $config->userFrameworkResourceURL . DIRECTORY_SEPARATOR;
 
 $session =& CRM_Core_Session::singleton();
 $civimobile_vars['loggedInContactID'] = $session->get('userID');
@@ -29,11 +30,9 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
     <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-rc.2/jquery-1.8.2.min.js"></script>
     <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-rc.2/jquery.mobile-1.2.0-rc.2.js"></script>
     <script src="<?php print $includePath; ?>js/common.js"></script>
-    <script src="<?php print $civimobile_vars['civicrm_base']; ?>packages/jquery/plugins/jquery.mustache.js"></script>
-    <script src="<?php print $civimobile_vars['civicrm_base']; ?>js/rest.js"></script>
+    <script src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/rest.js"></script>
     <script>
-      var crmajaxURL = '<?php print base_path(); ?>civicrm/ajax/rest';
-      var base_url =  '<?php print base_path(); ?>';
+      var crmajaxURL = '<?php print $civimobile_vars['civicrm_base']; ?>civicrm/ajax/rest';
       var cmurl = '<?php print url('civicrm/mobile/contact/')?>';
 			var profileId = 1;
     </script>
