@@ -19,8 +19,8 @@
 			}
     }
     function saveContact() {
-      saveProfile( profileId, contactID );
-      $.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactID );
+      saveProfile( null, contactID );
+      //$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactID );
     }
 		function goBackContact() {
 			if (action == "add"){

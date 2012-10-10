@@ -117,7 +117,6 @@ function getContactProfileId(contactType){
 	var profileIds = {"Individual":'1',
 	"Organization":'5',
 	"Household":'6'};
-	console.log("calc: "+profileIds[contactType]);	
 	return profileIds[contactType];
 }
 
@@ -125,21 +124,28 @@ function getContactProfileId(contactType){
 /**
 * Save profile values
 */
-function saveProfile( profileId, contactId ) {
-	$.each(fieldIds, function(index, value) {
-		fieldIds[index] = $('#'+index).val();
+function saveProfile( profileId, contactId ) {	
+	$().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
+	,{
+		ajaxURL: crmajaxURL,
+		success:function (data){
+			var contactType = data.result;
+			var profileId = getContactProfileId(contactType);
+			$.each(fieldIds, function(index, value) {
+				fieldIds[index] = $('#'+index).val();
+			});
+			fieldIds.version = "3";
+			fieldIds.profile_id = profileId;
+			fieldIds.contact_type = contactType;
+			if ( contactId ) {
+				fieldIds.contact_id = contactId;
+			}
+			$().crmAPI ('Profile','set', fieldIds
+			,{ 
+				success:function (data) {
+					$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactId );
+				}
+			});
+		}
 	});
-
-	fieldIds.version = "3";
-	fieldIds.contact_type = "Individual";
-	if ( contactId ) {
-		fieldIds.contact_id = contactId;
-	}
-
-	fieldIds.profile_id = profileId;
-	$().crmAPI ('Profile','set', fieldIds
-	,{ success:function (data) {
-		//$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+data.id );
-	}
-});
 }
