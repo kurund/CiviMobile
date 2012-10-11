@@ -9,7 +9,6 @@ else {
 $civimobile_vars['title'] = 'CiviMobile';
 
 $config =& CRM_Core_Config::singleton();
-$civimobile_vars['civicrm_base'] = $config->userFrameworkBaseURL . DIRECTORY_SEPARATOR;
 $civimobile_vars['civicrm_resourceURL'] = $config->userFrameworkResourceURL . DIRECTORY_SEPARATOR;
 
 $session =& CRM_Core_Session::singleton();
@@ -27,15 +26,14 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" >
     <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.2.0-rc.2/jquery.mobile-1.2.0-rc.2.min.css" />
-    <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-rc.2/jquery-1.8.2.min.js"></script>
-    <script src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-rc.2/jquery.mobile-1.2.0-rc.2.js"></script>
-    <script src="<?php print $includePath; ?>js/common.js"></script>
-    <script src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/rest.js"></script>
-    <script>
-      var crmajaxURL = '<?php print $civimobile_vars['civicrm_base']; ?>civicrm/ajax/rest';
-      var cmurl = '<?php print url('civicrm/mobile/contact/')?>';
-			var profileId = 1;
+    <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-rc.2/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0-rc.2/jquery.mobile-1.2.0-rc.2.js"></script>
+    <script type="text/javascript" src="<?php print $includePath; ?>js/common.js"></script>
+    <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/rest.js"></script>
+    <script type="text/javascript">
+      var crmajaxURL = '<?php print CRM_Utils_System::url("civicrm/ajax/rest"); ?>';
+      var profileId = 1;
     </script>
-    <script src="<?php print $includePath; ?>js/events.js"></script>
+    <script type="text/javascript" src="<?php print $includePath; ?>js/events.js"></script>
   </head>
   <body> 
