@@ -42,12 +42,7 @@ $( document ).delegate("#cm-events", "pageinit", function() {
 // events for participant checkin
 $( document ).delegate("#cm-participant-checkin", "pageinit", function() {
   $('#participant_name').keyup( function() {
-    if ($(this).val()) {
-      participantSearch($(this).val());
-    }
-    else {
-      $('.participant-list').find('*').not('.dividerClass').remove();
-    }
+    participantSearch($(this).val());
   });
   participantSearch();
 });
@@ -67,16 +62,6 @@ $( document ).delegate("#cm-surveys", "pageinit", function() {
 
 // events for survey contact listing
 $( document ).delegate("#cm-survey-contacts", "pageinit", function() {
-  /*
-  $('#sc_name').keyup( function() {
-    if ($(this).val()) {
-      surveyRespondantSearch($(this).val());
-    }
-    else {
-      $('#survey-contacts').empty(); 
-    }
-  });
-  */
   surveyRespondantSearch();
 });
 
