@@ -48,7 +48,7 @@
               ,{ 
                 ajaxURL: crmajaxURL,
                 success:function (data){
-                  proxContactSelector.append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c"><a href="/civicrm/mobile/contact?action=view&cid='+ value.contact_id +'" data-transition="slideup"data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
+                  proxContactSelector.append('<li role="option" tabindex="-1" data-ajax="true" data-theme="c"><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+ value.contact_id +'" data-transition="slideup"data-role="contact-'+value.contact_id+'">'+data.display_name+'</a></li>');
                   proxContactSelector.listview(cmd);
                 }
               });

@@ -18,7 +18,7 @@
   }
   else {
   ?>
-    <a data-role="button" data-icon="info" href="/civicrm/mobile/login" title="Click to login" class="icons" data-transition="slideup" >Login</a>
+    <a data-role="button" data-icon="info" href="<?php echo CRM_Utils_System::url('civicrm/mobile/login'); ?>" title="Click to login" class="icons" data-transition="slideup" >Login</a>
   <?php
   }
   ?>

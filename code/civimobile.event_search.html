@@ -27,7 +27,7 @@
           $('#events').empty();
         }
         $.each(data.values, function(key, value) {
-          $('#events').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.id+'" ><a href="/civicrm/mobile/participant/checkin?eid='+ value.id +'" data-transition="slideup">'+value.title+'</a></li>');
+          $('#events').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/participant/checkin', 'eid='); ?>'+ value.id +'" data-transition="slideup">'+value.title+'</a></li>');
         });
         $.mobile.hidePageLoadingMsg( );
         $('#events').listview(cmd); 

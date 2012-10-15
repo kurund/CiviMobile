@@ -41,7 +41,7 @@ function contactSearch (q) {
 				$('#contacts').empty();
 			}
 			$.each(data.values, function(key, value) {
-				$('#contacts').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.contact_id+'" ><a href="/civicrm/mobile/contact?action=view&cid='+value.contact_id+'" data-transition="slideup"  data-role="contact-'+value.contact_id+'">'+value.display_name+'</a></li>');
+				$('#contacts').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.contact_id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+value.contact_id+'" data-transition="slideup"  data-role="contact-'+value.contact_id+'">'+value.display_name+'</a></li>');
 			});
 			$.mobile.hidePageLoadingMsg( );
 			$('#contacts').listview(cmd); 
