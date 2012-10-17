@@ -25,7 +25,7 @@ else {
 
 	function contactView() {
 		buildProfileView( null, "contact-details-sections", contactId );
-		$('#edit-contact-button').attr('href',"<?php echo CRM_Utils_System::url('civicrm/mobile/contact', action=edit&cid= ?>" + contactId);
+		$('#edit-contact-button').attr('href',"<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=edit&cid=', false, null, false); ?>" + contactId);
 	}
 	</script>
 
