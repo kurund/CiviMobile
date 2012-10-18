@@ -1,4 +1,5 @@
 <?php require_once 'civimobile.header.php'; ?>
+  <!-- Note that this page is currently called only in Drupal -->
 <div data-role="page" id="cm-login" data-ajax="false">
   <div data-role="header">
     <h3>Login to CiviMobile</h3>
@@ -10,10 +11,10 @@
         <ul data-role="listview" data-inset="true" data-divider-theme="a">
           <li data-role="list-divider" role="heading" >Enter your username and password to access CiviCRM</li>
           <li data-role="fieldcontain">
-            <input type="text" name="uname" id="name" placeholder="Username" value=""  />
+            <input type="text" name="uname" id="uname" placeholder="Username" value=""  />
           </li>
           <li data-role="fieldcontain">
-            <input type="password" name="passwd" id="name" placeholder="Password" value=""  />
+            <input type="password" name="passwd" id="passwd" placeholder="Password" value=""  />
           </li>
           <li class="ui-body ui-body-b">
             <fieldset >
@@ -37,7 +38,12 @@
         $authenticate = false;
       }
 
-      if ( $authenticate && CRM_Utils_System::authenticate($_POST['uname'], $_POST['passwd'], true) ) {
+      $reponse = CRM_Utils_System::authenticate($_POST['uname'], $_POST['passwd'], TRUE);
+
+      if ( $authenticate && $reponse ) {
+        // authentication is successful so get cms user id
+        $uid = CRM_Utils_System::getLoggedInUfID();
+        user_login_finalize($uid);
         ?>
         <script type="text/javascript">
           var homeUrl = "<?php echo CRM_Utils_System::url('civicrm/mobile', null, false, null, false);?>";
