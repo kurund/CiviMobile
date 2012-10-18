@@ -151,7 +151,9 @@ function saveProfile( profileId, contactId, viewUrl ) {
             ,{
               ajaxURL: crmajaxURL,
               success:function (data) {
-                $.mobile.changePage( viewUrl + contactId );
+                if ( viewUrl ) {
+                  $.mobile.changePage( viewUrl + contactId );
+                }
               }
             });
         }

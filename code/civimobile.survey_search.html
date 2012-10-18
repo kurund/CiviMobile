@@ -28,7 +28,7 @@
             surveySelector.empty();
           }
           $.each(data.values, function(key, value) {
-            surveySelector.append('<li role="option" tabindex="-1" data-theme="c" id="survey-'+value.id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/survey/contacts', 'sid='); ?>"'+ value.id +'&resid='+value.result_id+'" data-transition="slideup">'+value.title+'</a></li>');
+            surveySelector.append('<li role="option" tabindex="-1" data-theme="c" id="survey-'+value.id+'"><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/survey/contacts', 'sid='); ?>'+ value.id +'&resid='+value.result_id+'" data-transition="slideup">'+value.title+'</a></li>');
           });
           $.mobile.hidePageLoadingMsg( );
           surveySelector.listview(cmd);
