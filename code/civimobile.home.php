@@ -13,12 +13,12 @@
       <a data-role="button" data-icon="search" href="#cm-contact-search" title="Contacts" class="icons" data-transition="slideup" >Contact</a>
       <a data-role="button" data-icon="grid" href="#cm-events" title="Events" class="icons" data-transition="slideup" >Events</a>
       <a data-role="button" data-icon="info" href="#cm-surveys" title="Survey" class="icons" data-transition="slideup" >Survey</a>
-      <a data-role="button" data-icon="info" href="<?php echo CRM_Utils_System::url('civicrm/mobile/logout'); ?>" title="click to logout" class="icons" data-transition="slideup"  data-ajax="false">Logout</a>
+      <a data-role="button" data-icon="delete" href="<?php echo CRM_Utils_System::url('civicrm/mobile/logout'); ?>" title="click to logout" class="icons" data-transition="slideup"  data-ajax="false">Logout</a>
       <?php
     }
     else {
       ?>
-      <a data-role="button" data-icon="info" href="<?php echo CRM_Utils_System::url('civicrm/mobile/login'); ?>" title="Click to login" class="icons" data-transition="slideup" >Login</a>
+      <a data-role="button" data-icon="check" href="<?php echo CRM_Utils_System::url('civicrm/mobile/login'); ?>" title="Click to login" class="icons" data-transition="slideup" >Login</a>
       <?php
     }
     ?>
