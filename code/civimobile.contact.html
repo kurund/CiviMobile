@@ -14,11 +14,14 @@
 		var action = "<?php echo $_GET['action']; ?>";
 		var pid = "<?php echo $_GET['pid']; ?>";
     function contactCreate() {
-			if (action == "add"){
-				$('#contact-header').text('Add Contact');
-				buildProfile( pid, "crm-contact-fields", null );
-			}else{
-				buildProfile( null, "crm-contact-fields", contactID );
+			if (action == "add") {
+        var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/create','reset=1&json=1', false, null, false);?>";
+        $('#contact-header').text('Add Contact');
+				buildProfile( pid, "crm-contact-fields", null, dataUrl );
+      } 
+      else {
+        var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/edit','reset=1&json=1', false, null, false);?>";
+				buildProfile( null, "crm-contact-fields", contactID, dataUrl );
 			}
     }
     function saveContact() {

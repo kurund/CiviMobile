@@ -3,7 +3,7 @@
 */
 
 var fieldIds = {};
-function buildProfile( profileId, profileContainerId, contactId ) {
+function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
 	$().crmAPI ('Contact','get',{'version' :'3', 'id' : contactId}
 	,{
 		ajaxURL: crmajaxURL,
@@ -15,12 +15,12 @@ function buildProfile( profileId, profileContainerId, contactId ) {
 			if (!profileId) {
 				profileId = getContactProfileId(contactInfo.contact_type);
 			}
+
+      dataUrl += '&gid=' + profileId;
 			if ( contactId ) {
-				var dataUrl = '/civicrm/profile/edit?reset=1&json=1&gid=' + profileId +'&id=' + contactId;	
+				dataUrl += '&id=' + contactId;	
 			}
-			else {
-				var dataUrl = '/civicrm/profile/create?reset=1&json=1&gid=' + profileId;
-			}
+      
       $.getJSON( dataUrl,
         {
           format: "json"
@@ -29,8 +29,9 @@ function buildProfile( profileId, profileContainerId, contactId ) {
           jsonProfile = data;
 
           var locationFields = ['email','street_address'];
-          $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId}
-            ,{ success:function (data){
+          $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId},
+            { ajaxURL: crmajaxURL,
+              success:function (data){
               $.each(data.values, function(index, value) {
                 if ( value.location_type_id ) {
                   if (value.field_name.indexOf("phone") != -1){
@@ -95,7 +96,8 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
 				profileId = getContactProfileId(contactInfo.contact_type);
 			}
 			$().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId}
-			,{ success:function (data){
+			,{ajaxURL: crmajaxURL, 
+        success:function (data){
 				$.each(data.values, function(index, value) {
 					if ( contactInfo[value.field_name] ) {
 						var content = '<li data-role="list-divider">'+value.label+'</li>' +
