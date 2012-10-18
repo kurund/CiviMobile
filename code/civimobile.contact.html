@@ -11,7 +11,7 @@
   </div><!-- /content -->
 
   <script>
-    var contactID = "<?php echo $_GET['cid']; ?>";
+    var contactID = "<?php if (isset($_GET['cid'])) { echo $_GET['cid']; }?>";
     var action = "<?php echo $_GET['action']; ?>";
     var pid = "<?php echo $_GET['pid']; ?>";
     function contactCreate() {
