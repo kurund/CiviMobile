@@ -149,6 +149,7 @@ function saveProfile( profileId, contactId ) {
           }
           $().crmAPI ('Profile','set', fieldIds
             ,{
+              ajaxURL: crmajaxURL,
               success:function (data) {
                 $.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactId );
               }
@@ -168,6 +169,7 @@ function saveProfile( profileId, contactId ) {
     }
     $().crmAPI ('Profile','set', fieldIds
       ,{
+        ajaxURL: crmajaxURL,
         success:function (data) {
           $.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+data.id );
         }
