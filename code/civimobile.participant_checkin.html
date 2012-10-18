@@ -47,7 +47,7 @@
               var content = '<li  role="option">' +
                 '<a href="#" id="event-participant-'+ value.participant_id+'" data-participant-id="'+ value.participant_id + '" data-role="participants-'+ value.id +'" >'+
                 value.display_name + '</a>' +
-                '<a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>"'+ value.contact_id + '&context=cm-events" data-icon="info"></a>' +
+                '<a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+ value.contact_id + '&context=cm-events" data-icon="info"></a>' +
                 '</li>';
               if((value.participant_status_id == '1') || (value.participant_status_id == '5')){
                 registeredParticipants.append(content);
@@ -62,10 +62,8 @@
             $("[id^=event-participant-]").click(function(event){
               checkinParticipant($(this).attr('data-participant-id'), eventId);
             });
-
           }
         });
-
     }
 
     function checkinParticipant(pid,eid) {
