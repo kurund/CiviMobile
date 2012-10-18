@@ -1,7 +1,7 @@
 <div data-role="header">
   <h3>Search Events</h3>
   <a href="#cm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
-</div> 
+</div>
 
 <div data-role="content" id="event-content">
   <div class="ui-listview-filter ui-bar-c">
@@ -10,29 +10,29 @@
   <ul id="events" data-role="listview" data-inset="false" data-filter="false"></ul>
 </div>
 
-<script>
+<script type="text/javascript">
   function eventSearch (q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('Event','get',
-    {'version' :'3', 'title': {'LIKE': q + '%'}, 'return' : 'event_title,id' },
-    { 
-      ajaxURL: crmajaxURL,
-      success:function (data){
-        if (data.count == 0) {
-          cmd = null;
+      {'version' :'3', 'title': {'LIKE': q + '%'}, 'return' : 'event_title,id' },
+      {
+        ajaxURL: crmajaxURL,
+        success:function (data){
+          if (data.count == 0) {
+            cmd = null;
+          }
+          else {
+            cmd = "refresh";
+            $('#events').show();
+            $('#events').empty();
+          }
+          $.each(data.values, function(key, value) {
+            $('#events').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/participant/checkin', 'eid='); ?>'+ value.id +'" data-transition="slideup">'+value.title+'</a></li>');
+          });
+          $.mobile.hidePageLoadingMsg( );
+          $('#events').listview(cmd);
         }
-        else {
-          cmd = "refresh";
-          $('#events').show();
-          $('#events').empty();
-        }
-        $.each(data.values, function(key, value) {
-          $('#events').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/participant/checkin', 'eid='); ?>'+ value.id +'" data-transition="slideup">'+value.title+'</a></li>');
-        });
-        $.mobile.hidePageLoadingMsg( );
-        $('#events').listview(cmd); 
-      }
-    });
+      });
   }
 </script>
 

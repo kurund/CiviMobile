@@ -5,13 +5,13 @@ $( document ).delegate("#cm-contact-view", "pageinit", function() {
 
 // events for contact create and edit, if contact id is not passed it's a create mode
 $( document ).delegate("#cm-contact-form", "pageinit", function() {
-	$('#save-contact-button').click(function(){
+  $('#save-contact-button').click(function(){
     saveContact( );
   });
-	$('#back-contact-button').click(function(){
-		goBackContact();
-		  });
-	
+  $('#back-contact-button').click(function(){
+    goBackContact();
+  });
+
   contactCreate();
 });
 
@@ -22,7 +22,7 @@ $( document ).delegate("#cm-contact-search", "pageinit", function() {
       contactSearch($(this).val());
     }
     else {
-      $('#contacts').empty(); 
+      $('#contacts').empty();
     }
   });
 });
@@ -34,7 +34,7 @@ $( document ).delegate("#cm-events", "pageinit", function() {
       eventSearch($(this).val());
     }
     else {
-      $('#events').empty(); 
+      $('#events').empty();
     }
   });
 });
@@ -54,7 +54,7 @@ $( document ).delegate("#cm-surveys", "pageinit", function() {
       surveySearch($(this).val());
     }
     else {
-      $('#surveys').empty(); 
+      $('#surveys').empty();
     }
   });
   surveySearch('');
@@ -93,12 +93,12 @@ $( document ).delegate("#cm-proximity-search", "pageinit", function() {
     }
   });
 
-    function onSuccess(location) {			
-      searchContactByGeoLocation(location);
-    }
+  function onSuccess(location) {
+    searchContactByGeoLocation(location);
+  }
 
-    // Error function for Geolocation call
-    function onError( ) {
-      $('#locationResult').html("Geolocation not supported");
-    }
+  // Error function for Geolocation call
+  function onError( ) {
+    $('#locationResult').html("Geolocation not supported");
+  }
 }); 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 class civimobile {
   function home() {
     require_once 'civimobile.home.php';
@@ -6,7 +6,7 @@ class civimobile {
   }
 
   function contacts() {
-		$action = $_GET['action'];
+    $action = $_GET['action'];
     if ( $action == 'view' ) {
       require_once 'civimobile.contact_view.html';
     }
@@ -25,7 +25,7 @@ class civimobile {
     require_once 'civimobile.survey_contacts.html';
     exit;
   }
-  
+
   function surveyInterview() {
     require_once 'civimobile.survey_interview.html';
     exit;

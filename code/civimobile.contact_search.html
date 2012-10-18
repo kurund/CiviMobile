@@ -1,52 +1,52 @@
 <div id="jqm-contactsheader" data-role="header">
-	<h3>Search Contacts</h3>
-	<a href="#cm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
-	<a href="#addContactPopup"  style="text-decoration: none" id="add-contact-button" data-role="button" data-icon="plus" class="ui-btn-right jqm-home" data-rel="popup">Add</a>
-</div> 
+  <h3>Search Contacts</h3>
+  <a href="#cm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
+  <a href="#addContactPopup"  style="text-decoration: none" id="add-contact-button" data-role="button" data-icon="plus" class="ui-btn-right jqm-home" data-rel="popup">Add</a>
+</div>
 <div data-role="popup" id="addContactPopup" data-transition="slidedown">
-	<ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="a">
-		<li data-role="divider" data-theme="a">Contact type:</li>
-		<li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=1'); ?>" data-transition="slideup">Individual</a></li>
-		<li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=5'); ?>" data-transition="slideup">Orgnaisation</a></li>
-		<li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=6'); ?>" data-transition="slideup">Household</a></li>
-	</ul>
+  <ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="a">
+    <li data-role="divider" data-theme="a">Contact type:</li>
+    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=1'); ?>" data-transition="slideup">Individual</a></li>
+    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=5'); ?>" data-transition="slideup">Orgnaisation</a></li>
+    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=6'); ?>" data-transition="slideup">Household</a></li>
+  </ul>
 </div>
 <div data-role="content" id="contact-content">
-	<div class="ui-listview-filter ui-bar-c">
-		<input type="search" name="sort_name" id="sort_name" value="" />
-	</div>
-	<ul id="contacts" data-role="listview" data-inset="false" data-filter="false"></ul>
+  <div class="ui-listview-filter ui-bar-c">
+    <input type="search" name="sort_name" id="sort_name" value="" />
+  </div>
+  <ul id="contacts" data-role="listview" data-inset="false" data-filter="false"></ul>
 </div>
 
 <br/>
 
 <div>
-	<a href="#cm-proximity-search" id="proximity-search-button" data-role="button" data-transition="slideup">Proximity Search</a>
+  <a href="#cm-proximity-search" id="proximity-search-button" data-role="button" data-transition="slideup">Proximity Search</a>
 </div>
 
 <script>
-function contactSearch (q) {
-	$.mobile.showPageLoadingMsg( 'Searching' );
-	$().crmAPI ('Contact','get',
-	{'version' :'3', 'sort_name': q, 'return' : 'display_name' },
-	{ 
-		ajaxURL: crmajaxURL,
-		success:function (data){
-			if (data.count == 0) {
-				cmd = null;
-			}
-			else {
-				cmd = "refresh";
-				$('#contacts').show();
-				$('#contacts').empty();
-			}
-			$.each(data.values, function(key, value) {
-				$('#contacts').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.contact_id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+value.contact_id+'" data-transition="slideup"  data-role="contact-'+value.contact_id+'">'+value.display_name+'</a></li>');
-			});
-			$.mobile.hidePageLoadingMsg( );
-			$('#contacts').listview(cmd); 
-		}
-	});
-}
+  function contactSearch (q) {
+    $.mobile.showPageLoadingMsg( 'Searching' );
+    $().crmAPI ('Contact','get',
+      {'version' :'3', 'sort_name': q, 'return' : 'display_name' },
+      {
+        ajaxURL: crmajaxURL,
+        success:function (data){
+          if (data.count == 0) {
+            cmd = null;
+          }
+          else {
+            cmd = "refresh";
+            $('#contacts').show();
+            $('#contacts').empty();
+          }
+          $.each(data.values, function(key, value) {
+            $('#contacts').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.contact_id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+value.contact_id+'" data-transition="slideup"  data-role="contact-'+value.contact_id+'">'+value.display_name+'</a></li>');
+          });
+          $.mobile.hidePageLoadingMsg( );
+          $('#contacts').listview(cmd);
+        }
+      });
+  }
 </script>
 

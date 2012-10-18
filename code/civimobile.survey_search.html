@@ -1,7 +1,7 @@
 <div data-role="header">
   <h3>Search Survey</h3>
   <a href="#cm-home" data-ajax="true" id="home-main" data-transition="slideup" data-direction="reverse" data-role="button" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home">Home</a>
-</div> 
+</div>
 
 <div data-role="content" id="survey-content">
   <div class="ui-listview-filter ui-bar-c">
@@ -14,26 +14,26 @@
   function surveySearch(q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
     $().crmAPI ('Survey','get',
-    {'version' :'3', 'title': {'LIKE': q + '%'}, 'is_active': 1},
-    { 
-      ajaxURL: crmajaxURL,
-      success:function (data){
-        var surveySelector = $('#surveys');
-        if (data.count == 0) {
-          cmd = null;
+      {'version' :'3', 'title': {'LIKE': q + '%'}, 'is_active': 1},
+      {
+        ajaxURL: crmajaxURL,
+        success:function (data){
+          var surveySelector = $('#surveys');
+          if (data.count == 0) {
+            cmd = null;
+          }
+          else {
+            cmd = "refresh";
+            surveySelector.show();
+            surveySelector.empty();
+          }
+          $.each(data.values, function(key, value) {
+            surveySelector.append('<li role="option" tabindex="-1" data-theme="c" id="survey-'+value.id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/survey/contacts', 'sid='); ?>"'+ value.id +'&resid='+value.result_id+'" data-transition="slideup">'+value.title+'</a></li>');
+          });
+          $.mobile.hidePageLoadingMsg( );
+          surveySelector.listview(cmd);
         }
-        else {
-          cmd = "refresh";
-          surveySelector.show();
-          surveySelector.empty();
-        }
-        $.each(data.values, function(key, value) {
-          surveySelector.append('<li role="option" tabindex="-1" data-theme="c" id="survey-'+value.id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/survey/contacts', 'sid='); ?>"'+ value.id +'&resid='+value.result_id+'" data-transition="slideup">'+value.title+'</a></li>');
-        });
-        $.mobile.hidePageLoadingMsg( );
-        surveySelector.listview(cmd);
-      }
-    });
+      });
   }
 </script>
 

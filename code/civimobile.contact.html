@@ -1,48 +1,50 @@
 <?php require_once('civimobile.header.php'); ?>
 
 <div data-role="page" id="cm-contact-form">
-	<div data-role="header">
-		<h1 id="contact-header">Edit contact</h1>
-		<a href="#" id="save-contact-button" data-role="button" data-icon="check" class="ui-btn-right jqm-save">Save</a>
-		<a href="#" id="back-contact-button" data-rel="back" class="ui-btn-left" data-icon="arrow-l">Back</a>
-	</div><!-- /header -->
+  <div data-role="header">
+    <h1 id="contact-header">Edit contact</h1>
+    <a href="#" id="save-contact-button" data-role="button" data-icon="check" class="ui-btn-right jqm-save">Save</a>
+    <a href="#" id="back-contact-button" data-rel="back" class="ui-btn-left" data-icon="arrow-l">Back</a>
+  </div><!-- /header -->
 
-	<div data-role="content" id="crm-contact-fields">
-	</div><!-- /content -->
- 
+  <div data-role="content" id="crm-contact-fields">
+  </div><!-- /content -->
+
   <script>
     var contactID = "<?php echo $_GET['cid']; ?>";
     var action = "<?php echo $_GET['action']; ?>";
-		var pid = "<?php echo $_GET['pid']; ?>";
+    var pid = "<?php echo $_GET['pid']; ?>";
     function contactCreate() {
-			if (action == "add") {
+      if (action == "add") {
         var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/create','reset=1&json=1', false, null, false);?>";
         $('#contact-header').text('Add Contact');
-				buildProfile( pid, "crm-contact-fields", null, dataUrl );
-      } 
+        buildProfile( pid, "crm-contact-fields", null, dataUrl );
+      }
       else {
         var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/edit','reset=1&json=1', false, null, false);?>";
-				buildProfile( null, "crm-contact-fields", contactID, dataUrl );
-			}
+        buildProfile( null, "crm-contact-fields", contactID, dataUrl );
+      }
     }
+
     function saveContact() {
-			if (action == "add"){
-				saveProfile( pid, contactID );
-			}else{
-				saveProfile( null, contactID );
-			}
-      
+      if (action == "add"){
+        saveProfile( pid, contactID );
+      }
+      else{
+        saveProfile( null, contactID );
+      }
+
       //$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactID );
     }
-		function goBackContact() {
-			if (action == "add"){
-				$.mobile.changePage('#cm-contact-search');
-			}
-			else{
+    function goBackContact() {
+      if (action == "add"){
+        $.mobile.changePage('#cm-contact-search');
+      }
+      else{
         var viewURL = "<?php echo CRM_Utils_System::url('civicrm/mobile/contact','action=view&cid=', false, null, false);?>";
         $.mobile.changePage( viewURL + contactID);
-			}
-		}
+      }
+    }
   </script>
 </div><!-- /page -->
 
