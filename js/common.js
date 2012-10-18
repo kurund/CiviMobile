@@ -130,7 +130,7 @@ function profileIdToContactType(profileId){
 /**
  * Save profile values
  */
-function saveProfile( profileId, contactId ) {
+function saveProfile( profileId, contactId, viewUrl ) {
   if (contactId){
     $().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
       ,{
@@ -151,7 +151,7 @@ function saveProfile( profileId, contactId ) {
             ,{
               ajaxURL: crmajaxURL,
               success:function (data) {
-                $.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactId );
+                $.mobile.changePage( viewUrl + contactId );
               }
             });
         }
@@ -171,7 +171,7 @@ function saveProfile( profileId, contactId ) {
       ,{
         ajaxURL: crmajaxURL,
         success:function (data) {
-          $.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+data.id );
+          $.mobile.changePage( viewUrl + data.id );
         }
       });
   }

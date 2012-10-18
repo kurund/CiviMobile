@@ -27,11 +27,12 @@
     }
 
     function saveContact() {
+      var viewUrl = "<?php echo CRM_Utils_System::url('civicrm/mobile/contact','action=view&cid=', false, null, false);?>";
       if (action == "add"){
-        saveProfile( pid, contactID );
+        saveProfile( pid, contactID, viewUrl );
       }
       else{
-        saveProfile( null, contactID );
+        saveProfile( null, contactID, viewUrl );
       }
 
       //$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactID );
