@@ -22,9 +22,6 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
         }
 
         $.getJSON( dataUrl,
-          {
-            format: "json"
-          },
           function(data) {
             jsonProfile = data;
 
@@ -59,13 +56,11 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
                     var tagName = $(field).get(0).tagName;
                     if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
                       if ($(field).get(0).type == 'text' || $(field).get(0).type == 'textarea') {
-                        $('#'+id).textinput();
-                        $('#'+id).attr( 'placeholder', value.label );
+                        $('#'+id).textinput().attr( 'placeholder', value.label );
                       }
                     }
                     else if (tagName == 'SELECT'){
-                      $('#'+id).selectmenu();
-                      $('#'+id).parent().parent().prepend('<label for="'+id+'">'+value.label+':</label>');
+                      $('#'+id).selectmenu().parent().parent().prepend('<label for="'+id+'">'+value.label+':</label>');
                     }
 
                     //gather all the processes field ids
