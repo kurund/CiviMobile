@@ -1,4 +1,5 @@
-<?php require_once('civimobile.header.php');
+<?php
+require_once('civimobile.header.php');
 if ( isset($_GET['context']) ) {
 	$context = $_GET['context'];
 }
@@ -8,26 +9,26 @@ else {
 ?>
 
 <div data-role="page" id="cm-contact-view">
-	<div data-role="header">
-		<h1>Contact details</h1>
-		<a href="" id="edit-contact-button" data-role="button" class="ui-btn-right jqm-edit">Edit</a>
-		<a href="#<?php echo $context;?>" id="back-contact-button" class="ui-btn-left" data-icon="arrow-l">Back</a>
-	</div><!-- /header -->
-	<div data-role="content" id="contact-details-content">
-		<div class="content-primary">
-			<ul data-role="listview" data-theme="g" data-inset="true" id="contact-details-sections" data-dividertheme="a">
-			</ul>
-		</div><!-- /content-primary -->
-	</div><!-- /content -->
+  <div data-role="header">
+    <h1>Contact details</h1>
+    <a href="" id="edit-contact-button" data-role="button" class="ui-btn-right jqm-edit">Edit</a>
+    <a href="#<?php echo $context;?>" id="back-contact-button" class="ui-btn-left" data-icon="arrow-l">Back</a>
+  </div><!-- /header -->
+  <div data-role="content" id="contact-details-content">
+    <div class="content-primary">
+      <ul data-role="listview" data-theme="g" data-inset="true" id="contact-details-sections" data-dividertheme="a">
+      </ul>
+    </div><!-- /content-primary -->
+  </div><!-- /content -->
 
-	<script>
-	var contactId = "<?php echo $_GET['cid']; ?>";
+  <script>
+    var contactId = "<?php echo $_GET['cid']; ?>";
 
-	function contactView() {
-		buildProfileView( null, "contact-details-sections", contactId );
-		$('#edit-contact-button').attr('href',"<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=edit&cid=', false, null, false); ?>" + contactId);
-	}
-	</script>
+    function contactView() {
+      buildProfileView( null, "contact-details-sections", contactId );
+      $('#edit-contact-button').attr('href',"<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=edit&cid=', false, null, false); ?>" + contactId);
+    }
+  </script>
 
 </div><!-- /page -->
 
