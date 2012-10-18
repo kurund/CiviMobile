@@ -7,13 +7,12 @@
     <a href="#" id="back-contact-button" data-rel="back" class="ui-btn-left" data-icon="arrow-l">Back</a>
   </div><!-- /header -->
 
-  <div data-role="content" id="crm-contact-fields">
-  </div><!-- /content -->
+  <div data-role="content" id="crm-contact-fields"></div><!-- /content -->
 
-  <script>
+  <script type="text/javascript">
     var contactID = "<?php if (isset($_GET['cid'])) { echo $_GET['cid']; }?>";
-    var action = "<?php echo $_GET['action']; ?>";
-    var pid = "<?php echo $_GET['pid']; ?>";
+    var action = "<?php if (isset($_GET['action'])) { echo $_GET['action']; }?>?>";
+    var pid = "<?php if (isset($_GET['pid'])) { echo $_GET['pid']; }?>?>";
     function contactCreate() {
       if (action == "add") {
         var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/create','reset=1&json=1', false, null, false);?>";
