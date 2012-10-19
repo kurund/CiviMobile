@@ -1,7 +1,7 @@
 <?php require_once 'civimobile.header.php'; ?>
 
 <!-- start of menu page -->
-<div data-role="page" id="cm-home" data-ajax="false">
+<div data-role="page" id="cm-home" data-ajax="false" data-dom-cache="false">
   <div data-role="header">
     <h1>CiviMobile</h1>
   </div><!-- /header -->
