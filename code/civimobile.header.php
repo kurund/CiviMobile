@@ -22,10 +22,10 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $civimobile_vars['language'] ?>" lang="<?php print $civimobile_vars['language'] ?>" >
 <head>
   <title><?php print $civimobile_vars['title'];?></title>
+  <?php //print $civimobile_page_settings['favicon'] ?>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" >
-  <link rel="stylesheet" href="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.css" />
-  <link rel="stylesheet" href="<?php print $includePath; ?>css/jqm.slidemenu.css" />
+  <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.css" />
   <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0/jquery-1.8.2.min.js"></script>
   <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.js"></script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/common.js"></script>
@@ -34,6 +34,5 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
     var crmajaxURL = '<?php print CRM_Utils_System::url('civicrm/ajax/rest', '', false, null, false); ?>';
   </script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/events.js"></script>
-  <script type="text/javascript" src="<?php print $includePath; ?>js/jqm.slidemenu.js"></script>
 </head>
 <body>
