@@ -1,6 +1,17 @@
 <?php require_once 'civimobile.header.php'; ?>
 
 <!-- start of menu page -->
+<div id="slidemenu">
+  <h3>MENU</h3>
+  <ul>
+    <li><a href="#cm-home" class="contentLink">Home</a></li>
+    <li><a href="#cm-contact-search" class="contentLink">Contact</a></li>
+    <li><a href="#cm-events" class="contentLink">Events</a></li>
+    <li><a href="#cm-surveys" class="contentLink">Survey</a></li>
+    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/logout'); ?>" data-ajax="false">Logout</a></li>
+  </ul>
+</div>
+
 <div data-role="page" id="cm-home" data-ajax="false">
   <div data-role="header">
     <h1>CiviMobile</h1>
