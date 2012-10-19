@@ -156,48 +156,54 @@ function getContactProfileId(contactType) {
  * Save profile values, this used for saving contact add/edit mode
  * This function is also called to record the survey responses
  */
-function saveProfile( profileId, contactId, viewUrl ) {
-  // if profile id is not passed retrieve it from contact id
-  if ( !profileId && contactId ) {
-    $().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
-      ,{
-        ajaxURL: crmajaxURL,
-        success:function (data){
-          $.each(fieldIds, function(index, value) {
-            fieldIds[index] = $('#'+index).val();
-          });
-
-          fieldIds.profile_id = getContactProfileId(data.result);
-          fieldIds.contact_id = contactId;
-          fieldIds.version = "3";
-
-          $().crmAPI ('Profile','set', fieldIds
-            ,{
-              ajaxURL: crmajaxURL,
-              success:function (data) {
-                $.mobile.changePage( viewUrl + data.id );
-              }
-            }
-          );
+function saveProfile( profileId, contactId, viewUrl, activityId ) {
+  // if contact id means either contact edit or survey interview mode
+  if ( contactId ) {
+    if ( !profileId ) {
+      // contact edit case
+      $().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
+        ,{
+          ajaxURL: crmajaxURL,
+          success:function (data){
+            processProfileSave( getContactProfileId(data.result), viewUrl, contactId );
+          }
         }
-      }
-    );
+      );
+    }
+    else {
+      // record survey respondant case
+      processProfileSave( profileId, viewUrl, contactId, activityId );
+    }
   }
   else {
-    $.each(fieldIds, function(index, value) {
-      fieldIds[index] = $('#'+index).val();
-    });
+    processProfileSave( profileId, viewUrl );
+  }
+}
 
-    fieldIds.profile_id = profileId;
-    fieldIds.version = "3";
+function processProfileSave( profileId, viewUrl, contactId, activityId ) {
+  $.each(fieldIds, function(index, value) {
+    fieldIds[index] = $('#'+index).val();
+  });
 
-    $().crmAPI ('Profile','set', fieldIds
-      ,{
-        ajaxURL: crmajaxURL,
-        success:function (data) {
+  fieldIds.profile_id = profileId;
+  fieldIds.version = "3";
+
+  if ( contactId ) {
+    fieldIds.contact_id = contactId;
+  }
+
+  if (activityId) {
+    fieldIds.activity_id = activityId;
+  }
+
+  $().crmAPI ('Profile','set', fieldIds
+    ,{
+      ajaxURL: crmajaxURL,
+      success:function (data) {
+        if (viewUrl) {
           $.mobile.changePage( viewUrl + data.id );
         }
       }
-    );
-  }
+    }
+  );
 }

@@ -14,6 +14,7 @@
     var action = "<?php if (isset($_GET['action'])) { echo $_GET['action']; }?>";
     var pid = "<?php if (isset($_GET['pid'])) { echo $_GET['pid']; }?>";
     function contactCreate() {
+      $.mobile.showPageLoadingMsg( 'Loading' );
       if (action == "add") {
         var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/create','reset=1&json=1', false, null, false);?>";
         $('#contact-header').text('Add Contact');
@@ -23,6 +24,7 @@
         var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/edit','reset=1&json=1', false, null, false);?>";
         buildProfile( null, "crm-contact-fields", contactID, dataUrl );
       }
+      $.mobile.hidePageLoadingMsg( );
     }
 
     function saveContact() {
@@ -33,9 +35,8 @@
       else{
         saveProfile( null, contactID, viewUrl );
       }
-
-      //$.mobile.changePage( "/civicrm/mobile/contact?action=view&cid="+contactID );
     }
+
     function goBackContact() {
       if (action == "add"){
         $.mobile.changePage('#cm-contact-search');

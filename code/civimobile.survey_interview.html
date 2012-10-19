@@ -31,11 +31,12 @@
       $().crmAPI ('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'enity_id' : surveyId}
         ,{ajaxURL: crmajaxURL,
           success:function (data) {
-          surveyProfileId = data.values[0].uf_group_id;
-          var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/edit','reset=1&json=1', false, null, false);?>";
-          buildProfile( surveyProfileId, 'crm-profile-content', contactId, dataUrl );
+            surveyProfileId = data.values[0].uf_group_id;
+            var dataUrl = "<?php echo CRM_Utils_System::url('civicrm/profile/edit','reset=1&json=1', false, null, false);?>";
+            buildProfile( surveyProfileId, 'crm-profile-content', contactId, dataUrl + '&aid=' + aid );
+          }
         }
-        });
+      );
 
       // get the result for the survey
       $().crmAPI ('OptionValue','get',
@@ -49,7 +50,8 @@
             });
             $('#select-choice-1').selectmenu();
           }
-        });
+        }
+      );
       $.mobile.hidePageLoadingMsg( );
     }
 
@@ -59,11 +61,11 @@
         return;
       }
 
-      var selectValue= $('#select-choice-1').val();
-      $().crmAPI ('Activity','update', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2'}, {
+      var selectValue = $('#select-choice-1').val();
+      $().crmAPI ('Activity','create', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2'}, {
         ajaxURL: crmajaxURL,
         success:function (data) {
-          saveProfile(surveyProfileId, contactId, null);
+          saveProfile(surveyProfileId, contactId, null, aid);
           // show success message
           $( "#popup-success" ).popup( "open" );
           gotoSurveyContactListing();
