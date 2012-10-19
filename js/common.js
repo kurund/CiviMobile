@@ -144,7 +144,7 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
 /**
  * A function to get the contact type and return the relevant ID
  */
-function getContactProfileId(contactType){
+function getContactProfileId(contactType) {
   var profileIds = {
     "Individual":'4',
     "Organization":'5',
@@ -152,41 +152,30 @@ function getContactProfileId(contactType){
   return profileIds[contactType];
 }
 
-function profileIdToContactType(profileId){
-  var contactTypes = {
-    '4':"Individual",
-    '5':"Organization",
-    '6':"Household"};
-  return contactTypes[profileId];
-}
-
 /**
- * Save profile values
+ * Save profile values, this used for saving contact add/edit mode
+ * This function is also called to record the survey responses
  */
 function saveProfile( profileId, contactId, viewUrl ) {
-  if (contactId){
+  // if profile id is not passed retrieve it from contact id
+  if ( !profileId && contactId ) {
     $().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
       ,{
         ajaxURL: crmajaxURL,
         success:function (data){
-          var contactType = data.result;
-          var profileId = getContactProfileId(contactType);
           $.each(fieldIds, function(index, value) {
             fieldIds[index] = $('#'+index).val();
           });
+
+          fieldIds.profile_id = getContactProfileId(data.result);
+          fieldIds.contact_id = contactId;
           fieldIds.version = "3";
-          fieldIds.profile_id = profileId;
-          fieldIds.contact_type = contactType;
-          if ( contactId ) {
-            fieldIds.contact_id = contactId;
-          }
+
           $().crmAPI ('Profile','set', fieldIds
             ,{
               ajaxURL: crmajaxURL,
               success:function (data) {
-                if ( viewUrl ) {
-                  $.mobile.changePage( viewUrl + contactId );
-                }
+                $.mobile.changePage( viewUrl + data.id );
               }
             }
           );
@@ -194,16 +183,14 @@ function saveProfile( profileId, contactId, viewUrl ) {
       }
     );
   }
-  else{
+  else {
     $.each(fieldIds, function(index, value) {
       fieldIds[index] = $('#'+index).val();
     });
-    fieldIds.version = "3";
+
     fieldIds.profile_id = profileId;
-    fieldIds.contact_type = profileIdToContactType(profileId);
-    if ( contactId ) {
-      fieldIds.contact_id = contactId;
-    }
+    fieldIds.version = "3";
+
     $().crmAPI ('Profile','set', fieldIds
       ,{
         ajaxURL: crmajaxURL,
