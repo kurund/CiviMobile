@@ -87,9 +87,13 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
 
               var id = $(field).attr('id');
               var tagName = $(field).get(0).tagName;
+
               if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
                 if ($(field).get(0).type == 'text' || $(field).get(0).type == 'textarea') {
                   $('#'+id).textinput().attr( 'placeholder', value.label );
+                }
+                else if ( $(field).get(0).type == 'radio' ) {
+                  $('#'+id).parent().prepend('<label for="'+id+'">'+value.label+':</label>');
                 }
               }
               else if (tagName == 'SELECT'){
