@@ -59,7 +59,7 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
         'im',
         'address_name'];
 
-      $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId},
+      $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight' },
         { ajaxURL: crmajaxURL,
           success:function (data){
             $.each(data.values, function(index, value) {
@@ -127,7 +127,7 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
         if (!profileId) {
           profileId = getContactProfileId(contactInfo.contact_type);
         }
-        $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId}
+        $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'}
           ,{ajaxURL: crmajaxURL,
             success:function (data){
               $.each(data.values, function(index, value) {
