@@ -61,7 +61,7 @@
         return;
       }
 
-      var selectValue = $('#select-choice-1').val();
+      var selectValue = $('#select-choice-1 option:selected').text();
       $().crmAPI ('Activity','create', {'version' :'3', 'id' : aid, 'result': selectValue, 'status_id': '2'}, {
         ajaxURL: crmajaxURL,
         success:function (data) {
