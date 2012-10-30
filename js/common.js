@@ -133,8 +133,21 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
               $.each(data.values, function(index, value) {
                 if ( contactInfo[value.field_name] ) {
                   var content = '<li data-role="list-divider">'+value.label+'</li>' +
-                    '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >'+
-                    contactInfo[value.field_name] +'</li>';
+                    '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
+
+                  switch (value.field_name) {
+                    case 'phone':
+                      content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                      break;
+                    case 'email':
+                      content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                      break;
+                    default:
+                      content += contactInfo[value.field_name];
+                  }
+
+                  content += '</li>';
+
                 }
                 $('#' + profileContainerId).append(content);
               });
