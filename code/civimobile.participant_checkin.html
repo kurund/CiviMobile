@@ -67,7 +67,6 @@
     }
 
     function checkinParticipant(pid,eid) {
-      var regDate;
       $.mobile.loading( 'show' );
       var participant = $('#event-participant-'+pid).parent().parent().parent();
       if(participant.parent().attr('id')=="registered-participants"){
@@ -77,16 +76,7 @@
         var statusId='1';
         var list = registeredParticipants
       }
-      $().crmAPI ('Participant','get',{'version' :'3', 'event_id' : eid, 'participant_id' : pid }
-        ,{
-          ajaxURL: crmajaxURL,
-          success:function (data){
-            $.each(data.values,function(key,value){
-	      regDate=value.participant_register_date;
-	    });
-          }
-        });
-      $().crmAPI ('Participant','create',{'version' :'3', 'event_id' : eid, 'id' : pid, 'status_id' : statusId, 'register_date' : regDate }
+      $().crmAPI ('Participant','create',{'version' :'3', 'event_id' : eid, 'participant_id' : pid, 'status_id' : statusId }
         ,{
           ajaxURL: crmajaxURL,
           success:function (data){

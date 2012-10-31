@@ -12,7 +12,7 @@ else {
   <div data-role="header">
     <h1>Contact details</h1>
     <a href="" id="edit-contact-button" data-role="button" class="ui-btn-right jqm-edit">Edit</a>
-    <a data-rel="back" href="<?php echo $context;?>" id="back-contact-button" class="ui-btn-left" data-icon="arrow-l">Back</a>
+    <a href="#<?php echo $context;?>" id="back-contact-button" class="ui-btn-left" data-icon="arrow-l">Back</a>
   </div><!-- /header -->
   <div data-role="content" id="contact-details-content">
     <div class="content-primary">
@@ -24,12 +24,6 @@ else {
   <script>
     var contactId = "<?php echo $_GET['cid']; ?>";
 
-    var context = "<?php echo $_GET['context']; ?>"
-    $(function(){
-    if(context == 'cm-events' || context == 'cm-surveys') {
-      $('#edit-contact-button').hide();
-    }
-    });
     function contactView() {
       buildProfileView( null, "contact-details-sections", contactId );
       $('#edit-contact-button').attr('href',"<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=edit&cid=', false, null, false); ?>" + contactId);
