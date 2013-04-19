@@ -27,10 +27,9 @@
 <script>
   function contactSearch (q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
-    $().crmAPI ('Contact','get',
+    CRM.api('Contact','get',
       {'version' :'3', 'sort_name': q, 'return' : 'display_name' },
       {
-        ajaxURL: crmajaxURL,
         success:function (data){
           if (data.count == 0) {
             cmd = null;

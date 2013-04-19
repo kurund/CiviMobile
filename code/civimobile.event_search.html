@@ -13,7 +13,7 @@
 <script type="text/javascript">
   function eventSearch (q) {
     $.mobile.showPageLoadingMsg( 'Searching' );
-    $().crmAPI ('Event','get',
+    CRM.api('Event','get',
       {'version' :'3', 'title': {'LIKE': q + '%'}, 'return' : 'event_title,id' },
       {
         ajaxURL: crmajaxURL,

@@ -25,11 +25,10 @@
       }
 
       $.mobile.showPageLoadingMsg( 'Searching' );
-      $().crmAPI ('SurveyRespondant','get',
+      CRM.api('SurveyRespondant','get',
       {'version' :'3', 'survey_id': surveyId, 'interviewer_id': interviewerId,
         'status_id': "1" },
       {
-        ajaxURL: crmajaxURL,
         success:function (data){
           var surveyContactSelector = $('#survey-contacts');
           if (data.count == 0) {

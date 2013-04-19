@@ -28,12 +28,12 @@
       if ( isNaN(eventId) ) {
         return;
       }
-      $.mobile.showPageLoadingMsg( 'Searching' );
-      $().crmAPI ('Participant','get',
+      $.mobile.showPageLoadingMsg('Searching');
+
+      CRM.api('Participant','get',
         {'version' :'3', 'sort_name': q, 'event_id': eventId, 'participant_status_id': {1:1,2:2,5:5},
           'return' : 'display_name,participant_status_id' },
         {
-          ajaxURL: crmajaxURL,
           success:function (data){
             if (data.count == 0) {
               cmd = null;
@@ -73,22 +73,23 @@
       if(participant.parent().attr('id')=="registered-participants"){
         var statusId = '2';
         var list = checkedInParticipants;
-      }else{
+      }
+      else{
         var statusId='1';
         var list = registeredParticipants
       }
-      $().crmAPI ('Participant','get',{'version' :'3', 'event_id' : eid, 'participant_id' : pid }
+
+      CRM.api('Participant','get',{'version' :'3', 'event_id' : eid, 'participant_id' : pid }
         ,{
-          ajaxURL: crmajaxURL,
           success:function (data){
             $.each(data.values,function(key,value){
 	      regDate=value.participant_register_date;
 	    });
           }
         });
-      $().crmAPI ('Participant','create',{'version' :'3', 'event_id' : eid, 'id' : pid, 'status_id' : statusId, 'register_date' : regDate }
+
+      CRM.api('Participant','create',{'version' :'3', 'event_id' : eid, 'id' : pid, 'status_id' : statusId, 'register_date' : regDate }
         ,{
-          ajaxURL: crmajaxURL,
           success:function (data){
             //move participant to other list
             list.append(participant);
@@ -97,7 +98,6 @@
         });
       $.mobile.loading( 'hide' );
     }
-
   </script>
 </div>
 

@@ -15,8 +15,8 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
     buildProfileForm( profileId, profileContainerId, dataUrl );
   }
   else {
-    $().crmAPI ('Contact','get',{'version' :'3', 'id' : contactId},
-      { ajaxURL: crmajaxURL,
+    CRM.api('Contact','get',{'version' :'3', 'id' : contactId},
+      {
         success:function (data){
           var contactInfo = data.values[contactId];
           var jsonProfile = {};
@@ -59,8 +59,8 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
         'im',
         'address_name'];
 
-      $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight' },
-        { ajaxURL: crmajaxURL,
+      CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight' },
+        {
           success:function (data){
             $.each(data.values, function(index, value) {
               if ( value.location_type_id ) {
@@ -119,41 +119,39 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
  * @param contactId
  */
 function buildProfileView( profileId, profileContainerId, contactId ) {
-  $().crmAPI ('Contact','get',{'version' :'3', 'id' : contactId}
+  CRM.api('Contact','get',{'version' :'3', 'id' : contactId}
     ,{
-      ajaxURL: crmajaxURL,
       success:function (data){
         var contactInfo = data.values[contactId];
         if (!profileId) {
           profileId = getContactProfileId(contactInfo.contact_type);
         }
-        $().crmAPI ('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'}
-          ,{ajaxURL: crmajaxURL,
-            success:function (data){
-              $.each(data.values, function(index, value) {
-                if ( contactInfo[value.field_name] ) {
-                  var content = '<li data-role="list-divider">'+value.label+'</li>' +
-                    '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
+        CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'} ,{
+          success:function (data){
+            $.each(data.values, function(index, value) {
+              if ( contactInfo[value.field_name] ) {
+                var content = '<li data-role="list-divider">'+value.label+'</li>' +
+                  '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
 
-                  switch (value.field_name) {
-                    case 'phone':
-                      content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                      break;
-                    case 'email':
-                      content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                      break;
-                    default:
-                      content += contactInfo[value.field_name];
-                  }
-
-                  content += '</li>';
-
+                switch (value.field_name) {
+                  case 'phone':
+                    content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                    break;
+                  case 'email':
+                    content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                    break;
+                  default:
+                    content += contactInfo[value.field_name];
                 }
-                $('#' + profileContainerId).append(content);
-              });
-              $('#' + profileContainerId).listview('refresh');
-            }
-          });
+
+                content += '</li>';
+
+              }
+              $('#' + profileContainerId).append(content);
+            });
+            $('#' + profileContainerId).listview('refresh');
+          }
+        });
       }
     });
 }
@@ -175,12 +173,11 @@ function getContactProfileId(contactType) {
  */
 function saveProfile( profileId, contactId, viewUrl, activityId ) {
   // if contact id means either contact edit or survey interview mode
-  if ( contactId ) {
-    if ( !profileId ) {
+  if (contactId) {
+    if (!profileId) {
       // contact edit case
-      $().crmAPI ('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
+      CRM.api('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
         ,{
-          ajaxURL: crmajaxURL,
           success:function (data){
             processProfileSave( getContactProfileId(data.result), viewUrl, contactId );
           }
@@ -213,9 +210,7 @@ function processProfileSave( profileId, viewUrl, contactId, activityId ) {
     fieldIds.activity_id = activityId;
   }
 
-  $().crmAPI ('Profile','set', fieldIds
-    ,{
-      ajaxURL: crmajaxURL,
+  CRM.api('Profile','set', fieldIds ,{
       success:function (data) {
         if (viewUrl) {
           $.mobile.changePage( viewUrl + data.id );

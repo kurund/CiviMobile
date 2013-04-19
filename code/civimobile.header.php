@@ -31,7 +31,7 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
   <script type="text/javascript" src="<?php print $includePath; ?>js/common.js"></script>
   <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/rest.js"></script>
   <script type="text/javascript">
-    var crmajaxURL = '<?php print CRM_Utils_System::url('civicrm/ajax/rest', '', false, null, false); ?>';
+    CRM.url('init', '<?php print CRM_Utils_System::url('civicrm/example', 'placeholder', true, null, false);?>');
   </script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/events.js"></script>
 </head>

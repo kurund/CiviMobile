@@ -27,7 +27,7 @@
     $.mobile.showPageLoadingMsg( 'Searching' );
 
     if (postcode != null) {
-      $().crmAPI ('Address','get',{'version' :'3', 'postal_code' : postcode}
+      CRM.api('Address','get',{'version' :'3', 'postal_code' : postcode}
         ,{
           ajaxURL: crmajaxURL,
           success:function (data){
@@ -67,9 +67,8 @@
    */
   function searchContactByGeoLocation(params) {
     $.mobile.showPageLoadingMsg( 'Searching' );
-    $().crmAPI ('Contact','proximity',{'version' :'3', 'latitude': params.coords.latitude, 'longitude' :params.coords.longitude, 'distance' : 200, 'units' : 'miles'}
+    CRM.api('Contact','proximity',{'version' :'3', 'latitude': params.coords.latitude, 'longitude' :params.coords.longitude, 'distance' : 200, 'units' : 'miles'}
       ,{
-        ajaxURL: crmajaxURL,
         success:function (data){
           var proxContactSelector = $('#cm-prox-contacts');
           if (data.count == 0) {
