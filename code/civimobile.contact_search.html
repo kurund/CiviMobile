@@ -6,9 +6,31 @@
 <div data-role="popup" id="addContactPopup" data-transition="slidedown">
   <ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="a">
     <li data-role="divider" data-theme="a">Contact type:</li>
-    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=4'); ?>" data-transition="slideup">Individual</a></li>
-    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=5'); ?>" data-transition="slideup">Organization</a></li>
-    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=add&pid=6'); ?>" data-transition="slideup">Household</a></li>
+    <?php
+      $params = array(
+        'version' => 3,
+        'return' => 'id',
+        'name' => 'new_individual',
+      );
+      $indProfileId = civicrm_api('uf_group', 'getvalue', $params);
+
+      $params = array(
+        'version' => 3,
+        'return' => 'id',
+        'name' => 'new_organization',
+      );
+      $orgProfileId = civicrm_api('uf_group', 'getvalue', $params);
+
+      $params = array(
+      'version' => 3,
+      'return' => 'id',
+      'name' => 'new_household',
+      );
+      $houseProfileId = civicrm_api('uf_group', 'getvalue', $params);
+    ?>
+    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', "action=add&pid={$indProfileId}"); ?>" data-transition="slideup">Individual</a></li>
+    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', "action=add&pid={$orgProfileId}"); ?>" data-transition="slideup">Organization</a></li>
+    <li><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', "action=add&pid={$houseProfileId}"); ?>" data-transition="slideup">Household</a></li>
   </ul>
 </div>
 <div data-role="content" id="contact-content">

@@ -22,14 +22,20 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
           var jsonProfile = {};
 
           if (!profileId) {
-            profileId = getContactProfileId(contactInfo.contact_type);
+            var profileName = getContactProfileName(contactInfo.contact_type);
+            CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
+              success: function(data) {
+                buildProfileForm( data.result, profileContainerId, dataUrl );
+              }
+            });
           }
-          buildProfileForm( profileId, profileContainerId, dataUrl );
+          else {
+            buildProfileForm( profileId, profileContainerId, dataUrl );
+          }
         }
       }
     );
   }
-
 }
 
 function buildProfileForm( profileId, profileContainerId, dataUrl ) {
@@ -135,32 +141,63 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
         });
 
         if (!profileId) {
-          profileId = getContactProfileId(contactInfo.contact_type);
-        }
-        CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'} ,{
-          success:function (data){
-            $.each(data.values, function(index, value) {
-              if ( contactInfo[value.field_name] ) {
-                var content = '<li data-role="list-divider">'+value.label+'</li>' +
-                  '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
+          var profileName = getContactProfileName(contactInfo.contact_type);
+          CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
+            success: function(data) {
+              profileId = data.result;
+              CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'} ,{
+                success:function (data){
+                  $.each(data.values, function(index, value) {
+                    if ( contactInfo[value.field_name] ) {
+                      var content = '<li data-role="list-divider">'+value.label+'</li>' +
+                        '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
 
-                switch (value.field_name) {
-                  case 'phone':
-                    content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                    break;
-                  case 'email':
-                    content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                    break;
-                  default:
-                    content += contactInfo[value.field_name];
+                      switch (value.field_name) {
+                        case 'phone':
+                          content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                          break;
+                        case 'email':
+                          content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                          break;
+                        default:
+                          content += contactInfo[value.field_name];
+                      }
+                      content += '</li>';
+                    }
+                    $('#' + profileContainerId).append(content);
+                  });
+                  $('#' + profileContainerId).listview('refresh');
                 }
-                content += '</li>';
-              }
-              $('#' + profileContainerId).append(content);
-            });
-            $('#' + profileContainerId).listview('refresh');
-          }
-        });
+              });
+            }
+          });
+        }
+        else {
+          CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'} ,{
+            success:function (data){
+              $.each(data.values, function(index, value) {
+                if ( contactInfo[value.field_name] ) {
+                  var content = '<li data-role="list-divider">'+value.label+'</li>' +
+                    '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
+
+                  switch (value.field_name) {
+                    case 'phone':
+                      content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                      break;
+                    case 'email':
+                      content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
+                      break;
+                    default:
+                      content += contactInfo[value.field_name];
+                  }
+                  content += '</li>';
+                }
+                $('#' + profileContainerId).append(content);
+              });
+              $('#' + profileContainerId).listview('refresh');
+            }
+          });
+        }
       }
     });
 }
@@ -168,11 +205,13 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
 /**
  * A function to get the contact type and return the relevant ID
  */
-function getContactProfileId(contactType) {
+function getContactProfileName(contactType) {
   var profileIds = {
-    "Individual":'4',
-    "Organization":'5',
-    "Household":'6'};
+    "Individual": 'new_individual',
+    "Organization": 'new_organization',
+    "Household": 'new_household'
+  };
+
   return profileIds[contactType];
 }
 
@@ -188,7 +227,12 @@ function saveProfile( profileId, contactId, viewUrl, activityId ) {
       CRM.api('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
         ,{
           success:function (data){
-            processProfileSave( getContactProfileId(data.result), viewUrl, contactId );
+            var profileName = getContactProfileName(data.result);
+            CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
+              success: function(data) {
+                processProfileSave( data.result, viewUrl, contactId );
+              }
+            });
           }
         }
       );
