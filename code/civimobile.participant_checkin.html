@@ -49,11 +49,10 @@
                 value.display_name + '</a>' +
                 '<a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+ value.contact_id + '&context=cm-events" data-icon="info"></a>' +
                 '</li>';
-              if((value.participant_status_id == '1') || (value.participant_status_id == '5')){
+              if ((value.participant_status_id == '1') || (value.participant_status_id == '5')) {
                 registeredParticipants.append(content);
               }
-              if(value.participant_status_id == '2'){
-
+              if (value.participant_status_id == '2') {
                 checkedInParticipants.append(content);
               }
             });
@@ -62,6 +61,8 @@
             $("[id^=event-participant-]").click(function(event){
               checkinParticipant($(this).attr('data-participant-id'), eventId);
             });
+
+            appendParticipantCount();
           }
         });
     }
@@ -94,9 +95,21 @@
             //move participant to other list
             list.append(participant);
             participantList.listview('refresh');
+            appendParticipantCount();
           }
         });
       $.mobile.loading( 'hide' );
+    }
+
+    function appendParticipantCount() {
+      var cp = $('#checked-in-participants');
+      var rp = $('#registered-participants');
+      var cpcnt = cp.find('li').not('.dividerClass').length;
+      var rpcnt = rp.find('li').not('.dividerClass').length;
+      cp.find('li.dividerClass span').remove();
+      cp.find('li.dividerClass').append(' <span>('+ cpcnt +')</span>');
+      rp.find('li.dividerClass span').remove();
+      rp.find('li.dividerClass').append(' <span>('+ rpcnt +')</span>');
     }
   </script>
 </div>
