@@ -1,11 +1,11 @@
 <?php
 class civimobile {
-  function home() {
+  static public function home() {
     require_once 'civimobile.home.php';
     exit;
   }
 
-  function contacts() {
+  static public function contacts() {
     $action = $_GET['action'];
     if ( $action == 'view' ) {
       require_once 'civimobile.contact_view.html';
@@ -16,27 +16,27 @@ class civimobile {
     exit;
   }
 
-  function participantCheckin() {
+  static public function participantCheckin() {
     require_once 'civimobile.participant_checkin.html';
     exit;
   }
 
-  function surveyContacts() {
+  static public function surveyContacts() {
     require_once 'civimobile.survey_contacts.html';
     exit;
   }
 
-  function surveyInterview() {
+  static public function surveyInterview() {
     require_once 'civimobile.survey_interview.html';
     exit;
   }
 
-  function login() {
+  static public function login() {
     require_once 'civimobile.login.html';
     exit;
   }
 
-  function logout() {
+  static public function logout() {
     CRM_Utils_System::logout();
     CRM_Utils_System::redirect( CRM_Utils_System::url('civicrm/mobile') );
     CRM_Utils_System::civiExit();
