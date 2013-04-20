@@ -101,4 +101,4 @@ $( document ).delegate("#cm-proximity-search", "pageinit", function() {
   function onError( ) {
     $('#locationResult').html("Geolocation not supported");
   }
-}); 
+});

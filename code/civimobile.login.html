@@ -1,13 +1,13 @@
 <?php require_once 'civimobile.header.php'; ?>
   <!-- Note that this page is currently called only in Drupal -->
-<div data-role="page" id="cm-login" data-ajax="false">
+<div data-role="page" id="cm-login">
   <div data-role="header">
     <h3>Login to CiviMobile</h3>
   </div>
 
   <div data-role="content">
     <div class="content-primary">
-      <form method="POST">
+      <form method="POST" data-ajax="false" class="ui-body ui-corner-all">
         <ul data-role="listview" data-inset="true" data-divider-theme="a">
           <li data-role="list-divider" role="heading" >Enter your username and password to access CiviCRM</li>
           <li data-role="fieldcontain">
@@ -44,15 +44,18 @@
         // authentication is successful so get cms user id
         $uid = CRM_Utils_System::getLoggedInUfID();
         user_login_finalize($uid);
-        ?>
-        <script type="text/javascript">
-          var homeUrl = "<?php echo CRM_Utils_System::url('civicrm/mobile', null, false, null, false);?>";
-          $.mobile.changePage( homeUrl );
-        </script>
-        <?php
+
+        CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/mobile'));
+        CRM_Utils_System::civiExit();
       }
       else {
         echo "Authentication failure: Enter valid username/password.";
+      }
+    }
+    else {
+      if ( CRM_Utils_System::isUserLoggedIn() ) {
+        CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/mobile'));
+        CRM_Utils_System::civiExit();
       }
     }
   ?>

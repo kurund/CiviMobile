@@ -1,7 +1,7 @@
 <?php require_once 'civimobile.header.php'; ?>
 
 <!-- start of menu page -->
-<div data-role="page" id="cm-home" data-ajax="false" data-dom-cache="false">
+<div data-role="page" id="cm-home">
   <div data-role="header">
     <h1>CiviMobile</h1>
   </div><!-- /header -->
@@ -17,18 +17,19 @@
       <?php
     }
     else {
-      ?>
-      <a data-role="button" data-icon="check" href="<?php echo CRM_Utils_System::url('civicrm/mobile/login'); ?>" title="Click to login" class="icons" data-transition="slide" >Login</a>
-      <?php
+      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/mobile/login'));
+      CRM_Utils_System::civiExit();
     }
     ?>
   </div><!-- /content -->
 </div>
 <!-- end of menu page -->
 
+<!-- start of contact search -->
 <div data-role="page" id="cm-contact-search">
   <?php require_once 'civimobile.contact_search.html'; ?>
 </div>
+<!-- end of contact search -->
 
 <!-- start of event page -->
 <div data-role="page" id="cm-events" >
