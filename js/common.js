@@ -143,9 +143,7 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
                   default:
                     content += contactInfo[value.field_name];
                 }
-
                 content += '</li>';
-
               }
               $('#' + profileContainerId).append(content);
             });
