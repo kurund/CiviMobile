@@ -21,14 +21,14 @@ else {
     </div><!-- /content-primary -->
   </div><!-- /content -->
 
-  <script>
+  <script type="text/javascript">
     var contactId = "<?php echo $_GET['cid']; ?>";
 
-    var context = "<?php echo $_GET['context']; ?>"
+    var context = "<?php if (isset($_GET['context'])) { echo $_GET['context']; } else { echo ''; } ?>";
     $(function(){
-    if(context == 'cm-events' || context == 'cm-surveys') {
-      $('#edit-contact-button').hide();
-    }
+      if (context == 'cm-events' || context == 'cm-surveys') {
+        $('#edit-contact-button').hide();
+      }
     });
     function contactView() {
       buildProfileView( null, "contact-details-sections", contactId );

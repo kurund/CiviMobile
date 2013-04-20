@@ -77,6 +77,9 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
               else if ($.inArray(value.field_name, locationFields) >= 0 ) {
                 var field = jsonProfile[value.field_name+"-Primary"];
               }
+              else if (value.field_name.substr(0, 7)=='custom_') {
+                var field = jsonProfile[value.field_name];
+              }
               else {
                 var field = jsonProfile[value.field_name];
               }
@@ -123,6 +126,14 @@ function buildProfileView( profileId, profileContainerId, contactId ) {
     ,{
       success:function (data){
         var contactInfo = data.values[contactId];
+        CRM.api('CustomValue','get',{'version' :'3', 'entity_id' : contactId },{
+          success: function(data) {
+            $.each(data.values, function(index, value) {
+              contactInfo["custom_"+value.id] = value.latest;
+            });
+          }
+        });
+
         if (!profileId) {
           profileId = getContactProfileId(contactInfo.contact_type);
         }
