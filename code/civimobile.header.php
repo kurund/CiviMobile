@@ -25,9 +25,9 @@ $includePath = $config->extensionsURL . 'com.webaccessglobal.module.civimobile' 
   <?php //print $civimobile_page_settings['favicon'] ?>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" >
-  <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.css" />
-  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0/jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.js"></script>
+  <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.css" />
+  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.3.1/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.js"></script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/common.js"></script>
   <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/rest.js"></script>
   <script type="text/javascript">
