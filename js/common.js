@@ -123,83 +123,59 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
 /**
  * Function to build profile view
  *
- * @param profileId
- * @param profileContainerId
  * @param contactId
+ * @param profileContainerId
  */
-function buildProfileView( profileId, profileContainerId, contactId ) {
-  CRM.api('Contact','get',{'version' :'3', 'id' : contactId}
-    ,{
-      success:function (data){
-        var contactInfo = data.values[contactId];
-        CRM.api('CustomValue','get',{'version' :'3', 'entity_id' : contactId },{
+function buildProfileView( contactId, profileContainerId ) {
+  CRM.api('Contact', 'getvalue', {'sequential': 1, 'contact_id': contactId, 'return': 'contact_type'}, {
+      success: function(data) {
+        var profileName = getContactProfileName(data.result);
+        CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
           success: function(data) {
-            $.each(data.values, function(index, value) {
-              contactInfo["custom_"+value.id] = value.latest;
-            });
+
+            // append appropriate profile id
+            var dataUrl = CRM.url('civicrm/profile/view','reset=1&snippet=5&id=' + contactId + '&gid=' + data.result );
+
+            $.get(
+              dataUrl,
+              function ( response ) {
+                //console.log(response);
+                var content = '';
+                var elementValue = '';
+                var row = '';
+                $('<div>').html(response).
+                find('#crm-container div[id^="row-"] div').each(function(i) {
+                  if ($(this).hasClass('label')) {
+                    content += '<li data-role="list-divider">'+$(this).html()+'</li>';
+                  }
+                  else if ($(this).hasClass('content')) {
+                    //special case for email and phone
+                    row = $(this).parent().attr('id').replace('row-', '').split('_');
+                    switch (row[0]) {
+                      case 'email':
+                        elementValue = '<a href="mailto:">' + $(this).html() + '</a>';
+                        break;
+                      case 'phone':
+                        elementValue = '<a href="tel:">' + $(this).html() + '</a>';
+                        break;
+                      default :
+                        elementValue = $(this).html();
+                        break
+                    }
+                    content += '<li role="option" tabindex="-1" data-theme="c">' + elementValue +'</li>';
+                  }
+                });
+                $('#' + profileContainerId).append(content);
+                $('#' + profileContainerId).listview('refresh');
+              },
+              'html'
+            );
+
           }
         });
-
-        if (!profileId) {
-          var profileName = getContactProfileName(contactInfo.contact_type);
-          CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
-            success: function(data) {
-              profileId = data.result;
-              CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'} ,{
-                success:function (data){
-                  $.each(data.values, function(index, value) {
-                    if ( contactInfo[value.field_name] ) {
-                      var content = '<li data-role="list-divider">'+value.label+'</li>' +
-                        '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
-
-                      switch (value.field_name) {
-                        case 'phone':
-                          content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                          break;
-                        case 'email':
-                          content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                          break;
-                        default:
-                          content += contactInfo[value.field_name];
-                      }
-                      content += '</li>';
-                    }
-                    $('#' + profileContainerId).append(content);
-                  });
-                  $('#' + profileContainerId).listview('refresh');
-                }
-              });
-            }
-          });
-        }
-        else {
-          CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight'} ,{
-            success:function (data){
-              $.each(data.values, function(index, value) {
-                if ( contactInfo[value.field_name] ) {
-                  var content = '<li data-role="list-divider">'+value.label+'</li>' +
-                    '<li role="option" tabindex="-1" data-theme="c" id="contact-'+value.field_name+'" >';
-
-                  switch (value.field_name) {
-                    case 'phone':
-                      content += '<a href="tel:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                      break;
-                    case 'email':
-                      content += '<a href="mailto:'+contactInfo[value.field_name]+'">'+contactInfo[value.field_name]+'</a>';
-                      break;
-                    default:
-                      content += contactInfo[value.field_name];
-                  }
-                  content += '</li>';
-                }
-                $('#' + profileContainerId).append(content);
-              });
-              $('#' + profileContainerId).listview('refresh');
-            }
-          });
-        }
       }
-    });
+    }
+  );
 }
 
 /**
