@@ -1,5 +1,6 @@
 // events for view contact 
 $( document ).delegate("#cm-contact-view", "pageinit", function() {
+  $('#contact-details-sections').html('');
   contactView();
 });
 
