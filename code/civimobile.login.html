@@ -43,7 +43,27 @@
       if ( $authenticate && $reponse ) {
         // authentication is successful so get cms user id
         $uid = CRM_Utils_System::getLoggedInUfID();
-        user_login_finalize($uid);
+
+        /*
+        * @todo remove additional codethe correct code for the below is simply 
+        * @code
+        * $config = CRM_Core_Config::Singleton();
+        * $config->userSystem->userLoginFinalize($uid);
+        * @endcode
+        *
+        * However, as this won't work with core until 4.2.10/ 4.3.5 we need to keep
+        * this working for drupal7 (the only UF you could log in from prior to this) 
+        * and make it work for other UF if they are on the above releases
+        * We could do a hacky switch statement but this would encourage copy and paste of 
+        * the wrong way to do it
+        */
+        $config = CRM_Core_Config::Singleton();
+        if(method_exists($config->userSystem, 'userLoginFinalize')) {
+          $config->userSystem->userLoginFinalize($uid);
+        }
+        else{
+          user_login_finalize($uid);
+        }
 
         CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/mobile'));
         CRM_Utils_System::civiExit();
