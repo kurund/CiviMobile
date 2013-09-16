@@ -34,5 +34,14 @@ $includePath = $config->extensionsURL . DIRECTORY_SEPARATOR . 'com.webaccessglob
     CRM.url('init', '<?php print CRM_Utils_System::url('civicrm/example', 'placeholder', true, null, false);?>');
   </script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/events.js"></script>
+  <script type="text/javascript">
+    // Define globally default profile ids that will be used when creating new
+    // records.
+    var defaultProfileIds = {
+      'ind_profile_id': <? echo civimobile::getProfileId('Individual'); ?>,
+      'org_profile_id': <? echo civimobile::getProfileId('Organization'); ?>,
+      'house_profile_id': <? echo civimobile::getProfileId('Household'); ?>,
+    };
+  </script>
 </head>
 <body>

@@ -14,24 +14,15 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
   if ( profileId ) {
     buildProfileForm( profileId, profileContainerId, dataUrl );
   }
-  else {
-    CRM.api('Contact','get',{'version' :'3', 'id' : contactId},
+  else if ( contactId ) {
+    CRM.api('Contact','get',{'version' :'3', 'id' : contactId },
       {
         success:function (data){
           var contactInfo = data.values[contactId];
           var jsonProfile = {};
 
-          if (!profileId) {
-            var profileName = getContactProfileName(contactInfo.contact_type);
-            CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
-              success: function(data) {
-                buildProfileForm( data.result, profileContainerId, dataUrl );
-              }
-            });
-          }
-          else {
-            buildProfileForm( profileId, profileContainerId, dataUrl );
-          }
+          var profileId = getContactProfileId(contactInfo.contact_type);
+          buildProfileForm( profileId, profileContainerId, dataUrl );
         }
       }
     );
@@ -41,7 +32,6 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
 function buildProfileForm( profileId, profileContainerId, dataUrl ) {
   // append appropriate profile id
   dataUrl += '&gid=' + profileId;
-
   $.getJSON( dataUrl,
     function(data) {
       jsonProfile = data;
@@ -129,66 +119,67 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
 function buildProfileView( contactId, profileContainerId ) {
   CRM.api('Contact', 'getvalue', {'sequential': 1, 'contact_id': contactId, 'return': 'contact_type'}, {
       success: function(data) {
-        var profileName = getContactProfileName(data.result);
-        CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
-          success: function(data) {
+        var profileId = getContactProfileId(data.result);
+        // append appropriate profile id
+        var dataUrl = CRM.url('civicrm/profile/view','reset=1&snippet=5&id=' + contactId + '&gid=' + profileId );
 
-            // append appropriate profile id
-            var dataUrl = CRM.url('civicrm/profile/view','reset=1&snippet=5&id=' + contactId + '&gid=' + data.result );
+        $.get(
+          dataUrl,
+          function ( response ) {
+            //console.log(response);
+            var content = '';
+            var elementValue = '';
+            var row = '';
+            $('<div>').html(response).
+            find('#crm-container div[id^="row-"] div').each(function(i) {
+              if ($(this).hasClass('label')) {
+                content += '<li data-role="list-divider">'+$(this).html()+'</li>';
+              }
+              else if ($(this).hasClass('content')) {
+                //special case for email and phone
+                row = $(this).parent().attr('id').replace('row-', '').split('_');
+                switch (row[0]) {
+                  case 'email':
+                    elementValue = '<a href="mailto:' + $(this).html() + '">' + $(this).html() + '</a>';
+                    break;
+                  case 'phone':
+                    elementValue = '<a href="tel:' + $(this).html() + '">' + $(this).html() + '</a>';
+                    break;
+                  default :
+                    elementValue = $(this).html();
+                    break
+                }
+                content += '<li role="option" tabindex="-1" data-theme="c">' + elementValue +'</li>';
+              }
+            });
+            $('#' + profileContainerId).append(content);
+            $('#' + profileContainerId).listview('refresh');
+          },
+          'html'
+        );
 
-            $.get(
-              dataUrl,
-              function ( response ) {
-                //console.log(response);
-                var content = '';
-                var elementValue = '';
-                var row = '';
-                $('<div>').html(response).
-                find('#crm-container div[id^="row-"] div').each(function(i) {
-                  if ($(this).hasClass('label')) {
-                    content += '<li data-role="list-divider">'+$(this).html()+'</li>';
-                  }
-                  else if ($(this).hasClass('content')) {
-                    //special case for email and phone
-                    row = $(this).parent().attr('id').replace('row-', '').split('_');
-                    switch (row[0]) {
-                      case 'email':
-                        elementValue = '<a href="mailto:">' + $(this).html() + '</a>';
-                        break;
-                      case 'phone':
-                        elementValue = '<a href="tel:">' + $(this).html() + '</a>';
-                        break;
-                      default :
-                        elementValue = $(this).html();
-                        break
-                    }
-                    content += '<li role="option" tabindex="-1" data-theme="c">' + elementValue +'</li>';
-                  }
-                });
-                $('#' + profileContainerId).append(content);
-                $('#' + profileContainerId).listview('refresh');
-              },
-              'html'
-            );
-
-          }
-        });
       }
     }
   );
 }
 
 /**
- * A function to get the contact type and return the relevant ID
+ * A function to get the contact type and return the relevant ID of the
+ * profile to use.
  */
-function getContactProfileName(contactType) {
-  var profileIds = {
-    "Individual": 'new_individual',
-    "Organization": 'new_organization',
-    "Household": 'new_household'
-  };
-
-  return profileIds[contactType];
+function getContactProfileId(contactType) {
+  var name;
+  if(contactType == 'Individual') {
+    name = 'ind_profile_id';
+  }
+  else if(contactType == 'Organization') {
+    name = 'org_profile_id';
+  }
+  else if(contactType == 'Household') {
+    name = 'house_profile_id';
+  } 
+  
+  return window.defaultProfileIds[name];
 }
 
 /**
@@ -203,12 +194,8 @@ function saveProfile( profileId, contactId, viewUrl, activityId ) {
       CRM.api('Contact','getvalue',{'version' :'3', 'id' : contactId, 'sequential': '1', 'return' : 'contact_type'}
         ,{
           success:function (data){
-            var profileName = getContactProfileName(data.result);
-            CRM.api('uf_group', 'getvalue', {'version': '3', 'name': profileName, 'return': 'id'}, {
-              success: function(data) {
-                processProfileSave( data.result, viewUrl, contactId );
-              }
-            });
+            var profileId = getContactProfileId(data.result);
+            processProfileSave( profileId, viewUrl, contactId );
           }
         }
       );
