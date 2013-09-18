@@ -31,4 +31,8 @@
     <path>civicrm/mobile/survey/interview</path>
     <page_callback>civimobile::surveyInterview</page_callback>
   </item>
+  <item>
+    <path>civicrm/admin/setting/mobile</path>
+    <page_callback>civimobile_Form_Settings</page_callback>
+  </item>
 </menu>
