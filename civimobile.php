@@ -41,6 +41,7 @@ function civimobile_civicrm_navigationMenu( &$params ) {
   // Find the Administer -> Customize Data and Screens
   // part of the navigation menu and make our item
   // and child of it.
+  reset($params);
   while(list($k,$v) = each($params)) {
     $attributes = CRM_Utils_Array::value('attributes', $v);
     $child = CRM_Utils_Array::value('child', $v);

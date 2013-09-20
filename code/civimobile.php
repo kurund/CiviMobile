@@ -62,6 +62,7 @@ class civimobile {
     // First try to get custom value set for this installation.
     $params = array(
       'name' => $user_preference_key,
+      'group' => "CiviCRM Mobile",
     );
     try {
       $ret = civicrm_api3('Setting', 'getvalue', $params);
