@@ -32,7 +32,7 @@
 
       CRM.api('Participant','get',
         {'version' :'3', 'sort_name': q, 'event_id': eventId, 'participant_status_id': {1:1,2:2,5:5},
-          'return' : 'display_name,participant_status_id' },
+          'return' : 'display_name,participant_status_id', 'rowCount' : 500 },
         {
           success:function (data){
             if (data.count == 0) {
