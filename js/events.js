@@ -19,10 +19,10 @@ $( document ).delegate("#cm-contact-form", "pageinit", function() {
 // events for contact search
 $( document ).delegate("#cm-contact-search", "pageinit", function() {
   $('#sort_name').keyup( function() {
-    if ($(this).val()) {
+    if ($(this).val().length > 2) {
       contactSearch($(this).val());
     }
-    else {
+    else if (!$(this).val()) {
       $('#contacts').empty();
     }
   });
