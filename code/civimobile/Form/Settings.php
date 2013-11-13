@@ -20,6 +20,12 @@ class civimobile_Form_Settings extends CRM_Core_Form {
     reset($result['values']);
     while(list($k,$v) = each($result['values'])) {
       if(array_key_exists('group_type', $v) && $v['is_active'] == 1) {
+        $id = $v['id'];
+        // Ensure it's not a mixed type profile, because you cannot edit mixed type
+        // profiles
+        if(CRM_Core_BAO_UFField::checkProfileType($id)) {
+          continue;
+        }
         if(is_array($v['group_type'])) {
           // Just check the first one (this is arbitrary)
           $group_type = array_pop($v['group_type']); 
@@ -27,7 +33,6 @@ class civimobile_Form_Settings extends CRM_Core_Form {
         else {
           $group_type = $v['group_type'];
         }
-        $id = $v['id'];
         if(preg_match('/Individual/', $group_type)) {
           $ind_profile_options[$id] = $v['title'];
         } 

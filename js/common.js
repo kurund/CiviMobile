@@ -59,39 +59,52 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
         {
           success:function (data){
             $.each(data.values, function(index, value) {
+              var frozen = false;
               if ( value.location_type_id ) {
                 if (value.field_name == 'phone') {
                   var field = jsonProfile[value.field_name+"-"+value.location_type_id+"-"+value.phone_type_id];
+                  frozen = jsonProfile[value.field_name+"-"+value.location_type_id+"-"+value.phone_type_id]['frozen'];
                 }
                 else{
                   var field = jsonProfile[value.field_name+"-"+value.location_type_id];
+                  frozen = jsonProfile[value.field_name+"-"+value.location_type_id]['frozen'];
                 }
               }
               else if (value.field_name == 'phone') {
                 var field = jsonProfile[value.field_name+"-Primary-"+value.phone_type_id];
+                frozen = jsonProfile[value.field_name+"-Primary-"+value.phone_type_id]['frozen'];
               }
               else if ($.inArray(value.field_name, locationFields) >= 0 ) {
                 var field = jsonProfile[value.field_name+"-Primary"];
+                frozen = jsonProfile[value.field_name+"-Primary"]['frozen'];
               }
               else if (value.field_name.substr(0, 7)=='custom_') {
                 var field = jsonProfile[value.field_name];
+                frozen = jsonProfile[value.field_name]['frozen'];
               }
               else {
                 var field = jsonProfile[value.field_name];
+                frozen = jsonProfile[value.field_name]['frozen'];
               }
 
-              var field = field.html;
+              if(field === undefined) {
+                console.log("Failed to load the profile to edit this contact.");
+                return;
+              }
+              if(frozen) {
+                $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.value+'</div>');
+                return;
+              }
+              $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.html+'</div>');
 
-              $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field+'</div>');
-
-              var id = $(field).attr('id');
-              var tagName = $(field).get(0).tagName;
+              var id = $(field.html).attr('id');
+              var tagName = $(field.html).get(0).tagName;
 
               if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
-                if ($(field).get(0).type == 'text' || $(field).get(0).type == 'textarea') {
+                if ($(field.html).get(0).type == 'text' || $(field.html).get(0).type == 'textarea') {
                   $('#'+id).textinput().attr( 'placeholder', value.label );
                 }
-                else if ( $(field).get(0).type == 'radio' ) {
+                else if ( $(field.html).get(0).type == 'radio' ) {
                   $('#'+id).parent().prepend('<label for="'+id+'">'+value.label+':</label>');
                 }
               }
@@ -100,7 +113,15 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
               }
 
               //gather all the processes field ids
-              fieldIds[$(field).get(0).id] = "";
+              if($(field).get(0).type != 'group') {
+                fieldIds[$(field).get(0).id] = "";
+              }
+              else {
+                // Group types are for checkboxes, which won't have an id available,
+                // so use the name instead.
+                name = $(field).get(0).name;
+                fieldIds[name] = "";
+              }
 
             });
           }
@@ -212,9 +233,24 @@ function saveProfile( profileId, contactId, viewUrl, activityId ) {
 
 function processProfileSave( profileId, viewUrl, contactId, activityId ) {
   $.each(fieldIds, function(index, value) {
-    fieldIds[index] = $('#'+index).val();
+    if($('#'+index).length == 1) {
+      fieldIds[index] = $('#'+index).val();
+    }
+    else {
+      // Handle check boxes
+      var value = '';
+      var values = {};
+      $('input[name^=' + index + ']').each(function() {
+        if($(this).is(' :checked')) {
+          value = $(this)['context']['id'].replace(index + '_', '');
+          values[value] = value;
+        }
+      });
+      if(!$.isEmptyObject(values)) {
+        fieldIds[index] = values;
+      }
+    }
   });
-
   fieldIds.profile_id = profileId;
   fieldIds.version = "3";
 
@@ -231,6 +267,9 @@ function processProfileSave( profileId, viewUrl, contactId, activityId ) {
         if (viewUrl) {
           $.mobile.changePage( viewUrl + data.id );
         }
+      },
+      error:function(data) {
+        alert("There was an error saving the record: " + data.error_message);
       }
     }
   );
