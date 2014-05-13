@@ -38,9 +38,9 @@ $includePath = $config->extensionsURL . DIRECTORY_SEPARATOR . 'com.webaccessglob
     // Define globally default profile ids that will be used when creating new
     // records.
     var defaultProfileIds = {
-      'ind_profile_id': <? echo civimobile::getProfileId('Individual'); ?>,
-      'org_profile_id': <? echo civimobile::getProfileId('Organization'); ?>,
-      'house_profile_id': <? echo civimobile::getProfileId('Household'); ?>,
+      'ind_profile_id': <?php echo civimobile::getProfileId('Individual'); ?>,
+      'org_profile_id': <?php echo civimobile::getProfileId('Organization'); ?>,
+      'house_profile_id': <?php echo civimobile::getProfileId('Household'); ?>,
     };
   </script>
 </head>
