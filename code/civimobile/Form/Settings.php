@@ -36,7 +36,7 @@ class civimobile_Form_Settings extends CRM_Core_Form {
         if(preg_match('/Individual/', $group_type)) {
           $ind_profile_options[$id] = $v['title'];
         } 
-        if(preg_match('/Houeshold/', $group_type)) {
+        if(preg_match('/Household/', $group_type)) {
           $house_profile_options[$id] = $v['title'];
         }
         if(preg_match('/Organization/', $group_type)) {
