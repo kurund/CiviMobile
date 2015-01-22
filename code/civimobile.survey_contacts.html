@@ -24,7 +24,9 @@
         return;
       }
 
-      $.mobile.showPageLoadingMsg( 'Searching' );
+      setTimeout(function(){
+        $.mobile.loading('show');
+      },1);
       CRM.api('SurveyRespondant','get',
       {'version' :'3', 'survey_id': surveyId, 'interviewer_id': interviewerId,
         'status_id': "1" },
@@ -47,7 +49,9 @@
 
             surveyContactSelector.append(content);
           });
-          $.mobile.hidePageLoadingMsg( );
+          setTimeout(function(){
+            $.mobile.loading('hide');
+          },1);
           surveyContactSelector.listview(cmd);
         }
       });

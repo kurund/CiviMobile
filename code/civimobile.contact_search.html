@@ -26,7 +26,9 @@
 
 <script>
   function contactSearch (q) {
-    $.mobile.showPageLoadingMsg( 'Searching' );
+    setTimeout(function(){
+      $.mobile.loading('show');
+    },1);
     CRM.api('Contact','get',
       {'version' :'3', 'sort_name': q, 'return' : 'display_name' },
       {
@@ -42,7 +44,9 @@
           $.each(data.values, function(key, value) {
             $('#contacts').append('<li role="option" tabindex="-1" data-theme="c" id="event-'+value.contact_id+'" ><a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+value.contact_id+'" data-transition="slideup"  data-role="contact-'+value.contact_id+'">'+value.display_name+'</a></li>');
           });
-          $.mobile.hidePageLoadingMsg( );
+          setTimeout(function(){
+            $.mobile.loading('hide');
+          },1);
           $('#contacts').listview(cmd);
         }
       });

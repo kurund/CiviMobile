@@ -28,8 +28,10 @@
       if ( isNaN(eventId) ) {
         return;
       }
-      $.mobile.showPageLoadingMsg('Searching');
 
+      setTimeout(function(){
+        $.mobile.loading('show');
+      },1);
       CRM.api('Participant','get',
         {'version' :'3', 'sort_name': q, 'event_id': eventId, 'participant_status_id': {1:1,2:2,5:5},
           'return' : 'display_name,participant_status_id', 'rowCount' : 500 },
@@ -56,7 +58,9 @@
                 checkedInParticipants.append(content);
               }
             });
-            $.mobile.hidePageLoadingMsg( );
+            setTimeout(function(){
+              $.mobile.loading('hide');
+            },1);
             participantList.listview(cmd);
             $("[id^=event-participant-]").click(function(event){
               checkinParticipant($(this).attr('data-participant-id'), eventId);
