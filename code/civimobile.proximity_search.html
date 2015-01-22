@@ -24,7 +24,9 @@
    * @return void
    */
   function searchContactByPostcode(postcode){
-    $.mobile.showPageLoadingMsg( 'Searching' );
+    setTimeout(function(){
+      $.mobile.loading('show');
+    },1);
 
     if (postcode != null) {
       CRM.api('Address','get',{'postal_code' : postcode}
@@ -55,7 +57,9 @@
           }
         });
     }
-    $.mobile.hidePageLoadingMsg( );
+    setTimeout(function(){
+      $.mobile.loading('hide');
+    },1);
   }
 
   /**

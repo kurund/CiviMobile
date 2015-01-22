@@ -25,13 +25,19 @@ $includePath = $config->extensionsURL . DIRECTORY_SEPARATOR . 'com.webaccessglob
   <?php //print $civimobile_page_settings['favicon'] ?>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" >
-  <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.css" />
-  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.3.1/jquery-1.9.1.min.js"></script>
-  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.js"></script>
+  <link rel="stylesheet" href="<?php print $includePath;?>libraries/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.4.5/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/common.js"></script>
-  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/rest.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/plugins/jquery.blockUI.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/plugins/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/jquery-ui/jquery-ui.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/plugins/select2/select2.min.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/backbone/lodash.compat.min.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/Common.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/crm.ajax.js"></script>
   <script type="text/javascript">
-    CRM.url('init', '<?php print CRM_Utils_System::url('civicrm/example', 'placeholder', true, null, false);?>');
+    CRM.url({'back': '<?php print CRM_Utils_System::url('*path*', '*query*', true, null, false);?>', 'front': '<?php print CRM_Utils_System::url('*path*','*query*' , true, null, false);?>'});
   </script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/events.js"></script>
   <script type="text/javascript">
