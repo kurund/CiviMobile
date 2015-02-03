@@ -68,7 +68,9 @@
    * @param {object} params Object containing latitude and longitude properties
    */
   function searchContactByGeoLocation(params) {
-    $.mobile.showPageLoadingMsg( 'Searching' );
+    setTimeout(function(){
+      $.mobile.loading('show', {theme:"e", text:"Loading...", textonly:true, textVisible: true});
+    },1);
     CRM.api('Contact','proximity',{'version' :'3', 'latitude': params.coords.latitude, 'longitude' :params.coords.longitude, 'distance' : 200, 'units' : 'miles'}
       ,{
         success:function (data){
@@ -85,7 +87,9 @@
             });
             proxContactSelector.listview('refresh');
           }
-          $.mobile.hidePageLoadingMsg( );
+          setTimeout(function(){
+            $.mobile.loading('hide');
+          },1);
         }
       });
   }

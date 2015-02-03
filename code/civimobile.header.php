@@ -40,6 +40,7 @@ $includePath = $config->extensionsURL . DIRECTORY_SEPARATOR . 'com.webaccessglob
     CRM.url({'back': '<?php print CRM_Utils_System::url('*path*', '*query*', true, null, false);?>', 'front': '<?php print CRM_Utils_System::url('*path*','*query*' , true, null, false);?>'});
   </script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/events.js"></script>
+  <link type="text/css" rel="stylesheet" href="<?php print $includePath; ?>css/custom.css"/>
   <script type="text/javascript">
     // Define globally default profile ids that will be used when creating new
     // records.
