@@ -1,0 +1,13 @@
+.ui-mobile-viewport .ui-page .ui-content .ui-listview-filter{
+    border-width: 0;
+    margin: -15px -15px 15px;
+    overflow: hidden;
+}
+
+#contact-details-sections .ui-li-divider {
+    background : #e9e9e9;
+}
+
+#contact-details-sections .ui-li-static, #contact-details-sections .ui-li-divider {
+    border-style: none;
+}

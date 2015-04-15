@@ -26,7 +26,10 @@
 
       $('#crm-profile-content').empty();
 
-      $.mobile.showPageLoadingMsg( 'Loading' );
+      setTimeout(function() {
+        $.mobile.loading('show', {theme:"e", text:"Loading...", textonly:true, textVisible: true});
+      },1);
+
       // get the profile related to survey
       CRM.api('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'entity_id' : surveyId}
         ,{
@@ -42,7 +45,10 @@
       CRM.api('OptionValue','get',
         { 'version' :'3', 'option_group_id': resId }, {
           success:function (data){
-            $.mobile.hidePageLoadingMsg( );
+            setTimeout(function() {
+	      $.mobile.loading('hide');
+            },1);
+
             $('#question-list').append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br"><label for="select-choice-0" class="select"></label> <select name="select-choice-0" id="select-choice-1"> </select></div>');
             $.each(data.values, function(index, value) {
               $('#select-choice-1').append('<option value="'+value.value+'">'+value.label+'</option>');
@@ -51,7 +57,9 @@
           }
         }
       );
-      $.mobile.hidePageLoadingMsg( );
+      setTimeout(function() {
+        $.mobile.loading('show');
+      },1);
     }
 
     // save action to save the result for the activity

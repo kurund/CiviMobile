@@ -74,14 +74,15 @@
     function checkinParticipant(pid,eid) {
       var regDate;
       $.mobile.loading( 'show' );
-      var participant = $('#event-participant-'+pid).parent().parent().parent();
+      var pid;
+      var participant = $('#event-participant-'+pid).parent();
       if(participant.parent().attr('id')=="registered-participants"){
         var statusId = '2';
         var list = checkedInParticipants;
       }
       else{
         var statusId='1';
-        var list = registeredParticipants
+        var list = registeredParticipants;
       }
 
       CRM.api('Participant','get',{'version' :'3', 'event_id' : eid, 'participant_id' : pid }
