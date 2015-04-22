@@ -30,10 +30,10 @@ $includePath = $config->extensionsURL . DIRECTORY_SEPARATOR . 'com.webaccessglob
   <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/common.js"></script>
   <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/plugins/jquery.blockUI.js"></script>
-  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/plugins/jquery.validate.min.js"></script>
-  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/jquery-ui/jquery-ui.js"></script>
-  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/jquery/plugins/select2/select2.min.js"></script>
-  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>packages/backbone/lodash.compat.min.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>bower_components/jquery-ui/jquery-ui.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>bower_components/select2/select2.min.js"></script>
+  <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>bower_components/lodash-compat/lodash.min.js"></script>
   <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/Common.js"></script>
   <script type="text/javascript" src="<?php print $civimobile_vars['civicrm_resourceURL']; ?>js/crm.ajax.js"></script>
   <script type="text/javascript">
