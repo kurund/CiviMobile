@@ -1,4 +1,5 @@
 <?php
+require_once 'code/civimobile.php';
 function civimobile_civicrm_config( &$config ) {
   $tabRoot = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
   // fix php include path
