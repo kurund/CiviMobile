@@ -159,16 +159,16 @@ function buildProfileView( contactId, profileContainerId ) {
               else if ($(this).hasClass('content')) {
                 //special case for email and phone
                 row = $(this).parent().attr('id').replace('row-', '').split('_');
-                switch (row[0]) {
-                  case 'email':
-                    elementValue = '<a href="mailto:' + $(this).html() + '">' + $(this).html() + '</a>';
-                    break;
-                  case 'phone':
-                    elementValue = '<a href="tel:' + $(this).html() + '">' + $(this).html() + '</a>';
-                    break;
-                  default :
-                    elementValue = $(this).html();
-                    break
+                elementValue = $(this).html();
+                if ($(this).html() != 0) {
+                  switch (row[0]) {
+                    case 'email':
+                      elementValue = '<a href="mailto:' + $(this).html() + '">' + $(this).html() + '</a>';
+                      break;
+                    case 'phone':
+                      elementValue = '<a href="tel:' + $(this).html() + '">' + $(this).html() + '</a>';
+                      break;
+                  }
                 }
                 content += '<li role="option" tabindex="-1" data-theme="c">' + elementValue +'</li>';
               }
