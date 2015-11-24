@@ -27,32 +27,55 @@
       setTimeout(function(){
         $.mobile.loading('show');
       },1);
-      CRM.api('SurveyRespondant','get',
-      {'version' :'3', 'survey_id': surveyId, 'interviewer_id': interviewerId,
-        'status_id': "1" },
+      CRM.api('OptionValue', 'get', 
+      { "sequential": 1,
+        "option_group_id": "activity_type",
+        "component_id": "CiviCampaign",
+        "api.Activity.get": {"activity_type_id":"$value.value"}
+      },
       {
-        success:function (data){
-          var surveyContactSelector = $('#survey-contacts');
-          if (data.count == 0) {
-            cmd = null;
-          }
-          else {
-            cmd = "refresh";
-            surveyContactSelector.show();
-            surveyContactSelector.empty();
-          }
-          $.each(data.values, function(key, value) {
-            var content = '<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="survey-res-'+value.id+'" >' +
-              '<a href="<?php echo CRM_Utils_System::url('civicrm/mobile/survey/interview', 'sid='); ?>'+ surveyId +'&resid='+ resId +'&aid='+ value.id +'&cid='+value.voter_id+'" data-transition="slideup">'+value.voter_name+'</a>' +
-              '<a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+ value.voter_id + '&context=cm-surveys"  data-icon="info"></a>' +
-              '</li>';
-
-            surveyContactSelector.append(content);
+        success:function (data){ 
+          $.each(data.values, function(key, value){
+            $count = value['api.Activity.get'].count;
+            var arr = [];
+            if ($count > 0) { 
+              $.each(value['api.Activity.get'].values, function(key, value){
+                if (value.source_record_id == surveyId ) {
+                  arr.push(value.id);
+                }
+              });
+              CRM.api3('ActivityContact', 'get', 
+              {
+                "sequential": 1,
+                "activity_id": {"IN":arr},
+                "record_type_id": "Activity Targets",
+                "api.Contact.get": {"id":"$value.contact_id"}
+              }).success(function(result) { 
+                  var surveyContactSelector = $('#survey-contacts');
+                  if (result.count == 0) {
+                    cmd = null;
+                  }
+                  else {
+                    cmd = "refresh";
+                    surveyContactSelector.show();
+                    surveyContactSelector.empty();
+                  }
+                  $.each(result.values, function(key, value){
+                    $.each(value['api.Contact.get'].values, function(key, value){
+                      var content = '<li role="option" tabindex="-1" data-ajax="false" data-theme="c" id="survey-res-'+value.id+'" >' +
+                         '<a href="<?php echo CRM_Utils_System::url('civicrm/mobile/survey/interview', 'sid='); ?>'+ surveyId +'&resid='+ resId +'&aid='+ value.id +'&cid='+value.contact_id+'" data-transition="slideup">'+value.sort_name+'</a>' +
+                         '<a href="<?php echo CRM_Utils_System::url('civicrm/mobile/contact', 'action=view&cid='); ?>'+ value.contact_id + '&context=cm-surveys"  data-icon="info"></a>' +
+                         '</li>';
+                      surveyContactSelector.append(content);
+                      setTimeout(function(){
+                        $.mobile.loading('hide');
+                      },1);
+                      surveyContactSelector.listview(cmd);
+                    });
+                  });
+                });
+             }
           });
-          setTimeout(function(){
-            $.mobile.loading('hide');
-          },1);
-          surveyContactSelector.listview(cmd);
         }
       });
     }
