@@ -31,34 +31,42 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
 
 function buildProfileForm( profileId, profileContainerId, dataUrl ) {
   // append appropriate profile id
-  dataUrl += '&gid=' + profileId;
-  $.getJSON( dataUrl,
-    function(data) {
-      jsonProfile = data;
+    dataUrl += '&gid=' + profileId;
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == 'cid') {
+            var cID = sParameterName[1];
+        }
+    }
+    $.getJSON( dataUrl,
+      function(data) {
+        jsonProfile = data;
 
-      var locationFields = [
-        'street_address',
-        'street_number',
-        'street_name',
-        'street_unit',
-        'supplemental_address_1',
-        'supplemental_address_2',
-        'city',
-        'postal_code',
-        'postal_code_suffix',
-        'geo_code_1',
-        'geo_code_2',
-        'state_province',
-        'country',
-        'county',
-        'email',
-        'im',
-        'address_name'];
+        var locationFields = [
+         'street_address',
+         'street_number',
+         'street_name',
+         'street_unit',
+         'supplemental_address_1',
+         'supplemental_address_2',
+         'city',
+         'postal_code',
+         'postal_code_suffix',
+         'geo_code_1',
+         'geo_code_2',
+         'state_province',
+         'country',
+         'county',
+         'email',
+         'im',
+         'address_name'];
 
-      CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight' },
+        CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight' },
         {
-          success:function (data){
-            $.each(data.values, function(index, value) {
+          success:function(data){
+	    $.each(data.values, function(index, value) {
               var frozen = false;
               if ( value.location_type_id ) {
                 if (value.field_name == 'phone') {
@@ -78,21 +86,31 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
                 var field = jsonProfile[value.field_name+"-Primary"];
                 frozen = jsonProfile[value.field_name+"-Primary"]['frozen'];
               }
-              else if (value.field_name.substr(0, 7)=='custom_') {
+	      else if (value.field_name.substr(0, 7)=='custom_') {
                 var field = jsonProfile[value.field_name];
                 frozen = jsonProfile[value.field_name]['frozen'];
               }
-              else {
+	      else {
                 var field = jsonProfile[value.field_name];
                 frozen = jsonProfile[value.field_name]['frozen'];
               }
-
-              if(field === undefined) {
+              if (field === undefined) {
                 console.log("Failed to load the profile to edit this contact.");
                 return;
               }
-              if(frozen) {
-                $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.value+'</div>');
+	      if (frozen) {
+                CRM.api3('Contact', 'get', {"sequential": 1, "id": cID}
+                ).done(function(result) {
+                  if (value.field_name == 'country') {
+	            $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+result.values[0].country+'</div>');
+		  }
+                  if (value.field_name == 'state_province') {
+		    $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+result.values[0].state_province+'</div>');
+		  }
+		  if (value.field_name != 'state_province' && value.field_name != 'country') {
+	            $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.value+'</div>');
+		  }		      
+                });
                 return;
               }
               $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.html+'</div>');
@@ -108,11 +126,9 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
                   $('#'+id).parent().prepend('<label for="'+id+'">'+value.label+':</label>');
                 }
               }
-             else if (tagName == 'SELECT') {
-//                $('#'+id).selectmenu().parent().parent().prepend('<label for="'+id+'">'+value.label+':</label>');
-	           $('<div class="ui-select"><label for="select-choice-0" class="select">' +value.label+ ':</label>').insertBefore('#'+id) ;
-	           $('#'+id).selectmenu();
-             }
+              else if (tagName == 'SELECT'){
+                $('#'+id).selectmenu().parent().parent().prepend('<label for="'+id+'">'+value.label+':</label>');
+              }
 
               //gather all the processes field ids
               if($(field).get(0).type != 'group') {
@@ -124,12 +140,11 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
                 name = $(field).get(0).name;
                 fieldIds[name] = "";
               }
-
             });
           }
         }
       );
-    }
+     }
   );
 }
 
@@ -149,7 +164,6 @@ function buildProfileView( contactId, profileContainerId ) {
         $.get(
           dataUrl,
           function ( response ) {
-            //console.log(response);
             var content = '';
             var elementValue = '';
             var row = '';
