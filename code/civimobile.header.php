@@ -29,8 +29,6 @@ $includePath = $config->extensionsURL . DIRECTORY_SEPARATOR . 'com.webaccessglob
   <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.4.5/jquery-1.10.2.min.js"></script>
   <script type="text/javascript" src="<?php print $includePath; ?>libraries/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
   <script type="text/javascript" src="<?php print $includePath; ?>js/common.js"></script>
-  <script type="text/javascript" src="<?php print $includePath; ?>js/Common.js"></script>
-  <script type="text/javascript" src="<?php print $includePath; ?>js/crm.ajax.js"></script>
   <script type="text/javascript">
     CRM.url({'back': '<?php print CRM_Utils_System::url('*path*', '*query*', true, null, false);?>', 'front': '<?php print CRM_Utils_System::url('*path*','*query*' , true, null, false);?>'});
   </script>
