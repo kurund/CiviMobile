@@ -31,34 +31,42 @@ function buildProfile( profileId, profileContainerId, contactId, dataUrl ) {
 
 function buildProfileForm( profileId, profileContainerId, dataUrl ) {
   // append appropriate profile id
-  dataUrl += '&gid=' + profileId;
-  $.getJSON( dataUrl,
-    function(data) {
-      jsonProfile = data;
+    dataUrl += '&gid=' + profileId;
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == 'cid') {
+            var cID = sParameterName[1];
+        }
+    }
+    $.getJSON( dataUrl,
+      function(data) {
+        jsonProfile = data;
 
-      var locationFields = [
-        'street_address',
-        'street_number',
-        'street_name',
-        'street_unit',
-        'supplemental_address_1',
-        'supplemental_address_2',
-        'city',
-        'postal_code',
-        'postal_code_suffix',
-        'geo_code_1',
-        'geo_code_2',
-        'state_province',
-        'country',
-        'county',
-        'email',
-        'im',
-        'address_name'];
+        var locationFields = [
+         'street_address',
+         'street_number',
+         'street_name',
+         'street_unit',
+         'supplemental_address_1',
+         'supplemental_address_2',
+         'city',
+         'postal_code',
+         'postal_code_suffix',
+         'geo_code_1',
+         'geo_code_2',
+         'state_province',
+         'country',
+         'county',
+         'email',
+         'im',
+         'address_name'];
 
-      CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight' },
+        CRM.api('UFField','get',{'version' :'3', 'uf_group_id' : profileId, 'sort': 'weight' },
         {
-          success:function (data){
-            $.each(data.values, function(index, value) {
+          success:function(data){
+	    $.each(data.values, function(index, value) {
               var frozen = false;
               if ( value.location_type_id ) {
                 if (value.field_name == 'phone') {
@@ -78,21 +86,31 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
                 var field = jsonProfile[value.field_name+"-Primary"];
                 frozen = jsonProfile[value.field_name+"-Primary"]['frozen'];
               }
-              else if (value.field_name.substr(0, 7)=='custom_') {
+	      else if (value.field_name.substr(0, 7)=='custom_') {
                 var field = jsonProfile[value.field_name];
                 frozen = jsonProfile[value.field_name]['frozen'];
               }
-              else {
+	      else {
                 var field = jsonProfile[value.field_name];
                 frozen = jsonProfile[value.field_name]['frozen'];
               }
-
-              if(field === undefined) {
+              if (field === undefined) {
                 console.log("Failed to load the profile to edit this contact.");
                 return;
               }
-              if(frozen) {
-                $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.value+'</div>');
+	      if (frozen) {
+                CRM.api3('Contact', 'get', {"sequential": 1, "id": cID}
+                ).done(function(result) {
+                  if (value.field_name == 'country') {
+	            $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+result.values[0].country+'</div>');
+		  }
+                  if (value.field_name == 'state_province') {
+		    $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+result.values[0].state_province+'</div>');
+		  }
+		  if (value.field_name != 'state_province' && value.field_name != 'country') {
+	            $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.value+'</div>');
+		  }		      
+                });
                 return;
               }
               $('#' + profileContainerId ).append('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">'+field.html+'</div>');
@@ -122,12 +140,11 @@ function buildProfileForm( profileId, profileContainerId, dataUrl ) {
                 name = $(field).get(0).name;
                 fieldIds[name] = "";
               }
-
             });
           }
         }
       );
-    }
+     }
   );
 }
 
@@ -147,7 +164,6 @@ function buildProfileView( contactId, profileContainerId ) {
         $.get(
           dataUrl,
           function ( response ) {
-            //console.log(response);
             var content = '';
             var elementValue = '';
             var row = '';
@@ -274,3 +290,167 @@ function processProfileSave( profileId, viewUrl, contactId, activityId ) {
     }
   );
 }
+
+//added selected code from Common.js & crm.ajax.js
+
+// https://civicrm.org/licensing
+/* global CRM:true */
+var CRM = CRM || {};
+var cj = CRM.$ = jQuery;
+
+// https://civicrm.org/licensing
+/**
+ * @see https://wiki.civicrm.org/confluence/display/CRMDOC/AJAX+Interface
+ * @see https://wiki.civicrm.org/confluence/display/CRMDOC/Ajax+Pages+and+Forms
+ */
+(function($, CRM, undefined) {
+  /**
+   * @param string path
+   * @param string|object query
+   * @param string mode - optionally specify "front" or "back"
+   */
+  var tplURL;
+  CRM.url = function (path, query, mode) {
+    if (typeof path === 'object') {
+      tplURL = path;
+      return path;
+    }
+    if (!tplURL) {
+      CRM.console('error', 'Error: CRM.url called before initialization');
+    }
+    if (!mode) {
+      mode = CRM.config && CRM.config.isFrontend ? 'front' : 'back';
+    }
+    query = query || '';
+    var frag = path.split('?');
+    var url = tplURL[mode].replace("*path*", frag[0]);
+
+    if (!query) {
+      url = url.replace(/[?&]\*query\*/, '');
+    }
+    else {
+      url = url.replace("*query*", typeof query === 'string' ? query : $.param(query));
+    }
+    if (frag[1]) {
+      url += (url.indexOf('?') < 0 ? '?' : '&') + frag[1];
+    }
+    return url;
+  };
+
+  // @deprecated
+  $.extend ({'crmURL':
+    function (p, params) {
+      CRM.console('warn', 'Calling crmURL from jQuery is deprecated. Please use CRM.url() instead.');
+      return CRM.url(p, params);
+    }
+  });
+
+  $.fn.crmURL = function () {
+    return this.each(function() {
+      if (this.href) {
+        this.href = CRM.url(this.href);
+      }
+    });
+  };
+
+  /**
+   * AJAX api
+   */
+  CRM.api3 = function(entity, action, params, status) {
+    if (typeof(entity) === 'string') {
+      params = {
+        entity: entity,
+        action: action.toLowerCase(),
+        json: JSON.stringify(params || {})
+      };
+    } else {
+      params = {
+        entity: 'api3',
+        action: 'call',
+        json: JSON.stringify(entity)
+      };
+      status = action;
+    }
+    var ajax = $.ajax({
+      url: CRM.url('civicrm/ajax/rest'),
+      dataType: 'json',
+      data: params,
+      type: params.action.indexOf('get') < 0 ? 'POST' : 'GET'
+    });
+    if (status) {
+      // Default status messages
+      if (status === true) {
+        status = {success: params.action === 'delete' ? ts('Removed') : ts('Saved')};
+        if (params.action.indexOf('get') === 0) {
+          status.start = ts('Loading...');
+          status.success = null;
+        }
+      }
+      var messages = status === true ? {} : status;
+      CRM.status(status, ajax);
+    }
+    return ajax;
+  };
+
+  /**
+   * @deprecated
+   * AJAX api
+   */
+  CRM.api = function(entity, action, params, options) {
+    // Default settings
+    var settings = {
+      context: null,
+      success: function(result, settings) {
+        return true;
+      },
+      error: function(result, settings) {
+        $().crmError(result.error_message, ts('Error'));
+        return false;
+      },
+      callBack: function(result, settings) {
+        if (result.is_error == 1) {
+          return settings.error.call(this, result, settings);
+        }
+        return settings.success.call(this, result, settings);
+      },
+      ajaxURL: 'civicrm/ajax/rest'
+    };
+    action = action.toLowerCase();
+    // Default success handler
+    switch (action) {
+      case "update":
+      case "create":
+      case "setvalue":
+      case "replace":
+        settings.success = function() {
+          CRM.status(ts('Saved'));
+          return true;
+        };
+        break;
+      case "delete":
+        settings.success = function() {
+          CRM.status(ts('Removed'));
+          return true;
+        };
+    }
+    params = {
+      entity: entity,
+      action: action,
+      json: JSON.stringify(params)
+    };
+    // Pass copy of settings into closure to preserve its value during multiple requests
+    (function(stg) {
+      $.ajax({
+        url: stg.ajaxURL.indexOf('http') === 0 ? stg.ajaxURL : CRM.url(stg.ajaxURL),
+        dataType: 'json',
+        data: params,
+        type: action.indexOf('get') < 0 ? 'POST' : 'GET',
+        success: function(result) {
+          stg.callBack.call(stg.context, result, stg);
+        }
+      });
+    })($.extend({}, settings, options));
+  };
+}(jQuery, CRM));
+
+ 

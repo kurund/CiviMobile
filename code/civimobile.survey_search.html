@@ -16,7 +16,7 @@
       $.mobile.loading('show');
     },1);
     CRM.api('Survey','get',
-      {'version' :'3', 'title': {'LIKE': q + '%'}, 'is_active': 1},
+      {'version' :'3', 'title': {'LIKE': '%' + q + '%'}, 'is_active': 1},
       {
         success:function (data){
           var surveySelector = $('#surveys');
