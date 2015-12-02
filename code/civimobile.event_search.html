@@ -16,7 +16,7 @@
       $.mobile.loading('show');
     },1);
     CRM.api('Event','get',
-      {'version' :'3', 'title': {'LIKE': q + '%'}, 'return' : 'event_title,id' }, {
+      {'version' :'3', 'title': {'LIKE': '%' + q + '%'}, 'return' : 'event_title,id' }, {
       success:function (data){
         if (data.count == 0) {
           cmd = null;

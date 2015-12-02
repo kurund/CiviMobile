@@ -28,24 +28,27 @@
       if ( isNaN(eventId) ) {
         return;
       }
-
       setTimeout(function(){
         $.mobile.loading('show');
       },1);
-      CRM.api('Participant','get',
-        {'version' :'3', 'sort_name': q, 'event_id': eventId, 'participant_status_id': {1:1,2:2,5:5},
-          'return' : 'display_name,participant_status_id', 'rowCount' : 500 },
-        {
-          success:function (data){
-            if (data.count == 0) {
+      CRM.api3('Participant', 'get', {
+        "sequential": 1,
+        "event_id": eventId,
+        "sort_name" :q,
+        "participant_status_id": {1:1,2:2,5:5},
+        "options": {"sort":"first_name"},
+        "return": "display_name,participant_status_id", 
+        "rowCount" : 500 
+      }).done(function(data) {
+           if (data.count == 0) {
               cmd = null;
-            }
-            else {
-              cmd = "refresh";
-              participantList.show();
-              participantList.find('*').not('.dividerClass').remove();
-            }
-            $.each(data.values, function(key, value) {
+           }
+           else {
+             cmd = "refresh";
+             participantList.show();
+             participantList.find('*').not('.dividerClass').remove();
+           }
+           $.each(data.values, function(key, value) {
               var content = '<li  role="option">' +
                 '<a href="#" id="event-participant-'+ value.participant_id+'" data-participant-id="'+ value.participant_id + '" data-role="participants-'+ value.id +'" >'+
                 value.display_name + '</a>' +
@@ -57,18 +60,16 @@
               if (value.participant_status_id == '2') {
                 checkedInParticipants.append(content);
               }
-            });
-            setTimeout(function(){
-              $.mobile.loading('hide');
-            },1);
-            participantList.listview(cmd);
-            $("[id^=event-participant-]").click(function(event){
-              checkinParticipant($(this).attr('data-participant-id'), eventId);
-            });
-
-            appendParticipantCount();
-          }
-        });
+           });
+           setTimeout(function(){
+             $.mobile.loading('hide');
+           },1);
+           participantList.listview(cmd);
+           $("[id^=event-participant-]").click(function(event){
+             checkinParticipant($(this).attr('data-participant-id'), eventId);
+           });
+           appendParticipantCount();
+         });
     }
 
     function checkinParticipant(pid,eid) {
