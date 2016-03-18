@@ -31,7 +31,7 @@
       },1);
 
       // get the profile related to survey
-      CRM.api('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_table' :'civicrm_survey', 'entity_id' : surveyId}
+      CRM.api('UFJoin','get',{ 'sequential' :'1', 'module' :'CiviCampaign', 'entity_id' : surveyId, 'api.Entity.get': {'entity_table':'civicrm_survey'}}
         ,{
           success:function (data) {
             surveyProfileId = data.values[0].uf_group_id;
