@@ -2,9 +2,9 @@
 CiviMobile Extension
 ===================================
 
-Mobile application for few specific actions in CiviCRM
+Mobile friendly interface for the specific actions in CiviCRM
 
-Current feature includes:
+Features include:
 
 * Contacts
 - Search Contacts
@@ -22,11 +22,14 @@ Requirement: CiviCRM v4.7.x
 
 Using CiviMobile
 - Install the extension
-- CiviMobile menu item will be added to the navigation menu
-- Clicking on the CiviMobile menu will switch you to CiviMobile interface
+- CiviMobile menu item will be automatically added to the CiviCRM navigation menu
+- Clicking on the CiviMobile menu, it will switch you to CiviMobile interface
+
+You can directly access the CiviMobile interface on your moblile using <sitename>/civicrm/mobile/login
+
+Note: This extension does not convert web interface of CiviCRM to mobile friendly. 
 
 Contributors:
-
 Web Access        - webaccessglobal.com
 Kurund Jalmi      - civicrm.org
 Peter McAndrew    - thirdsectordesign.org
