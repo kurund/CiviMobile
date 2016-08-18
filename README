@@ -20,6 +20,11 @@ Current feature includes:
 
 Requirement: CiviCRM v4.7.x
 
+Using CiviMobile
+- Install the extension
+- CiviMobile menu item will be added to the navigation menu
+- Clicking on the CiviMobile menu will switch you to CiviMobile interface
+
 Contributors:
 
 Web Access        - webaccessglobal.com
